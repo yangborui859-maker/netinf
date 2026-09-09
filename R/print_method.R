@@ -104,3 +104,28 @@ print.looMultiAnalysis <- function(x, ...) {
 
   invisible(x)
 }
+
+
+#' Print Method for empiricalInfluence Objects
+#'
+#' Prints a sorted table of empirical influence values.
+#'
+#' @param x An object of class `"empiricalInfluence"`.
+#' @param ... Additional arguments (currently unused).
+#'
+#' @return Invisibly returns `x`.
+#' @export
+print.empiricalInfluence <- function(x, ...) {
+  cat("Empirical Influence Values\n")
+  cat("==========================\n\n")
+
+  ord <- order(abs(x), decreasing = TRUE)
+  influence_table <- data.frame(
+    case_id = ord,
+    influence = unname(x[ord])
+  )
+
+  print(influence_table, row.names = FALSE)
+
+  invisible(x)
+}

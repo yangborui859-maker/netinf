@@ -36,6 +36,10 @@ bootnet_with_data <- function(data, nBoots = 1000, default = c("none", "EBICglas
         stop("default = 'graphicalVAR' only supported for output of estimateNetwork()")
     }
     default <- match.arg(default)
+    if (default != "EBICglasso") {
+    warning("Only 'EBICglasso' is currently supported. Other methods may produce invalid results.")
+    stop("Unsupported default method.")
+  }
     if (any(statistics == "all")) {
         if (missing(communities)) {
             statistics <- c("intercept", "edge", "length", "distance",

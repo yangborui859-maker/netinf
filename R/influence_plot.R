@@ -38,6 +38,9 @@ influence_plot <- function(object,
   if (inherits(object, "influenceDiagnostic")) {
     object <- object$empirical_influence$influence
   }
+  if (inherits(object, "empiricalInfluence")) {
+    object <- unclass(object)
+  }
 
   if (is.null(dim(object))) {
     if (!is.vector(object)) {

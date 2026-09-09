@@ -5,21 +5,22 @@
 \title{Calculate Generalized Cook's Distance for Centrality Measures}
 \usage{
 calculate_centrality_gCD(
-  boot_result,
-  case_ids,
   data,
+  boot_result,
+  case_ids = NULL,
   metric = c("Strength", "Closeness", "Betweenness"),
   default = "EBICglasso",
+  nCores = 1,
   ...
 )
 }
 \arguments{
+\item{data}{Original data frame used in the bootstrap analysis.}
+
 \item{boot_result}{An object of class \code{"bootnetWithData"} returned by
 \code{\link[=bootnet_with_data]{bootnet_with_data()}}.}
 
 \item{case_ids}{Numeric vector of case IDs to evaluate.}
-
-\item{data}{Original data frame used in the bootstrap analysis.}
 
 \item{metric}{Character vector of centrality measures to compute.
 Can be one or more of \code{"Strength"}, \code{"Closeness"}, \code{"Betweenness"}.}

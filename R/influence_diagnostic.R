@@ -40,6 +40,10 @@ influence_diagnostic <- function(data,
                                   centrality_metrics = c("Strength", "Closeness", "Betweenness"),
                                   run_centrality_gCD = TRUE,
                                   ...) {
+  if (default != "EBICglasso") {
+    warning("Only 'EBICglasso' is currently supported. Other methods may produce invalid results.")
+    stop("Unsupported default method.")
+  }
   if (inherits(data, "bootnetWithData")) {
     boot_result <- data
     data_used <- boot_result$sample$data
@@ -80,9 +84,11 @@ influence_diagnostic <- function(data,
       default = default,
       ...
     )
-  } else {
+   centrality_diff_vectors <- attr(centrality_gCD_results, "diff_vectors")
+ } else {
     centrality_gCD_results <- NULL
-  }
+    centrality_diff_vectors <- NULL
+ }
 
   result <- list(
     empirical_influence = list(
@@ -91,6 +97,7 @@ influence_diagnostic <- function(data,
     ),
     loo_validation = loo_results,
     centrality_gCD = centrality_gCD_results,
+    centrality_diff_vectors = centrality_diff_vectors,
     boot_result = boot_result,
     data = data_used,
     top_n = top_n,

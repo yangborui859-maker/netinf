@@ -53,5 +53,6 @@ calculate_empirical_influence <- function(boot_result,...) {
   l <- rep(0, n)
   l[inc] <- beta
   l <- l - mean(l)
+  class(l) <-"empiricalInfluence"
   return(l)
 }

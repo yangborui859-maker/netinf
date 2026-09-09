@@ -28,23 +28,38 @@
 #' the usual inverse, and a warning is issued.
 #'
 #' @export
-calculate_centrality_gCD <- function(boot_result,
-                                     case_ids,
-                                     data,
+calculate_centrality_gCD <- function(data,
+                                     boot_result,
+                                     case_ids = NULL,
                                      metric = c("Strength", "Closeness", "Betweenness"),
                                      default = "EBICglasso",
+                                     nCores = 1,
                                      ...) {
 
+  if(is.null(case_ids)){case_ids <- seq_len(nrow(data))}
+  
   metric <- match.arg(metric, several.ok = TRUE)
+  
+  if (nCores > 1) {
+    cl <- parallel::makeCluster(nCores)
+    on.exit(parallel::stopCluster(cl), add = TRUE)
+    parallel::clusterExport(cl,c('data'), envir = environment())
+    networks_without <- pbapply::pblapply(case_ids, function(id) {
+      data_without <- data[-id, , drop = FALSE]
+      bootnet::estimateNetwork(data_without,
+                               default = default,
+                               verbose = FALSE,
+                               ...)
+    }, cl = cl)
 
-  networks_without <- list()
-  for (k in seq_along(case_ids)) {
-    id <- case_ids[k]
-    data_without <- data[-id, , drop = FALSE]
-    networks_without[[k]] <- bootnet::estimateNetwork(data_without,
-                                                      default = default,
-                                                      verbose = FALSE,
-                                                      ...)
+  } else {
+    networks_without <- lapply(case_ids, function(id) {
+      data_without <- data[-id, , drop = FALSE]
+      bootnet::estimateNetwork(data_without,
+                               default = default,
+                               verbose = FALSE,
+                               ...)
+    })
   }
 
   full_graph <- boot_result$sample$graph
@@ -59,7 +74,8 @@ calculate_centrality_gCD <- function(boot_result,
   }
 
   all_results <- list()
-
+  diff_vectors <- list()
+  
   for (m in metric) {
     centrality_list <- lapply(boot_result$boots, function(net) {
       g <- net$graph
@@ -100,10 +116,12 @@ calculate_centrality_gCD <- function(boot_result,
         gCD = gCD,
         stringsAsFactors = FALSE
       )
+      diff_vectors[[length(diff_vectors) + 1]] <- diff_vec
     }
   }
 
   out <- do.call(rbind, all_results)
   rownames(out) <- NULL
+  attr(out, "diff_vectors") <- diff_vectors
   return(out)
 }
