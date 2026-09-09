@@ -39,6 +39,7 @@ influence_diagnostic <- function(data,
                                   verbose = TRUE,
                                   centrality_metrics = c("Strength", "Closeness", "Betweenness"),
                                   run_centrality_gCD = TRUE,
+                                  nCores = 1,
                                   ...) {
   if (default != "EBICglasso") {
     warning("Only 'EBICglasso' is currently supported. Other methods may produce invalid results.")
@@ -53,6 +54,7 @@ influence_diagnostic <- function(data,
                                       nBoots = nBoots,
                                       default = default,
                                       verbose = verbose,
+                                      nCores = nCores,
                                       ...)
   }
 
@@ -82,6 +84,7 @@ influence_diagnostic <- function(data,
       data = data_used,
       metric = centrality_metrics,
       default = default,
+      nCores = nCores,
       ...
     )
    centrality_diff_vectors <- attr(centrality_gCD_results, "diff_vectors")

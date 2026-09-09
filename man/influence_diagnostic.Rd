@@ -15,6 +15,7 @@ influence_diagnostic(
   verbose = TRUE,
   centrality_metrics = c("Strength", "Closeness", "Betweenness"),
   run_centrality_gCD = TRUE,
+  nCores = 1,
   ...
 )
 }
