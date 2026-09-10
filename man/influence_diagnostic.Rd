@@ -20,7 +20,7 @@ influence_diagnostic(
 )
 }
 \arguments{
-\item{data}{An object of class \code{"bootnetWithData"}.}
+\item{data}{An object of class \code{"bootnetWithIndices"}.}
 
 \item{nBoots}{Number of bootstrap samples. Default is 1000.}
 

@@ -17,8 +17,8 @@ calculate_centrality_gCD(
 \arguments{
 \item{data}{Original data frame used in the bootstrap analysis.}
 
-\item{boot_result}{An object of class \code{"bootnetWithData"} returned by
-\code{\link[=bootnet_with_data]{bootnet_with_data()}}.}
+\item{boot_result}{An object of class \code{"bootnetWithIndices"} returned by
+\code{\link[=bootnet_with_indices]{bootnet_with_indices()}}.}
 
 \item{case_ids}{Numeric vector of case IDs to evaluate.}
 

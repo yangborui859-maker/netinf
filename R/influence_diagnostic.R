@@ -3,7 +3,7 @@
 #' All-in-one function that performs empirical influence screening,
 #' leave-one-out validation, and centrality gCD computation.
 #'
-#' @param data An object of class `"bootnetWithData"`.
+#' @param data An object of class `"bootnetWithIndices"`.
 #' @param nBoots Number of bootstrap samples. Default is 1000.
 #' @param remove_cases Optional numeric vector of case IDs to remove manually.
 #' @param top_n Number of top influential cases to select when `remove_cases`
@@ -45,17 +45,16 @@ influence_diagnostic <- function(data,
     warning("Only 'EBICglasso' is currently supported. Other methods may produce invalid results.")
     stop("Unsupported default method.")
   }
-  if (inherits(data, "bootnetWithData")) {
+  if (inherits(data, "bootnetWithIndices")) {
     boot_result <- data
     data_used <- boot_result$sample$data
   } else {
     data_used <- data
-    boot_result <- bootnet_with_data(data_used,
+    boot_result <- bootnet_with_indices(data_used,
                                       nBoots = nBoots,
-                                      default = default,
-                                      verbose = verbose,
-                                      nCores = nCores,
-                                      ...)
+                                      keep_data = FALSE,
+                                      default   = default,
+                                  ...)
   }
 
   if (verbose) message("Phase 1: Empirical influence screening...")

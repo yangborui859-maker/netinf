@@ -7,8 +7,8 @@
 calculate_empirical_influence(boot_result, ...)
 }
 \arguments{
-\item{boot_result}{An object of class \code{"bootnetWithData"} returned by
-\code{\link[=bootnet_with_data]{bootnet_with_data()}}, containing bootstrap samples, bootstrap indices,
+\item{boot_result}{An object of class \code{"bootnetWithIndices"} returned by
+\code{\link[=bootnet_with_indices]{bootnet_with_indices()}}, containing bootstrap samples, bootstrap indices,
 and the original sample network.}
 
 \item{...}{Additional arguments (currently unused).}

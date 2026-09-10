@@ -5,8 +5,8 @@
 #' It follows the approach of the `empinf.reg` function in the boot package,
 #' adapted for network analysis.
 #'
-#' @param boot_result An object of class `"bootnetWithData"` returned by
-#'   [bootnet_with_data()], containing bootstrap samples, bootstrap indices,
+#' @param boot_result An object of class `"bootnetWithIndices"` returned by
+#'   [bootnet_with_indices()], containing bootstrap samples, bootstrap indices,
 #'   and the original sample network.
 #' @param ... Additional arguments (currently unused).
 #'
@@ -28,7 +28,7 @@
 calculate_empirical_influence <- function(boot_result,...) {
 
   nCases <- boot_result$sampleSize
-  nBoots <- boot_result$nBoots
+  nBoots <- length(boot_result$bootIndices)
   full_graph <- boot_result$sample$graph
   global_full <- sum(abs(full_graph[upper.tri(full_graph)]))
 

@@ -5,8 +5,8 @@
 #' For each case, the centrality vector from the full sample is compared to
 #' the centrality vector obtained after removing that case.
 #'
-#' @param boot_result An object of class `"bootnetWithData"` returned by
-#'   [bootnet_with_data()].
+#' @param boot_result An object of class `"bootnetWithIndices"` returned by
+#'   [bootnet_with_indices()].
 #' @param case_ids Numeric vector of case IDs to evaluate.
 #' @param data Original data frame used in the bootstrap analysis.
 #' @param metric Character vector of centrality measures to compute.
