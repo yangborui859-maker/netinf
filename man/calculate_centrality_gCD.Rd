@@ -9,33 +9,43 @@ calculate_centrality_gCD(
   boot_result,
   case_ids = NULL,
   metric = c("Strength", "Closeness", "Betweenness"),
-  default = "EBICglasso",
   nCores = 1,
   ...
 )
 }
 \arguments{
-\item{data}{Original data frame used in the bootstrap analysis.}
+\item{data}{Original data frame used in the bootstrap analysis. The first
+argument, so that it can be passed positionally, matching the convention of
+\code{\link[bootnet:estimateNetwork]{bootnet::estimateNetwork()}}.}
 
 \item{boot_result}{An object of class \code{"bootnetWithIndices"} returned by
-\code{\link[=bootnet_with_indices]{bootnet_with_indices()}}.}
+\code{\link[=bootnet_with_indices]{bootnet_with_indices()}}. Provides the full sample network (\code{sample$graph})
+and the bootstrap networks (\code{boots}) used to estimate the covariance
+matrix of the centrality measures.}
 
-\item{case_ids}{Numeric vector of case IDs to evaluate.}
+\item{case_ids}{Numeric vector of case IDs (row indices) to evaluate. If
+\code{NULL} (default), all cases in \code{data} are evaluated.}
 
-\item{metric}{Character vector of centrality measures to compute.
-Can be one or more of \code{"Strength"}, \code{"Closeness"}, \code{"Betweenness"}.}
+\item{metric}{Character vector of centrality measures to compute. Can be one
+or more of \code{"Strength"}, \code{"Closeness"}, \code{"Betweenness"}.}
 
-\item{default}{Network estimation method passed to \code{estimateNetwork}.}
+\item{nCores}{Integer. Number of CPU cores for parallel estimation of the
+leave-one-out networks. Default is \code{1} (sequential). Values greater than 1
+use a SOCK cluster via \code{\link[parallel:makeCluster]{parallel::makeCluster()}} and
+\code{\link[pbapply:pblapply]{pbapply::pblapply()}}.}
 
-\item{...}{Additional arguments passed to \code{\link[bootnet:estimateNetwork]{bootnet::estimateNetwork()}}.}
+\item{...}{Additional arguments passed to \code{\link[bootnet:estimateNetwork]{bootnet::estimateNetwork()}}.
+The \code{default} argument is required, e.g. \code{default = "EBICglasso"}.}
 }
 \value{
-A data frame with columns:
+A data frame with one row per case-metric combination and columns:
 \itemize{
-\item \code{case_id}: case identifier
-\item \code{metric}: centrality measure
-\item \code{gCD}: generalized Cook's distance
+\item \code{case_id}: the case identifier
+\item \code{metric}: the centrality measure
+\item \code{gCD}: the generalized Cook's distance
 }
+The list of raw difference vectors (full-sample centrality minus
+leave-one-out centrality) is attached as the attribute \code{"diff_vectors"}.
 }
 \description{
 Computes generalized Cook's distance (gCD) for centrality measures
@@ -44,8 +54,15 @@ For each case, the centrality vector from the full sample is compared to
 the centrality vector obtained after removing that case.
 }
 \details{
-The covariance matrix of the centrality measures is estimated from the
-bootstrap samples contained in \code{boot_result$boots}. If this covariance
-matrix is singular, the Moore-Penrose pseudo-inverse is used instead of
-the usual inverse, and a warning is issued.
+For each centrality measure, the covariance matrix of node-level centrality
+values is estimated from the bootstrap samples stored in
+\code{boot_result$boots}. The gCD for case \eqn{i} is computed as
+\deqn{gCD_i = (\theta - \theta_{(-i)})' V^{-1} (\theta - \theta_{(-i)})}
+where \eqn{\theta} is the vector of centrality values in the full sample,
+\eqn{\theta_{(-i)}} is the vector after removing case \eqn{i}, and \eqn{V}
+is the bootstrap covariance matrix. If \eqn{V} is singular, the
+Moore-Penrose pseudo-inverse from \code{\link[MASS:ginv]{MASS::ginv()}} will be used.
+}
+\seealso{
+\code{\link[=bootnet_with_indices]{bootnet_with_indices()}}, \code{\link[bootnet:estimateNetwork]{bootnet::estimateNetwork()}}
 }

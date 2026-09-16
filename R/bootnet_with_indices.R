@@ -1,36 +1,43 @@
-#' Bootstrap with indices extracted from stored data
+#' Bootstrap with Indices Extracted from Stored Data
 #'
-#' A wrapper around `bootnet::bootnet()` that extracts bootstrap case indices
-#' from the row names of the data stored in each bootstrap result. This avoids
-#' copying the full `bootnet` source code.
+#' A lightweight wrapper around [bootnet::bootnet()] that extracts bootstrap
+#' case indices from the row names of the data stored in each bootstrap result.
 #'
-#' @param data A data frame or tibble. Row names will be reset to `1:nrow(data)`
-#'   if they are not already `1:n`. If row names are not the default numeric
-#'   sequence, a warning is issued.
-#' @param nBoots Number of bootstrap samples. Default is 1000.
-#' @param default Network estimation method. Default is `"EBICglasso"`.
-#' @param keep_data Logical. If `FALSE`, the stored `data` in each bootstrap
-#'   result is removed after extracting indices to save memory. Default is
-#'   `FALSE`.
-#' @param ... Additional arguments passed to [bootnet::bootnet()].
-#'
-#' @return An object of class `"bootnet"` (and `"bootnetWithIndices"`) with an
-#'   additional component `bootIndices`: a list of length `nBoots`, each element
-#'   being a numeric vector of original case indices used in that bootstrap
-#'   sample.
+#' @param data A data frame or matrix. Row names are reset to `1:nrow(data)`
+#'   before bootstrapping. 
+#' @param keep_data If `FALSE` (default), the stored bootstrap data
+#'   frames are removed from each element of `boots` after the indices have
+#'   been extracted. If `TRUE`, the data frames are retained.
+#' @param ... Additional arguments passed to [bootnet::bootnet()]. Note that
+#'   these are not listed explicitly in the function signature; please refer to
+#'   [bootnet::bootnet()] for the full list of supported arguments.
+#'   The `default` argument is required, e.g. `default = "EBICglasso"`.
+#' @return An object of class `"bootnetWithIndices"` that inherits from
+#'   `"bootnet"`. It contains all components returned by
+#'   [bootnet::bootnet()], plus:
+#'   \describe{
+#'     \item{`bootIndices`}{A list of length equal to the number of bootstrap
+#'       samples. Each element is a numeric vector of original case indices
+#'       drawn in that bootstrap sample.}
+#'   }
 #'
 #' @details
-#' This function uses `bootnet::bootnet(..., memorysaver = FALSE)` so that each
-#' bootstrap result stores the full bootstrap data. The original case indices
-#' are recovered from the row names of those stored data frames. After
-#' extraction, the data frames are removed (unless `keep_data = TRUE`) to
-#' conserve memory.
+#' This function relies on [bootnet::bootnet()] being called with
+#' `memorysaver = FALSE`, which forces the underlying
+#' [bootnet::estimateNetwork()] to store the full bootstrap data in each
+#' bootstrap result. The original case indices are then recovered from the row
+#' names of those stored data frames, after removing the `.1`, `.2`, ... suffixes
+#' that R adds for duplicated row names.
+#'
+#' @seealso [bootnet::bootnet()], [bootnet::estimateNetwork()]
 #'
 #' @export
 bootnet_with_indices <- function(data,
-                                  nBoots = 1000,
                                   keep_data = FALSE,
                                   ...) {
+  if(!is.data.frame(data)&&!is.matrix(data)){
+    stop("'data' must be a data frame or matrix")
+  }
 
   if (inherits(data, "tbl_df")) {
     data <- as.data.frame(data)
@@ -53,22 +60,12 @@ bootnet_with_indices <- function(data,
 
   boot_res <- bootnet::bootnet(
     data,
-    nBoots = nBoots,
     memorysaver = FALSE,          
     ...
   )
 
-
   boot_indices <- lapply(boot_res$boots, function(boot_i) {
     rn <- rownames(boot_i$data)
-
-    if (is.null(rn)) {
-      stop(
-        "Bootstrap data has no row names. ",
-        "This should not happen after resetting input row names."
-      )
-    }
-
     idx <- as.numeric(gsub("\\.\\d+$", "", rn))
     idx
   })

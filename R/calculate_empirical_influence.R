@@ -9,7 +9,7 @@
 #'   [bootnet_with_indices()], containing bootstrap samples, bootstrap indices,
 #'   and the original sample network.
 #' @param ... Additional arguments (currently unused).
-#'
+#' 
 #' @return A numeric vector of length equal to the number of cases in the
 #'   original data. Each element represents the centered empirical influence
 #'   of the corresponding case on the global strength (sum of absolute edge
@@ -21,8 +21,7 @@
 #' The empirical influence is computed by regressing the bootstrap global
 #' strength values on the standardized inclusion frequencies (inclusion count
 #' divided by sample size). To avoid collinearity, the first case is omitted
-#' as the baseline, and the resulting coefficients are centered to have mean
-#' zero.
+#' as the baseline, and the resulting coefficients are mean-centered.
 #'
 #' @export
 calculate_empirical_influence <- function(boot_result,...) {
@@ -30,10 +29,9 @@ calculate_empirical_influence <- function(boot_result,...) {
   nCases <- boot_result$sampleSize
   nBoots <- length(boot_result$bootIndices)
   full_graph <- boot_result$sample$graph
-  global_full <- sum(abs(full_graph[upper.tri(full_graph)]))
 
   inclusion_matrix <- matrix(0, nrow = nBoots, ncol = nCases)
-  for (b in 1:nBoots) {
+  for (b in seq_len(nBoots)) {
     inclusion_matrix[b, ] <- tabulate(boot_result$bootIndices[[b]],
                                        nbins = nCases)
   }
@@ -53,6 +51,8 @@ calculate_empirical_influence <- function(boot_result,...) {
   l <- rep(0, n)
   l[inc] <- beta
   l <- l - mean(l)
+
   class(l) <-"empiricalInfluence"
+  
   return(l)
 }

@@ -12,10 +12,23 @@
 #'   and `threshold` are not specified.
 #' @param direction Character, direction of selection: `"both"`, `"positive"`,
 #'   or `"negative"`.
-#' @param default Network estimation method. Default is `"EBICglasso"`.
 #' @param verbose Logical, whether to print progress messages.
 #' @param ... Additional arguments passed to [bootnet::estimateNetwork()].
+#'   The `default` argument is required, e.g. `default = "EBICglasso"`.
+#' @details
+#' The function validates all inputs before running the analysis:
+#' \itemize{
+#'   \item `influence_result` must be a numeric vector whose length equals
+#'         `nrow(data)`.
+#'   \item `remove_cases` must be a vector of unique integers in `1:nrow(data)`.
+#'   \item `threshold` must be a single non-negative numeric value.
+#'   \item `top_n` must be a single positive integer; if it exceeds the number
+#'         of cases, a warning is issued and all cases are used.
+#' }
 #'
+#' When multiple selection arguments are supplied, the priority is
+#' `remove_cases` > `threshold` > `top_n`. A warning is issued when a
+#' lower-priority argument is ignored.
 #' @return If `remove_cases` has length > 1, an object of class
 #'   `"looMultiAnalysis"`. Otherwise, an object of class `"looAnalysis"`.
 #' @export
@@ -23,26 +36,74 @@ leave_one_out_analysis <- function(influence_result,
                                     data,
                                     remove_cases = NULL,
                                     threshold = NULL,
-                                    top_n = 1,
+                                    top_n = NULL,
                                     direction = c("both", "positive", "negative"),
-                                    default = "EBICglasso",
+                                    digits = NULL,
                                     verbose = TRUE,
                                     ...) {
-  if (!is.null(remove_cases) && (!is.null(threshold) || !missing(top_n))) {
+  n <- nrow(data)
+
+  if (!is.numeric(influence_result)) {
+    stop("'influence_result' must be a numeric vector.")
+  }
+  if (length(influence_result) != n) {
+    stop("Length of 'influence_result' (", length(influence_result),
+         ") must equal the number of rows in 'data' (", n, ").")
+  }
+
+  if (is.null(remove_cases) && is.null(threshold) && is.null(top_n)) {
+    stop("One of 'remove_cases', 'threshold', or 'top_n' must be supplied.")
+  }
+
+  if (!is.null(remove_cases)) {
+    if (!is.numeric(remove_cases)) {
+      stop("'remove_cases' must be a numeric vector.")
+    }
+    if (any(remove_cases != round(remove_cases))) {
+      stop("'remove_cases' must be integers.")
+    }
+    if (any(remove_cases < 1 | remove_cases > n)) {
+      stop("'remove_cases' must be between 1 and ", n, ".")
+    }
+    if (anyDuplicated(remove_cases)) {
+      stop("'remove_cases' can not contain duplicated values.")
+    }
+  }
+
+  if (!is.null(threshold)) {
+    if (!is.numeric(threshold) || length(threshold) != 1) {
+      stop("'threshold' must be a single numeric value.")
+    }
+    if (threshold < 0) {
+      stop("'threshold' can not be negative, please use direction = 'negative'.")
+    }
+  }
+
+if (!is.null(top_n)) {
+  if (!is.numeric(top_n) || length(top_n) != 1 ||
+      top_n < 1 || top_n != round(top_n)) {
+    stop("'top_n' must be a single positive integer.")
+  }
+  if (top_n > n) {
+    warning("'top_n' (", top_n, ") exceeds the number of cases (", n,
+            "); using all cases instead.")
+    top_n <- n
+  }
+}
+
+  if (!is.null(remove_cases) && (!is.null(threshold) || !is.null(top_n))) {
       warning("remove_cases is specified; ignoring threshold and top_n.")
-  } else if (!is.null(threshold) && !missing(top_n)) {
+  } else if (!is.null(threshold) && !is.null(top_n)) {
       warning("threshold is specified; ignoring top_n.")
   }
   direction <- match.arg(direction)
   influence_values <- influence_result
-  n <- length(influence_values)
 
   if (!is.null(remove_cases) && length(remove_cases) > 1) {
 
     if (verbose) message("Performing leave-multiple-out analysis...")
 
     full_network <- bootnet::estimateNetwork(data,
-                                              default = default,
                                               verbose = FALSE,
                                               ...)
 
@@ -52,7 +113,6 @@ leave_one_out_analysis <- function(influence_result,
     data_without <- data[-remove_cases, , drop = FALSE]
 
     network_without <- bootnet::estimateNetwork(data_without,
-                                                 default = default,
                                                  verbose = FALSE,
                                                  ...)
 
@@ -61,7 +121,8 @@ leave_one_out_analysis <- function(influence_result,
 
     structure_changes <- diagnose_structure_change(full_graph,
                                                      graph_without,
-                                                     colnames(data))
+                                                     colnames(data),
+                                                     digits = digits)
 
     result <- list(
       case_ids = remove_cases,
@@ -117,7 +178,6 @@ leave_one_out_analysis <- function(influence_result,
 
   if (verbose) message("Estimating full network...")
   full_network <- bootnet::estimateNetwork(data,
-                                            default = default,
                                             verbose = FALSE,
                                             ...)
 
@@ -135,7 +195,6 @@ leave_one_out_analysis <- function(influence_result,
     data_without <- data[-case_id, , drop = FALSE]
 
     network_without <- bootnet::estimateNetwork(data_without,
-                                                 default = default,
                                                  verbose = FALSE,
                                                  ...)
 
@@ -144,7 +203,8 @@ leave_one_out_analysis <- function(influence_result,
 
     structure_changes <- diagnose_structure_change(full_graph,
                                                      graph_without,
-                                                     colnames(data))
+                                                     colnames(data),
+                                                     digits = digits)
 
     results[[i]] <- list(
       case_id = case_id,

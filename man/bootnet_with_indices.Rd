@@ -2,40 +2,45 @@
 % Please edit documentation in R/bootnet_with_indices.R
 \name{bootnet_with_indices}
 \alias{bootnet_with_indices}
-\title{Bootstrap with indices extracted from stored data}
+\title{Bootstrap with Indices Extracted from Stored Data}
 \usage{
-bootnet_with_indices(data, nBoots = 1000, keep_data = FALSE, ...)
+bootnet_with_indices(data, keep_data = FALSE, ...)
 }
 \arguments{
-\item{data}{A data frame or tibble. Row names will be reset to \code{1:nrow(data)}
-if they are not already \code{1:n}. If row names are not the default numeric
-sequence, a warning is issued.}
+\item{data}{A data frame or matrix. Row names are reset to \code{1:nrow(data)}
+before bootstrapping.}
 
-\item{nBoots}{Number of bootstrap samples. Default is 1000.}
+\item{keep_data}{If \code{FALSE} (default), the stored bootstrap data
+frames are removed from each element of \code{boots} after the indices have
+been extracted. If \code{TRUE}, the data frames are retained.}
 
-\item{keep_data}{Logical. If \code{FALSE}, the stored \code{data} in each bootstrap
-result is removed after extracting indices to save memory. Default is
-\code{FALSE}.}
-
-\item{...}{Additional arguments passed to \code{\link[bootnet:bootnet]{bootnet::bootnet()}}.}
-
-\item{default}{Network estimation method. Default is \code{"EBICglasso"}.}
+\item{...}{Additional arguments passed to \code{\link[bootnet:bootnet]{bootnet::bootnet()}}. Note that
+these are not listed explicitly in the function signature; please refer to
+\code{\link[bootnet:bootnet]{bootnet::bootnet()}} for the full list of supported arguments.
+The \code{default} argument is required, e.g. \code{default = "EBICglasso"}.}
 }
 \value{
-An object of class \code{"bootnet"} (and \code{"bootnetWithIndices"}) with an
-additional component \code{bootIndices}: a list of length \code{nBoots}, each element
-being a numeric vector of original case indices used in that bootstrap
-sample.
+An object of class \code{"bootnetWithIndices"} that inherits from
+\code{"bootnet"}. It contains all components returned by
+\code{\link[bootnet:bootnet]{bootnet::bootnet()}}, plus:
+\describe{
+\item{\code{bootIndices}}{A list of length equal to the number of bootstrap
+samples. Each element is a numeric vector of original case indices
+drawn in that bootstrap sample.}
+}
 }
 \description{
-A wrapper around \code{bootnet::bootnet()} that extracts bootstrap case indices
-from the row names of the data stored in each bootstrap result. This avoids
-copying the full \code{bootnet} source code.
+A lightweight wrapper around \code{\link[bootnet:bootnet]{bootnet::bootnet()}} that extracts bootstrap
+case indices from the row names of the data stored in each bootstrap result.
 }
 \details{
-This function uses \code{bootnet::bootnet(..., memorysaver = FALSE)} so that each
-bootstrap result stores the full bootstrap data. The original case indices
-are recovered from the row names of those stored data frames. After
-extraction, the data frames are removed (unless \code{keep_data = TRUE}) to
-conserve memory.
+This function relies on \code{\link[bootnet:bootnet]{bootnet::bootnet()}} being called with
+\code{memorysaver = FALSE}, which forces the underlying
+\code{\link[bootnet:estimateNetwork]{bootnet::estimateNetwork()}} to store the full bootstrap data in each
+bootstrap result. The original case indices are then recovered from the row
+names of those stored data frames, after removing the \code{.1}, \code{.2}, ... suffixes
+that R adds for duplicated row names.
+}
+\seealso{
+\code{\link[bootnet:bootnet]{bootnet::bootnet()}}, \code{\link[bootnet:estimateNetwork]{bootnet::estimateNetwork()}}
 }

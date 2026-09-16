@@ -47,7 +47,7 @@ gcds_md_plot <- function(diag,
   metric <- match.arg(metric, several.ok = TRUE)
   if (length(metric) > 1){
     plots <- lapply(metric,function(m){
-      gcd_md_plot(
+      gcds_md_plot(
         diag = diag,
         data = data,
         metric = m,

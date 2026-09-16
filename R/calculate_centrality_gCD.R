@@ -5,38 +5,66 @@
 #' For each case, the centrality vector from the full sample is compared to
 #' the centrality vector obtained after removing that case.
 #'
+#' @param data Original data frame used in the bootstrap analysis. The first
+#'   argument, so that it can be passed positionally, matching the convention of
+#'   [bootnet::estimateNetwork()].
 #' @param boot_result An object of class `"bootnetWithIndices"` returned by
-#'   [bootnet_with_indices()].
-#' @param case_ids Numeric vector of case IDs to evaluate.
-#' @param data Original data frame used in the bootstrap analysis.
-#' @param metric Character vector of centrality measures to compute.
-#'   Can be one or more of `"Strength"`, `"Closeness"`, `"Betweenness"`.
-#' @param default Network estimation method passed to `estimateNetwork`.
+#'   [bootnet_with_indices()]. Provides the full sample network (`sample$graph`)
+#'   and the bootstrap networks (`boots`) used to estimate the covariance
+#'   matrix of the centrality measures.
+#' @param case_ids Numeric vector of case IDs (row indices) to evaluate. If
+#'   `NULL` (default), all cases in `data` are evaluated.
+#' @param metric Character vector of centrality measures to compute. Can be one
+#'   or more of `"Strength"`, `"Closeness"`, `"Betweenness"`.
+#' @param nCores Integer. Number of CPU cores for parallel estimation of the
+#'   leave-one-out networks. Default is `1` (sequential). Values greater than 1
+#'   use a SOCK cluster via [parallel::makeCluster()] and
+#'   [pbapply::pblapply()].
 #' @param ... Additional arguments passed to [bootnet::estimateNetwork()].
-#'
-#' @return A data frame with columns:
+#'   The `default` argument is required, e.g. `default = "EBICglasso"`.
+#' @return A data frame with one row per case-metric combination and columns:
 #'   \itemize{
-#'     \item `case_id`: case identifier
-#'     \item `metric`: centrality measure
-#'     \item `gCD`: generalized Cook's distance
+#'     \item `case_id`: the case identifier
+#'     \item `metric`: the centrality measure
+#'     \item `gCD`: the generalized Cook's distance
 #'   }
+#'   The list of raw difference vectors (full-sample centrality minus
+#'   leave-one-out centrality) is attached as the attribute `"diff_vectors"`.
 #'
 #' @details
-#' The covariance matrix of the centrality measures is estimated from the
-#' bootstrap samples contained in `boot_result$boots`. If this covariance
-#' matrix is singular, the Moore-Penrose pseudo-inverse is used instead of
-#' the usual inverse, and a warning is issued.
+#' For each centrality measure, the covariance matrix of node-level centrality
+#' values is estimated from the bootstrap samples stored in
+#' `boot_result$boots`. The gCD for case \eqn{i} is computed as
+#' \deqn{gCD_i = (\theta - \theta_{(-i)})' V^{-1} (\theta - \theta_{(-i)})}
+#' where \eqn{\theta} is the vector of centrality values in the full sample,
+#' \eqn{\theta_{(-i)}} is the vector after removing case \eqn{i}, and \eqn{V}
+#' is the bootstrap covariance matrix. If \eqn{V} is singular, the
+#' Moore-Penrose pseudo-inverse from [MASS::ginv()] will be used.
+#'
+#' @seealso [bootnet_with_indices()], [bootnet::estimateNetwork()]
 #'
 #' @export
 calculate_centrality_gCD <- function(data,
                                      boot_result,
                                      case_ids = NULL,
                                      metric = c("Strength", "Closeness", "Betweenness"),
-                                     default = "EBICglasso",
                                      nCores = 1,
                                      ...) {
 
-  if(is.null(case_ids)){case_ids <- seq_len(nrow(data))}
+  if(is.null(case_ids)){
+    case_ids <- seq_len(nrow(data))}else{
+  
+  if (!is.numeric(case_ids)) {
+    stop("'case_ids' must be a numeric vector.")
+  }
+    
+  if (any(case_ids != round(case_ids))) {
+    stop("'case_ids' must be integers.")
+  }
+  
+  if (any(case_ids < 1 | case_ids > nrow(data))) {
+    stop("'case_ids' must be between 1 and ", nrow(data), ".")
+  }}
   
   metric <- match.arg(metric, several.ok = TRUE)
   
@@ -47,8 +75,6 @@ calculate_centrality_gCD <- function(data,
     networks_without <- pbapply::pblapply(case_ids, function(id) {
       data_without <- data[-id, , drop = FALSE]
       bootnet::estimateNetwork(data_without,
-                               default = default,
-                               verbose = FALSE,
                                ...)
     }, cl = cl)
 
@@ -56,8 +82,6 @@ calculate_centrality_gCD <- function(data,
     networks_without <- lapply(case_ids, function(id) {
       data_without <- data[-id, , drop = FALSE]
       bootnet::estimateNetwork(data_without,
-                               default = default,
-                               verbose = FALSE,
                                ...)
     })
   }

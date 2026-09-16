@@ -3,7 +3,10 @@
 #' All-in-one function that performs empirical influence screening,
 #' leave-one-out validation, and centrality gCD computation.
 #'
-#' @param data An object of class `"bootnetWithIndices"`.
+#' @param data A data frame, matrix, or `bootnetWithIndices` object.
+#'   If a data frame/matrix is provided, bootstrapping is performed
+#'   internally via [bootnet_with_indices()]. If a `bootnetWithIndices`
+#'   object is provided, it is used directly and `nBoots` is ignored.
 #' @param nBoots Number of bootstrap samples. Default is 1000.
 #' @param remove_cases Optional numeric vector of case IDs to remove manually.
 #' @param top_n Number of top influential cases to select when `remove_cases`
@@ -16,8 +19,8 @@
 #' @param verbose Logical, whether to print progress messages.
 #' @param centrality_metrics Character vector of centrality measures to compute
 #'   in Phase 3. Default is `c("Strength", "Closeness", "Betweenness")`.
-#' @param run_centrality_gCD Logical, whether to run Phase 3 centrality gCD
-#'   computation. Default is `TRUE`.
+#' @param nCores Integer, number of CPU cores for parallel computation
+#'   in Phase 3. Default is 1 (sequential).
 #' @param ... Additional arguments passed to [bootnet::estimateNetwork()].
 #'
 #' @return An object of class `"influenceDiagnostic"` containing:
@@ -32,30 +35,48 @@
 influence_diagnostic <- function(data,
                                   nBoots = 1000,
                                   remove_cases = NULL,
-                                  top_n = 1,
+                                  top_n = NULL,
                                   threshold = NULL,
                                   direction = c("both", "positive", "negative"),
                                   default = "EBICglasso",
                                   verbose = TRUE,
                                   centrality_metrics = c("Strength", "Closeness", "Betweenness"),
-                                  run_centrality_gCD = TRUE,
                                   nCores = 1,
                                   ...) {
-  if (default != "EBICglasso") {
-    warning("Only 'EBICglasso' is currently supported. Other methods may produce invalid results.")
-    stop("Unsupported default method.")
+
+  if (!identical(default, "EBICglasso")) {
+    stop("'default' only support 'EBICglasso' now.")
   }
+
+  direction <- match.arg(direction)
+
+  if (!is.numeric(nCores) || length(nCores) != 1 || nCores < 1 ||
+      nCores != round(nCores)) {
+    stop("'nCores' must be a single positive integer.")
+  }
+
   if (inherits(data, "bootnetWithIndices")) {
+    if (!missing(nBoots)) {
+      warning("'nBoots' is ignored when 'data' is a bootnetWithIndices ",
+              "object. Using the bootstrap samples already present in 'data'.")
+    }
     boot_result <- data
     data_used <- boot_result$sample$data
-  } else {
+
+  } else if (is.data.frame(data) || is.matrix(data)) {
     data_used <- data
-    boot_result <- bootnet_with_indices(data_used,
-                                      nBoots = nBoots,
-                                      keep_data = FALSE,
-                                      default   = default,
-                                  ...)
+    boot_result <- bootnet_with_indices(
+      data_used,
+      nBoots = nBoots,
+      keep_data = FALSE,
+      default = default,
+      ...
+    )
+
+  } else {
+    stop("'data' must be a data frame, matrix, or bootnetWithIndices object.")
   }
+
 
   if (verbose) message("Phase 1: Empirical influence screening...")
 
@@ -75,22 +96,23 @@ influence_diagnostic <- function(data,
     ...
   )
 
- if (run_centrality_gCD) {
-    if (verbose) message("Phase 3: Centrality gCD computation...")
-    centrality_gCD_results <- calculate_centrality_gCD(
-      boot_result = boot_result,
-      case_ids = loo_results$case_ids,
-      data = data_used,
-      metric = centrality_metrics,
-      default = default,
-      nCores = nCores,
-      ...
-    )
-   centrality_diff_vectors <- attr(centrality_gCD_results, "diff_vectors")
- } else {
-    centrality_gCD_results <- NULL
-    centrality_diff_vectors <- NULL
- }
+  if (verbose) message("Phase 3: Centrality gCD computation...")
+
+  centrality_gCD_results <- calculate_centrality_gCD(
+    boot_result = boot_result,
+    case_ids = loo_results$case_ids,
+    data = data_used,
+    metric = centrality_metrics,
+    default = default,
+    nCores = nCores,
+    ...
+  )
+
+  centrality_diff_vectors <- attr(centrality_gCD_results, "diff_vectors")
+
+  if (is.null(centrality_diff_vectors)) {
+    warning("'diff_vectors' attribute missing from gCD results.")
+  }
 
   result <- list(
     empirical_influence = list(
@@ -107,7 +129,7 @@ influence_diagnostic <- function(data,
     direction = direction,
     remove_cases = remove_cases,
     centrality_metrics = centrality_metrics,
-    run_centrality_gCD = run_centrality_gCD
+    nBoots = length(boot_result$bootIndices)
   )
 
   class(result) <- "influenceDiagnostic"

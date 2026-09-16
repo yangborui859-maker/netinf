@@ -11,7 +11,7 @@ leave_one_out_analysis(
   threshold = NULL,
   top_n = 1,
   direction = c("both", "positive", "negative"),
-  default = "EBICglasso",
+  digits = NULL,
   verbose = TRUE,
   ...
 )
@@ -32,11 +32,10 @@ and \code{threshold} are not specified.}
 \item{direction}{Character, direction of selection: \code{"both"}, \code{"positive"},
 or \code{"negative"}.}
 
-\item{default}{Network estimation method. Default is \code{"EBICglasso"}.}
-
 \item{verbose}{Logical, whether to print progress messages.}
 
-\item{...}{Additional arguments passed to \code{\link[bootnet:estimateNetwork]{bootnet::estimateNetwork()}}.}
+\item{...}{Additional arguments passed to \code{\link[bootnet:estimateNetwork]{bootnet::estimateNetwork()}}.
+The \code{default} argument is required, e.g. \code{default = "EBICglasso"}.}
 }
 \value{
 If \code{remove_cases} has length > 1, an object of class
@@ -45,4 +44,19 @@ If \code{remove_cases} has length > 1, an object of class
 \description{
 Performs leave-one-out (or leave-multiple-out) analysis on candidate
 influential cases identified by empirical influence values.
+}
+\details{
+The function validates all inputs before running the analysis:
+\itemize{
+\item \code{influence_result} must be a numeric vector whose length equals
+\code{nrow(data)}.
+\item \code{remove_cases} must be a vector of unique integers in \code{1:nrow(data)}.
+\item \code{threshold} must be a single non-negative numeric value.
+\item \code{top_n} must be a single positive integer; if it exceeds the number
+of cases, a warning is issued and all cases are used.
+}
+
+When multiple selection arguments are supplied, the priority is
+\code{remove_cases} > \code{threshold} > \code{top_n}. A warning is issued when a
+lower-priority argument is ignored.
 }

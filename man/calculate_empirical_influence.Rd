@@ -31,6 +31,5 @@ adapted for network analysis.
 The empirical influence is computed by regressing the bootstrap global
 strength values on the standardized inclusion frequencies (inclusion count
 divided by sample size). To avoid collinearity, the first case is omitted
-as the baseline, and the resulting coefficients are centered to have mean
-zero.
+as the baseline, and the resulting coefficients are mean-centered.
 }

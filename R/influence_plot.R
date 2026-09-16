@@ -46,13 +46,11 @@ influence_plot <- function(object,
     if (!is.vector(object)) {
       stop("'object' invalid. Neither a matrix nor a vector.")
     }
-    if (is.null(names(object))) {
-      names(object) <- seq_along(object)
-    }
   } else {
     if (is.null(column) && (ncol(object) == 1)) {
       tmp <- rownames(object)
       object <- object[, 1, drop = TRUE]
+      if (!is.null(tmp)) names(object) <- tmp
     } else {
       if (length(column) != 1) {
         stop("'column' must have length 1.")
@@ -63,16 +61,18 @@ influence_plot <- function(object,
       }
       tmp <- rownames(object)
       object <- object[, column, drop = TRUE]
-    }
-
-    if (is.null(names(object))) {
-      names(object) <- tmp
+      if (!is.null(tmp)) names(object) <- tmp
     }
   }
 
   object <- object[!is.na(object)]
   if (length(object) == 0) {
     stop("No cases have valid values.")
+  }
+  
+  if (is.null(names(object))) {
+    message("Note: no row names found; using 1:n as case IDs.")
+    names(object) <- seq_along(object)
   }
 
   if (absolute) {
