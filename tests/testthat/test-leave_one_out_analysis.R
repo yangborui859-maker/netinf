@@ -191,15 +191,14 @@ test_that("b14: top_n exceeding n warns and selects all cases", {
   expect_length(res$case_ids, nrow(shared_data))
 })
 
-# b15: no topn/removecase/threshold
+# b15: no topn/removecase/threshold, run all cases
 test_that("b15: no selection argument raises an error", {
-  expect_error(
-    leave_one_out_analysis(
+    res <- leave_one_out_analysis(
       shared_empic, shared_data,
       default = "EBICglasso"
-    ),
-    "One of 'remove_cases', 'threshold', or 'top_n' must be supplied"
-  )
+    )
+  expect_equal(res$n_cases, nrow(shared_data))
+  expect_equal(sort(res$case_ids), seq_len(nrow(shared_data)))
 })
 
 #Test of priority(remove_cases/threshold/top_n)

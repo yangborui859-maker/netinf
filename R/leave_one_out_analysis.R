@@ -52,7 +52,7 @@ leave_one_out_analysis <- function(influence_result,
   }
 
   if (is.null(remove_cases) && is.null(threshold) && is.null(top_n)) {
-    stop("One of 'remove_cases', 'threshold', or 'top_n' must be supplied.")
+    top_n = n
   }
 
   if (!is.null(remove_cases)) {
