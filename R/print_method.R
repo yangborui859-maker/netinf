@@ -111,11 +111,12 @@ print.looMultiAnalysis <- function(x, ...) {
 #' Prints a sorted table of empirical influence values.
 #'
 #' @param x An object of class `"empiricalInfluence"`.
+#' @param n If setted, only the top "n" cases with absolute values will be printed.
 #' @param ... Additional arguments (currently unused).
 #'
 #' @return Invisibly returns `x`.
 #' @export
-print.empiricalInfluence <- function(x, ...) {
+print.empiricalInfluence <- function(x, n = NULL, ...) {
   cat("Empirical Influence Values\n")
   cat("==========================\n\n")
 
@@ -124,6 +125,13 @@ print.empiricalInfluence <- function(x, ...) {
     case_id = ord,
     influence = unname(x[ord])
   )
+  
+  if (!is.null(n)) {
+    n <- max(1L, min(as.integer(n), nrow(influence_table)))
+    influence_table <- influence_table[seq_len(n), , drop = FALSE]
+    cat(sprintf("Showing top %d of %d cases by absolute influence:\n\n",
+                n, length(x)))
+  }
 
   print(influence_table, row.names = FALSE)
 
