@@ -91,7 +91,7 @@ influence_plot <- function(object,
   )
   vline_aes <- utils::modifyList(
     vline_aes,
-    list(mapping = ggplot2::aes(xend = row_id, yend = 0))
+    list(mapping = ggplot2::aes(xend = .data$row_id, yend = 0))
   )
 
   hline_aes <- utils::modifyList(
@@ -110,7 +110,7 @@ influence_plot <- function(object,
     check.names = FALSE
   )
 
-  p <- ggplot2::ggplot(dat, ggplot2::aes(x = row_id, y = x))
+  p <- ggplot2::ggplot(dat, ggplot2::aes(x = .data$row_id, y = .data$x))
   p <- p + do.call(ggplot2::geom_segment, vline_aes)
   p <- p + do.call(ggplot2::geom_point, point_aes)
   p <- p + ggplot2::labs(title = plot_title)
@@ -155,7 +155,7 @@ influence_plot <- function(object,
       case_label_aes,
       list(
         data = dat[label_x, , drop = FALSE],
-        mapping = ggplot2::aes(x = row_id, y = x, label = case_id)
+        mapping = ggplot2::aes(x = .data$row_id, y = .data$x, label = .data$case_id)
       )
     )
     p <- p + do.call(ggrepel::geom_label_repel, case_label_aes)

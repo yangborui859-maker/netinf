@@ -8,19 +8,21 @@ influence_diagnostic(
   data,
   nBoots = 1000,
   remove_cases = NULL,
-  top_n = 1,
+  top_n = NULL,
   threshold = NULL,
   direction = c("both", "positive", "negative"),
   default = "EBICglasso",
   verbose = TRUE,
   centrality_metrics = c("Strength", "Closeness", "Betweenness"),
-  run_centrality_gCD = TRUE,
   nCores = 1,
   ...
 )
 }
 \arguments{
-\item{data}{An object of class \code{"bootnetWithIndices"}.}
+\item{data}{A data frame, matrix, or \code{bootnetWithIndices} object.
+If a data frame/matrix is provided, bootstrapping is performed
+internally via \code{\link[=bootnet_with_indices]{bootnet_with_indices()}}. If a \code{bootnetWithIndices}
+object is provided, it is used directly and \code{nBoots} is ignored.}
 
 \item{nBoots}{Number of bootstrap samples. Default is 1000.}
 
@@ -42,8 +44,8 @@ or \code{"negative"}.}
 \item{centrality_metrics}{Character vector of centrality measures to compute
 in Phase 3. Default is \code{c("Strength", "Closeness", "Betweenness")}.}
 
-\item{run_centrality_gCD}{Logical, whether to run Phase 3 centrality gCD
-computation. Default is \code{TRUE}.}
+\item{nCores}{Integer, number of CPU cores for parallel computation
+in Phase 3. Default is 1 (sequential).}
 
 \item{...}{Additional arguments passed to \code{\link[bootnet:estimateNetwork]{bootnet::estimateNetwork()}}.}
 }

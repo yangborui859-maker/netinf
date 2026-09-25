@@ -98,9 +98,9 @@ gcds_md_plot <- function(diag,
   
   mahalanobis_distance <- function(data) {
   data <- data[sapply(data, is.numeric)]
-  data <- na.omit(data)
+  data <- stats::na.omit(data)
   mu <- colMeans(data)
-  S <- cov(data)
+  S <- stats::cov(data)
   md <- stats::mahalanobis(data, center = mu, cov = S)
   names(md) <- rownames(data)
   md

@@ -1,11 +1,11 @@
-# InfluenceNet
+# netinf
 
-`influenceNet` is an R package for identifying influential cases in network analysis。
+`netinf` is an R package for identifying influential cases in network analysis。
 
 ## Getting started
 
 For a detailed walkthrough, see the 
-[Getting started guide](articles/influenceNet-guide.html).
+[Getting started guide](articles/infnet-guide.html).
 
 ## Installation
 ```r

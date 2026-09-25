@@ -76,7 +76,7 @@ test_that("print.looMultiAnalysis: returns invisibly", {
 test_that("print_structure_changes: single case_id prints 'Without Case'", {
   sc <- shared_loo$results[[1]]$structure_changes
 
-  out <- capture.output(influenceNet:::print_structure_changes(sc, 1))
+  out <- capture.output(netinf:::print_structure_changes(sc, 1))
 
   expect_true(any(grepl("Without Case 1", out)))
   expect_true(any(grepl("Structure Changes", out)))
@@ -86,7 +86,7 @@ test_that("print_structure_changes: multiple case_ids prints 'Without Cases'", {
   sc <- shared_loo_multi$structure_changes
 
   out <- capture.output(
-    influenceNet:::print_structure_changes(sc, c(1, 2, 3))
+    netinf:::print_structure_changes(sc, c(1, 2, 3))
   )
 
   expect_true(any(grepl("Without Cases 1, 2, 3", out)))
@@ -95,7 +95,7 @@ test_that("print_structure_changes: multiple case_ids prints 'Without Cases'", {
 test_that("print_structure_changes: NULL case_ids prints generic header", {
   sc <- shared_loo$results[[1]]$structure_changes
 
-  out <- capture.output(influenceNet:::print_structure_changes(sc))
+  out <- capture.output(netinf:::print_structure_changes(sc))
 
   expect_true(any(grepl("=== Structure Changes ===", out, fixed = TRUE)))
 })
@@ -103,7 +103,7 @@ test_that("print_structure_changes: NULL case_ids prints generic header", {
 test_that("print_structure_changes: always prints three sections", {
   sc <- shared_loo$results[[1]]$structure_changes
 
-  out <- capture.output(influenceNet:::print_structure_changes(sc, 1))
+  out <- capture.output(netinf:::print_structure_changes(sc, 1))
 
   expect_true(any(grepl("Edges disappeared:", out, fixed = TRUE)))
   expect_true(any(grepl("Edges appeared:", out, fixed = TRUE)))
@@ -120,7 +120,7 @@ test_that("print_structure_changes: empty changes show 'None' three times", {
     n_reversed    = 0
   )
 
-  out <- capture.output(influenceNet:::print_structure_changes(sc, 1))
+  out <- capture.output(netinf:::print_structure_changes(sc, 1))
 
   n_none <- sum(grepl("None", out))
   expect_equal(n_none, 3)
@@ -137,7 +137,7 @@ test_that("print_structure_changes: non-empty changes list each edge", {
     n_reversed    = 1
   )
 
-  out <- capture.output(influenceNet:::print_structure_changes(sc, 1))
+  out <- capture.output(netinf:::print_structure_changes(sc, 1))
 
   expect_true(any(grepl("x1 -- x2", out)))
   expect_true(any(grepl("x1 -- x3", out)))

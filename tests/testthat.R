@@ -1,4 +1,4 @@
 library(testthat)
-library(influenceNet)
+library(netinf)
 
-test_check("influenceNet")
+test_check("netinf")

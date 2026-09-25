@@ -5,6 +5,7 @@
 #' gCD results if available.
 #'
 #' @param x An object of class `"influenceDiagnostic"`.
+#' @param ... Additional arguments (currently unused).
 #'
 #' @return Invisibly returns `x`.
 #' @export
@@ -46,6 +47,7 @@ print.influenceDiagnostic <- function(x, ...) {
 #' global strength changes and structural changes for each case.
 #'
 #' @param x An object of class `"looAnalysis"`.
+#' @param ... Additional arguments (currently unused).
 #'
 #' @return Invisibly returns `x`.
 #' @export
@@ -79,6 +81,7 @@ print.looAnalysis <- function(x, ...) {
 #' are removed simultaneously.
 #'
 #' @param x An object of class `"looMultiAnalysis"`.
+#' @param ... Additional arguments (currently unused).
 #'
 #' @return Invisibly returns `x`.
 #' @export

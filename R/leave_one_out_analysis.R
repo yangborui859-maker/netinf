@@ -13,6 +13,9 @@
 #' @param direction Character, direction of selection: `"both"`, `"positive"`,
 #'   or `"negative"`.
 #' @param verbose Logical, whether to print progress messages.
+#' @param digits Optional integer. If supplied, controls the number of
+#'   decimal places used when formatting edge changes. Default `NULL`
+#'   uses full precision.
 #' @param ... Additional arguments passed to [bootnet::estimateNetwork()].
 #'   The `default` argument is required, e.g. `default = "EBICglasso"`.
 #' @details

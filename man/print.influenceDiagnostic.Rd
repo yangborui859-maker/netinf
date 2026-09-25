@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{An object of class \code{"influenceDiagnostic"}.}
+
+\item{...}{Additional arguments (currently unused).}
 }
 \value{
 Invisibly returns \code{x}.

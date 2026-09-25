@@ -4,10 +4,12 @@
 \alias{print.empiricalInfluence}
 \title{Print Method for empiricalInfluence Objects}
 \usage{
-\method{print}{empiricalInfluence}(x, ...)
+\method{print}{empiricalInfluence}(x, n = NULL, ...)
 }
 \arguments{
 \item{x}{An object of class \code{"empiricalInfluence"}.}
+
+\item{n}{If setted, only the top "n" cases with absolute values will be printed.}
 
 \item{...}{Additional arguments (currently unused).}
 }

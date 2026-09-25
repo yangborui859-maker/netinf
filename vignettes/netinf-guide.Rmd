@@ -1,0 +1,566 @@
+---
+title: "netinf-guide"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{netinf-guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>",
+  fig.width  = 6,
+  fig.height = 4,
+  message  = FALSE,
+  warning  = FALSE
+)
+```
+
+# Getting started with netinf
+
+`netinf` identifies **influential cases** in psychological network analysis.
+
+In network analysis, we often care about "which cases have the largest impact on the results?" For example, after removing a case, does the global strength, the centrality ranking, or even the sign of an edge change? `netinf` strings these diagnostic steps together into a coherent workflow.
+
+This package contains the following three main parts:
+
+1. **Core components**: extracting case indices from bootstrap samples → computing empirical influence values → leave-one-out validation → computing centrality gCD
+2. **All-in-one function**: `influence_diagnostic()` performs all of the above in one call
+3. **Visualization**: three `plot` functions
+
+## Table of contents
+
+- [Overview](#overview)
+- [Step 1: bootnet_with_indices](#step-1)
+- [Step 2: calculate_empirical_influence](#step-2)
+- [Step 3: leave_one_out_analysis](#step-3)
+- [Step 4: calculate_centrality_gCD](#step-4)
+- [All-in-one: influence_diagnostic](#all-in-one)
+- [Visualization](#visualization)
+  - [influence_plot](#plot-influence)
+  - [gcds_plot](#plot-gcds)
+  - [gcds_md_plot](#plot-gcds-md)
+
+---
+
+# Overview {#overview}
+`netinf` is designed as a **bottom-up pipeline**:
+
+| Step | Function | Purpose |
+|---|---|---|
+| 1 | `bootnet_with_indices()` | Extract case indices from bootstrap samples |
+| 2 | `calculate_empirical_influence()` | Compute empirical influence value per case |
+| 3 | `leave_one_out_analysis()` | Validate candidates via leave-one-out |
+| 4 | `calculate_centrality_gCD()` | Diagnose centrality changes via generalized Cook's distance |
+
+We can run each step manually, or use `influence_diagnostic()` to run all four steps in one call.
+
+# Step 1: bootnet_with_indices {#step-1}
+# The core idea: why we need case indices
+
+## What bootstrap does in network analysis
+
+The core of network analysis is estimating a network structure (e.g., a partial correlation network, a GLASSO network). But **how stable is the estimated network?**
+
+The standard approach is **bootstrap**: draw $n$ cases with replacement from the original data and re-estimate the network. Repeating this $B$ times gives us $B$ "resampled networks", which we can use to assess the confidence intervals of edge weights, the stability of centrality, and so on. 
+
+Mathematically, the $b$-th bootstrap sample is:
+
+$$
+X^{(b)} = \{x_{i_1^{(b)}}, x_{i_2^{(b)}}, \dots, x_{i_n^{(b)}}\}
+$$
+
+where each $i_k^{(b)} \in \{1, 2, \dots, n\}$ is a **case index drawn with replacement** from the original data. 
+
+## The problem: `bootnet` does not store these indices by default
+
+By default, `bootnet::bootnet()` uses `memorysaver = TRUE`. To save memory, it does **not** store the bootstrap data, nor the sampling indices $i_k^{(b)}$.
+
+But to compute the "empirical influence" of each case—which measures how much a case influences the results via its inclusion frequency—we **must know which cases were drawn in each bootstrap sample**.
+
+## The solution: `bootnet_with_indices()`
+
+`bootnet_with_indices()` does three things:
+
+1. Calls `bootnet::bootnet()` with `memorysaver = FALSE`, so that the data from each bootstrap sample is retained
+2. Recovers the original case indices from the **row names** of each bootstrap dataset
+3. By default, uses `keep_data = FALSE` to discard the data immediately after the indices are extracted, saving memory
+
+The returned object is a `bootnetWithIndices` object: a `bootnet` result with an additional object `bootIndices`.
+
+# Basic usage
+
+## Setup
+
+```{r}
+library(netinf)
+```
+
+We use a simulated dataset based on the 9 variables from the `HolzingerSwineford1939` dataset in `lavaan`.
+
+```{r}
+set.seed(123)
+dat <- lavaan::HolzingerSwineford1939
+datused <- dat[, paste0("x", 1:9)]
+
+#Following Fried's suggestion(2017),N/P > 10
+sample_idx <- sample(1:nrow(datused), 99)
+data_99 <- datused[sample_idx, ]
+means_99 <- colMeans(data_99)
+sds_99 <- sapply(data_99, sd)
+case_100 <- numeric(9)
+
+#One influential case
+names(case_100) <- paste0("x", 1:9)
+high_vars <- c("x1", "x2", "x4", "x6", "x7", "x3", "x5", "x8", "x9")
+case_100 <- means_99
+case_100[high_vars] <- means_99[high_vars] + 2 * sds_99[high_vars]
+data <- rbind(data_99, case_100)
+```
+
+## Calling `bootnet_with_indices()`
+
+```{r}
+set.seed(1)
+boot_res <- bootnet_with_indices(
+  data,
+  nBoots = 5000,               
+  default = "EBICglasso"
+)
+```
+
+## Structure of the returned object
+
+```{r}
+class(boot_res)
+names(boot_res)
+```
+
+In addition to the `bootnet` objects (`sample`, `boots`, `sampleTable`, `bootTable`, etc.), there is one extra object "bootIndices":
+
+```{r}
+# The case indices drawn in each bootstrap sample
+length(boot_res$bootIndices)      # equals nBoots
+str(boot_res$bootIndices[[1]])    # indices from the first bootstrap
+```
+
+`bootIndices[[b]]` is a vector of length $n$. Its $k$-th element indicates which row of the original data was drawn at position $k$ in the $b$-th bootstrap sample.
+
+These indices are the input to `calculate_empirical_influence()`, which turns them into a numeric influence value per case. 
+
+# Step 2: calculate_empirical_influence {#step-2}
+
+## Why this step exists
+
+This step use very little computing power to output some valuable information in addition to the work that researchers inevitably have to do. And this is why we do not conduct leave-one-out analysis directly.
+
+We need a **single number per case** that quantifies: *how much does this case influence the network's global structure?* 
+
+`calculate_empirical_influence()` answers this question by regressing a network-level summary (global strength) on the inclusion counts of each case.
+
+### Global strength
+
+For each bootstrap network, compute its **global strength(sum of absolute edge weights)**:
+
+$$
+\text{GS}^{(b)} = \sum_{j < k} |w_{jk}^{(b)}|
+$$
+
+where $w_{jk}^{(b)}$ is the edge weight between nodes $j$ and $k$ in the $b$-th bootstrap network. 
+
+### Inclusion counts
+
+For each case $i$ and bootstrap sample $b$, let:
+
+$$
+c_i^{(b)} = \text{number of times case } i \text{ appears in bootstrap sample } b
+$$
+
+This is exactly the information stored in `bootIndices[[b]]` (as a frequency table).
+
+### The regression
+
+We fit a linear model:
+
+$$
+\text{GS}^{(b)} = \beta_0 + \sum_{i=1}^{n} \beta_i \cdot c_i^{(b)} + \varepsilon^{(b)}
+$$
+
+The coefficient of empirical influence $\beta_i$ measures **how much case $i$ contributes to global strength**. 
+
+### Two details
+
+1. **Drop one case to avoid collinearity.** Since $\sum_i c_i^{(b)} = n$ for every $b$, the inclusion counts are perfectly collinear with the intercept. The function drops case 1 and sets its influence value via the sum-to-zero constraint.
+
+2. **Center to mean zero.** After estimating $\beta_1, \dots, \beta_n$, the values are centered:
+$$
+\tilde{\beta}_i = \beta_i - \frac{1}{n} \sum_{j=1}^{n} \beta_j
+$$
+so that the average influence is 0. Positive values mean "including this case increases global strength"; negative values mean the opposite.
+
+## Basic usage
+
+```{r}
+empic <- calculate_empirical_influence(boot_res)
+```
+
+The result is a numeric vector of length $n$, with a class `"empiricalInfluence"`:
+
+```{r}
+class(empic)
+length(empic)
+```
+
+## Structure of the output
+
+```{r}
+print(empic, n = 10)    #For demo, only 10 cases were printed(10 cases with largest abs value)
+summary(as.numeric(empic))
+```
+
+## Interpreting the output
+
+A **large positive** value for case $i$ means:
+
+> Including case $i$ in the sample tends to **increase** global strength.
+
+A **large negative** value means:
+
+> Including case $i$ tends to **decrease** global strength.
+
+> **Note**: These values are **regression coefficients**. In this regression,
+> each case's **inclusion proportion** in a bootstrap sample ranges from
+> 0 (never drawn) to 1 (always drawn). The coefficient for case $i$
+> therefore quantifies: *how much the predicted global strength changes
+> when case $i$'s inclusion proportion moves from 0 to 1, holding the
+> other cases constant in the regression sense*.
+>
+> This is a **hypothetical 0-to-1 change**—in any single bootstrap sample
+> the proportions sum to 1, so no case can independently reach 1. The values are meaningful only for **ranking cases within the same analysis**. To
+> measure the actual change in global strength, use `leave_one_out_analysis()`
+> (see [Step 3](#step-3)), which physically removes the case and
+> re-estimates the network.
+## Possible pitfalls
+
+### 1. `nBoots` must be large enough
+
+If `nBoots` is too small, the regression may not stable. Roughly speaking, 5000+ is good.
+
+### 2. Sparse network need more boots
+
+If all bootstrap networks have almost the same global strength (e.g., because the network is nearly empty), the response variable has  almost zero variance and the regression may fails when `nBoots` is small. 
+
+## Next step
+
+The empirical influence values identify **candidate** influential cases—those with large absolute coefficient. The next function, `leave_one_out_analysis()`, **validates** these candidates by actually removing them from the data and re-estimating the network, one case at a time (or several at once if specifying `remove_cases`).
+
+
+# Step 3: leave_one_out_analysis {#step-3}
+
+## Why this step exists
+
+To confirm that a candidate truly matters, we need to **actually remove it** from the data, **re-estimate the network**, and see what changes. This is what `leave_one_out_analysis()` does.
+
+## The idea
+
+### Leave-one/multiple-out validation
+The core operation is simple: take the data, **remove one or several cases**,
+re-estimate the network, and compare it to the full-sample network.
+
+For a single case $i$:
+
+$$
+\hat{G}^{(-i)} = \text{estimateNetwork}(X \setminus \{x_i\})
+$$
+
+For a set of cases $S$:
+
+$$
+\hat{G}^{(-S)} = \text{estimateNetwork}(X \setminus \{x_{i} : i \in S\})
+$$
+
+The function supports both:
+
+- **Single-case removal**: remove one case at a time and compare each result
+  to the full network. This is the classic leave-one-out (LOO) design and
+  returns an object of class `looAnalysis`.
+- **Multi-case removal**: remove several cases **simultaneously** and compare
+  the resulting network to the full network. This is a leave-multiple-out
+  (LMO) design and returns an object of class `looMultiAnalysis`.
+
+The multi-case design is also useful when you suspect that several cases act
+**jointly**—their combined effect may differ from the sum of individual
+effects, especially if they are correlated or share a common pattern.
+
+For each removed case or set, the re-estimated network
+$\hat{G}^{(-i)}$ (or $\hat{G}^{(-S)}$) is compared to the full-sample network
+$\hat{G}$ on several dimensions:
+
+- **Global strength**: how much does the sum of absolute edge weights change?
+- **Edges disappeared**: present in $\hat{G}$, zero in $\hat{G}^{(-i)}$?
+- **Edges appeared**: zero in $\hat{G}$, present in $\hat{G}^{(-i)}$?
+- **Edges reversed sign**: which edge would be opposite direction?
+
+### Three selection methods
+
+The function needs to know **which cases to remove**. Supply one of three
+options: `remove_cases` (manual IDs), `threshold` (select by magnitude), or
+`top_n` (select the top N by magnitude). If **none** is supplied, the
+function defaults to **all cases**
+
+| Method | Argument | Behavior |
+|---|---|---|
+| Manual | `remove_cases` | vector of case IDs |
+| Threshold | `threshold` | Select cases with $|\text{empirical influence}| > \theta$ |
+| Top-N | `top_n` | Select the $N$ cases with largest $|\text{empirical influence}|$ |
+
+If more than one is supplied, the priority is **`remove_cases` > `threshold`
+> `top_n`**, and a warning tells you which arguments are ignored.
+
+### Direction
+
+For `threshold` and `top_n`, the `direction` argument controls which tail of
+the influence distribution to select:
+
+- `"both"`: use $|\text{influence}|$ (default)
+- `"positive"`: only cases that increase global strength
+- `"negative"`: only cases that decrease global strength
+
+### Two output classes
+
+- **One case removed at a time** (`remove_cases` has length 1, or
+  `threshold` / `top_n` produce one candidate): returns `looAnalysis`
+- **Multiple cases removed simultaneously** (`remove_cases` has length > 1):
+  returns `looMultiAnalysis`
+
+## Basic usage
+
+### Option 1: select the top 3 most influential cases
+
+```{r}
+loo_res <- leave_one_out_analysis(
+  influence_result = empic,
+  data             = data,
+  top_n            = 3,
+  default          = "EBICglasso"
+)
+```
+
+### Option 2: select by threshold
+
+```{r}
+loo_thr <- leave_one_out_analysis(
+  influence_result = empic,
+  data             = data,
+  threshold        = 0.02,
+  direction        = "both",
+  default          = "EBICglasso"
+)
+```
+
+### Option 3: manually remove specific cases(if multiple cases are specified, only leave-multiple-out now)
+
+```{r}
+lmo_res <- leave_one_out_analysis(
+  influence_result = empic,
+  data             = data,
+  remove_cases     = c(3, 7, 12),
+  default          = "EBICglasso"
+)
+```
+
+## Structure of the output
+
+### For `looAnalysis` (one case at a time)
+
+```{r}
+loo_res
+```
+
+### For `looMultiAnalysis` (multiple cases at once)
+
+```{r}
+lmo_res
+```
+
+Columns:
+
+- `case_id`: the case removed
+- `empirical_influence`: value from Step 2
+- `global_weight_strength_change`: how much global strength changed
+- `global_weight_strength_change_pct`: change as a percentage
+- `n_edges_disappeared`, `n_edges_appeared`, `n_edges_reversed`: counts of
+  structural changes
+
+## Interpreting the output
+
+*Coming soon.After running*
+
+## Possible pitfalls
+
+### 1. `threshold` must be non-negative
+
+If you want cases with influence **below** a cutoff (e.g., $\beta_i < -0.5$),
+use `direction = "negative"` and a **positive** threshold:
+
+```{r eval = FALSE}
+# A correct demo: threshold is positive, direction controls the tail
+leave_one_out_analysis(empic, data,
+                       threshold = 0.5,
+                       direction = "negative")
+```
+
+### 2. Multiple-case removal is not simply "the sum of individual effects"
+
+When `remove_cases` has length > 1, the function removes all cases
+**simultaneously**. This is different from removing them one at a time—the
+joint effect may differ from individual effects combined, especially if the
+cases are correlated.
+
+
+# Step 4: calculate_centrality_gCD {#step-4}
+
+## Why this step exists
+`leave_one_out_analysis()` gave a comprehensive description of how a influential cases 
+works in a network analysis, and the following function `calculate_centrality_gCD()`will
+uses a generalized Cook's distance(gCD) to summarize the overall change in the
+**centrality vector**, providing a single, easy-to-interpret index to guide users' decision.
+
+## The idea
+
+### The centrality vector(only support 'Strength', 'Closeness', and 'Betweenness' now)
+
+For a given centrality measure (Strength, Closeness, or Betweenness), let
+
+$$
+\theta = (\theta_1, \theta_2, \dots, \theta_p)
+$$
+
+be the vector of centrality values across the $p$ nodes, computed from the
+full-sample network. Similarly, let
+
+$$
+\theta^{(-i)} = (\theta_1^{(-i)}, \theta_2^{(-i)}, \dots, \theta_p^{(-i)})
+$$
+
+be the centrality vector after removing case $i$.
+
+### The difference vector
+
+Define the difference:
+
+$$
+d_i = \theta - \theta^{(-i)}
+$$
+
+### The covariance matrix $V$
+
+From the bootstrap networks (`boot_result$boots`), compute the centrality
+vector for each sample:
+
+$$
+\theta^{(1)}, \theta^{(2)}, \dots, \theta^{(B)}
+$$
+
+Then estimate their covariance:
+
+$$
+V = \mathrm{Cov}(\theta^{(1)}, \dots, \theta^{(B)}) \in \mathbb{R}^{p \times p}
+$$
+
+### The generalized Cook's distance
+
+The gCD for case $i$ is the **squared Mahalanobis distance** of $d_i$:
+
+$$
+\text{gCD}_i = d_i^\top V^{-1} d_i
+$$
+
+### Handling singular $V$
+
+If $V$ is singular, `V^{-1}` does not exist. The function detects this and falls back to the **Moore-Penrose pseudo-inverse** (`MASS::ginv`), issuing a warning:
+
+```
+Warning: Covariance matrix for Strength is singular;
+Moore-Penrose pseudo-inverse was used.
+```
+
+## Basic usage
+
+```{r}
+gcd_res <- calculate_centrality_gCD(
+  data        = data,
+  boot_result = boot_res,
+  case_ids    = c(100, 75, 50, 25),
+  metric      = c("Strength", "Closeness", "Betweenness"),
+  default     = "EBICglasso"
+)
+```
+
+## Structure of the output
+
+The result is a **data frame** with one row per case × metric:
+
+```{r}
+gcd_res
+```
+
+Columns:
+
+- `case_id`: the case
+- `metric`: `"Strength"`, `"Closeness"`, or `"Betweenness"`
+- `gCD`: the generalized Cook's distance
+
+## Interpreting the output
+
+A **large gCD** means the case substantially shifts the centrality vector.
+The value has no upper bound, so interpretation is **relative**—compare cases within the same dataset and metric.
+
+## Possible pitfalls
+
+### 1. Singular covariance matrix
+
+If some nodes are constant across all bootstrap networks (e.g., isolated
+nodes), $V$ is singular. The function warns and falls back to the
+pseudo-inverse. **This is not an error**, but a sign that the centrality
+estimates for those nodes are not meaningful.
+
+### 2. Small `nBoots` produces unstable $V$
+
+The covariance matrix $V$ is estimated from `nBoots` samples. With small
+`nBoots`, gCD values become unreliable. As recommended before, 5000+ is good.
+
+## Next step
+
+The next section shows how to run all four steps in **one call** with
+`influence_diagnostic()`.:
+
+1. `bootnet_with_indices()` — bootstrap with case indices
+2. `calculate_empirical_influence()` — per-case influence values
+3. `leave_one_out_analysis()` — validate candidates
+4. `calculate_centrality_gCD()` — centrality-level diagnosis
+
+
+# All-in-one: influence_diagnostic {#all-in-one}
+
+`influence_diagnostic()` wraps **all four steps** into a single call.
+Step 1 (`bootnet_with_indices()`) is **optional** and depends on the input:
+if you pass raw data, the function runs four steps for you; if you pass an `bootnetWithIndices` object, the function skips the first step and reuses your existing bootstrap result. Which input to use depends on your workflow.
+
+---
+
+# Visualization {#visualization}
+
+## influence_plot {#plot-influence}
+
+*Coming soon.*
+
+## gcds_plot {#plot-gcds}
+
+*Coming soon.*
+
+## gcds_md_plot {#plot-gcds-md}
+
+*Coming soon.*

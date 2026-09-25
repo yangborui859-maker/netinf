@@ -36,7 +36,7 @@ test_that("b2: different nBoots changes nothing in length", {
   empic_lessboot <- calculate_empirical_influence(shared_boot_small)
   empic_moreboot <- calculate_empirical_influence(shared_boot)
 
-  expect_length(empic_lessboot, nrow(shared_data))
+  expect_length(empic_lessboot, nrow(shared_data_small))
   expect_length(empic_moreboot, nrow(shared_data))
 })
 
@@ -89,7 +89,7 @@ test_that("d1: matches manual implementation from bootIndices and boots", {
   X <- inclusion_matrix / nCases
   inc <- 2:nCases
   X <- X[, inc, drop = FALSE]
-  beta <- coefficients(glm(global_boots ~ X))[-1L]
+  beta <- stats::coefficients(stats::glm(global_boots ~ X))[-1L]
 
   l_manual <- rep(0, nCases)
   l_manual[inc] <- beta

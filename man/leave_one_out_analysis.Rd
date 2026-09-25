@@ -9,7 +9,7 @@ leave_one_out_analysis(
   data,
   remove_cases = NULL,
   threshold = NULL,
-  top_n = 1,
+  top_n = NULL,
   direction = c("both", "positive", "negative"),
   digits = NULL,
   verbose = TRUE,
@@ -31,6 +31,10 @@ and \code{threshold} are not specified.}
 
 \item{direction}{Character, direction of selection: \code{"both"}, \code{"positive"},
 or \code{"negative"}.}
+
+\item{digits}{Optional integer. If supplied, controls the number of
+decimal places used when formatting edge changes. Default \code{NULL}
+uses full precision.}
 
 \item{verbose}{Logical, whether to print progress messages.}
 
