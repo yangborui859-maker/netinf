@@ -1,4 +1,4 @@
-^influenceNet\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
 ^_pkgdown\.yml$
 ^docs$
