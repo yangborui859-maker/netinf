@@ -74,6 +74,9 @@ bootnet_with_indices <- function(data,
   if (!keep_data) {
     boot_res$boots <- lapply(boot_res$boots, function(boot_i) {
       boot_i$data <- NULL
+      boot_i$results   <- NULL
+      boot_i$.input    <- NULL
+      boot_i$estimator <- NULL
       boot_i
     })
   }
