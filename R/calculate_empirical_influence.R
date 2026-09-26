@@ -47,7 +47,7 @@ calculate_empirical_influence <- function(boot_result,...) {
   X <- inclusion_matrix / n
   inc <- 2:n
   X <- X[, inc, drop = FALSE]
-  beta <- coefficients(glm(global_boots ~ X))[-1L]
+  beta <- stats::coefficients(stats::glm(global_boots ~ X))[-1L]
   l <- rep(0, n)
   l[inc] <- beta
   l <- l - mean(l)

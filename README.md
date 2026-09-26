@@ -5,7 +5,7 @@
 ## Getting started
 
 For a detailed walkthrough, see the 
-[Getting started guide](articles/infnet-guide.html).
+[Getting started guide](articles/netinf-guide.html).
 
 ## Installation
 ```r

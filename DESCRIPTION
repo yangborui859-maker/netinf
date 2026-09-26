@@ -16,7 +16,8 @@ Imports:
     MASS,
     pbapply,
     qgraph,
-    utils
+    utils,
+    rlang
 Suggests: 
     knitr,
     rmarkdown,
