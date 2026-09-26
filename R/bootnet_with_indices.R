@@ -73,10 +73,10 @@ bootnet_with_indices <- function(data,
 
   if (!keep_data) {
     for (i in seq_along(boot_res$boots)){
-      boot_i$data <- NULL
-      boot_i$results   <- NULL
-      boot_i$.input    <- NULL
-      boot_i$estimator <- NULL
+      boot_res$boots[[i]]$data <- NULL
+      boot_res$boots[[i]]$results   <- NULL
+      boot_res$boots[[i]]$.input    <- NULL
+      boot_res$boots[[i]]$estimator <- NULL
     }
     gc()
   }
