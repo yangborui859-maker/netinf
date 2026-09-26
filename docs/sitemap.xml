@@ -1,0 +1,23 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/influenceNet-guide.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/reference/bootnet_with_data.html</loc></url>
+<url><loc>/reference/bootnet_with_indices.html</loc></url>
+<url><loc>/reference/calculate_centrality_gCD.html</loc></url>
+<url><loc>/reference/calculate_empirical_influence.html</loc></url>
+<url><loc>/reference/gcds_md_plot.html</loc></url>
+<url><loc>/reference/gcds_plot.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/influence_diagnostic.html</loc></url>
+<url><loc>/reference/influence_plot.html</loc></url>
+<url><loc>/reference/leave_one_out_analysis.html</loc></url>
+<url><loc>/reference/print.empiricalInfluence.html</loc></url>
+<url><loc>/reference/print.influenceDiagnostic.html</loc></url>
+<url><loc>/reference/print.looAnalysis.html</loc></url>
+<url><loc>/reference/print.looMultiAnalysis.html</loc></url>
+</urlset>
+
