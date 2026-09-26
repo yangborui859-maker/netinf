@@ -16,6 +16,12 @@
 #'   `NULL` (default), all cases in `data` are evaluated.
 #' @param metric Character vector of centrality measures to compute. Can be one
 #'   or more of `"Strength"`, `"Closeness"`, `"Betweenness"`.
+#' @param sort Character. How to sort the output data frame:
+#'   \describe{
+#'     \item{`"none"`}{(default) Original case order within each metric.}
+#'     \item{`"increasing"`}{Sort by gCD within each metric, ascending.}
+#'     \item{`"decreasing"`}{Sort by gCD within each metric, descending.}
+#'   }
 #' @param nCores Integer. Number of CPU cores for parallel estimation of the
 #'   leave-one-out networks. Default is `1` (sequential). Values greater than 1
 #'   use a SOCK cluster via [parallel::makeCluster()] and
@@ -48,26 +54,28 @@ calculate_centrality_gCD <- function(data,
                                      boot_result,
                                      case_ids = NULL,
                                      metric = c("Strength", "Closeness", "Betweenness"),
+                                     sort = c("none", "increasing", "decreasing"),
                                      nCores = 1,
                                      ...) {
 
   if(is.null(case_ids)){
     case_ids <- seq_len(nrow(data))}else{
-  
+
   if (!is.numeric(case_ids)) {
     stop("'case_ids' must be a numeric vector.")
   }
-    
+
   if (any(case_ids != round(case_ids))) {
     stop("'case_ids' must be integers.")
   }
-  
+
   if (any(case_ids < 1 | case_ids > nrow(data))) {
     stop("'case_ids' must be between 1 and ", nrow(data), ".")
   }}
-  
+
   metric <- match.arg(metric, several.ok = TRUE)
-  
+  sort   <- match.arg(sort)
+
   if (nCores > 1) {
     cl <- parallel::makeCluster(nCores)
     on.exit(parallel::stopCluster(cl), add = TRUE)
@@ -99,7 +107,7 @@ calculate_centrality_gCD <- function(data,
 
   all_results <- list()
   diff_vectors <- list()
-  
+
   for (m in metric) {
     centrality_list <- lapply(boot_result$boots, function(net) {
       g <- net$graph
@@ -146,6 +154,20 @@ calculate_centrality_gCD <- function(data,
 
   out <- do.call(rbind, all_results)
   rownames(out) <- NULL
+
+   if (sort != "none") {
+    dec <- (sort == "decreasing")
+
+    metric_levels <- unique(out$metric)
+    out$metric <- factor(out$metric, levels = metric_levels)
+
+    ord <- order(out$metric, if (dec) -out$gCD else out$gCD)
+
+    out <- out[ord, , drop = FALSE]
+    diff_vectors <- diff_vectors[ord]
+    out$metric <- as.character(out$metric)
+    rownames(out) <- NULL
+  }
   attr(out, "diff_vectors") <- diff_vectors
   return(out)
 }
