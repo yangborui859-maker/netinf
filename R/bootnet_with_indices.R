@@ -4,7 +4,7 @@
 #' case indices from the row names of the data stored in each bootstrap result.
 #'
 #' @param data A data frame or matrix. Row names are reset to `1:nrow(data)`
-#'   before bootstrapping. 
+#'   before bootstrapping.
 #' @param keep_data If `FALSE` (default), the stored bootstrap data
 #'   frames are removed from each element of `boots` after the indices have
 #'   been extracted. If `TRUE`, the data frames are retained.
@@ -60,7 +60,7 @@ bootnet_with_indices <- function(data,
 
   boot_res <- bootnet::bootnet(
     data,
-    memorysaver = FALSE,          
+    memorysaver = FALSE,
     ...
   )
 
@@ -72,13 +72,13 @@ bootnet_with_indices <- function(data,
 
 
   if (!keep_data) {
-    boot_res$boots <- lapply(boot_res$boots, function(boot_i) {
+    for (i in seq_along(boot_res$boots)){
       boot_i$data <- NULL
       boot_i$results   <- NULL
       boot_i$.input    <- NULL
       boot_i$estimator <- NULL
-      boot_i
-    })
+    }
+    gc()
   }
 
   boot_res$bootIndices <- boot_indices

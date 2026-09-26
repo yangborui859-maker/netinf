@@ -4,18 +4,62 @@
 \name{netinf-package}
 \alias{netinf}
 \alias{netinf-package}
-\title{netinf: Influence Diagnostics for Network Analysis}
+\title{netinf: Diagnostic Influetial cases for Network Analysis}
 \description{
-Provides tools to identify influential cases in network analysis.
+\code{netinf} provides tools to identify influential cases in psychological
+network analysis. It complements \code{\link[bootnet:bootnet]{bootnet::bootnet()}} by adding a
+complete workflow for influence diagnostics:
 }
-\author{
-\strong{Maintainer}: Borui Yang \email{yangborui859@gmail.com}
-
-Authors:
+\details{
 \itemize{
-  \item Borui Yang \email{yangborui859@gmail.com}
-  \item Shu Fai Cheung \email{shufai.cheung@gmail.com}
+\item \code{\link[=bootnet_with_indices]{bootnet_with_indices()}} extracts case indices from bootstrap samples,
+which is not directly available from \code{bootnet}.
+\item \code{\link[=calculate_empirical_influence]{calculate_empirical_influence()}} computes one influence value per case
+via regression on inclusion counts.
+\item \code{\link[=leave_one_out_analysis]{leave_one_out_analysis()}} validates candidate cases by removing them
+from the data and re-estimating the network, one or several at a time.
+\item \code{\link[=calculate_centrality_gCD]{calculate_centrality_gCD()}} quantifies centrality changes via a
+generalized Cook's distance.
 }
 
+All four steps can be run manually, or through a single all-in-one
+function, \code{\link[=influence_diagnostic]{influence_diagnostic()}}.
+}
+\section{Getting started}{
+
+The recommended workflow:
+\enumerate{
+\item Bootstrap the network with \code{\link[=bootnet_with_indices]{bootnet_with_indices()}}
+\item Compute empirical influence with \code{\link[=calculate_empirical_influence]{calculate_empirical_influence()}}
+\item Validate candidates with \code{\link[=leave_one_out_analysis]{leave_one_out_analysis()}}
+\item Diagnose centrality changes with \code{\link[=calculate_centrality_gCD]{calculate_centrality_gCD()}}
+}
+
+Or run all four steps in one call with \code{\link[=influence_diagnostic]{influence_diagnostic()}}.
+
+See \code{vignette("netinf-guide", package = "netinf")} for a full walkthrough.
+}
+
+\section{Visualization}{
+
+\itemize{
+\item \code{\link[=influence_plot]{influence_plot()}} — plot of empirical influence values
+\item \code{\link[=gcds_plot]{gcds_plot()}} — gCD vs centrality change
+\item \code{\link[=gcds_md_plot]{gcds_md_plot()}} — bubble plot with Mahalanobis distance
+}
+}
+
+\section{Related packages}{
+
+\itemize{
+\item \href{https://cran.r-project.org/package=bootnet}{bootnet} for network
+estimation and bootstrap.
+\item \href{https://cran.r-project.org/package=qgraph}{qgraph} for network
+visualization and centrality.
+}
+}
+
+\author{
+Borui Yang and Shu Fai Cheung
 }
 \keyword{internal}
