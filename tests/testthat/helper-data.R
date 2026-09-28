@@ -1,13 +1,15 @@
 # Simulated data
 make_test_data <- function(n = 100, seed = 1) {
-  data("test_data", package = "netinf", envir = environment())
-  full <- test_data
-
+  if (!requireNamespace("lavaan", quietly = TRUE)) {
+    testthat::skip("lavaan not installed")
+  }
   set.seed(seed)
-  idx <- sample(nrow(full), n)
-  out <- full[idx, ]
+  data <- lavaan::HolzingerSwineford1939[, paste0("x", 1:9)]
+  idx <- sample(seq_len(nrow(data)), n)
+  out <- data[idx, ]
   rownames(out) <- NULL
-  out
+
+  as.data.frame(out)
 }
 
 # Simulate graph with 3 nodes

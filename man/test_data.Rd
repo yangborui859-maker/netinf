@@ -5,24 +5,24 @@
 \alias{test_data}
 \title{Simulated Network Data with an Influential Case}
 \format{
-A data frame with 100 rows and 10 variables:
+A data frame with 100 rows and 9 variables:
 \describe{
-\item{x1, x2, x3, x4, x5, x6, x7, x8, x9, x10}{Numeric. Big Five
-Inventory items (Likert 1–6). The 100th row is the influential case.}
+\item{x1, x2, x3, x4, x5, x6, x7, x8, x9}{Numeric (1–7 Likert
+scale). The 100th row is the influential case.}
 }
 }
 \source{
-Derived from the \code{bfi} dataset in the \pkg{psychTools} package
-(Revelle, 2024). The 100th row is constructed manually by shifting
-\code{x1}–\code{x9} by \eqn{+2} standard deviations.
+The first 99 cases are a random sample from
+\code{lavaan::HolzingerSwineford1939}. The 100th case is constructed
+manually as \code{mean + 2 * sd} on all 9 variables.
 }
 \usage{
 test_data
 }
 \description{
-A dataset with 100 cases and 10 variables. The first 99 cases are
-sampled from the \code{bfi} dataset (Big Five Inventory) in the
-\pkg{psychTools} package; the 100th case is an \strong{influential case}—its
+A dataset with 100 cases and 9 variables. The first 99 cases are
+sampled from the \code{HolzingerSwineford1939} dataset (Rosseel, 2012) in the
+\pkg{lavaan} package; the 100th case is an \strong{influential case}—its
 first nine variables are shifted by \eqn{+2} standard deviations from
 the mean of the first 99 cases. Used in examples, tests, and vignettes
 of \code{netinf}.

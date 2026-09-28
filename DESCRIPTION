@@ -15,7 +15,7 @@ Imports:
     ggrepel,
     MASS,
     pbapply,
-    psychTools,
+    lavaan,
     qgraph,
     utils,
     rlang
