@@ -9,7 +9,7 @@
 #'   [bootnet_with_indices()], containing bootstrap samples, bootstrap indices,
 #'   and the original sample network.
 #' @param ... Additional arguments (currently unused).
-#' 
+#'
 #' @return A numeric vector of length equal to the number of cases in the
 #'   original data. Each element represents the centered empirical influence
 #'   of the corresponding case on the global strength (sum of absolute edge
@@ -22,6 +22,19 @@
 #' strength values on the standardized inclusion frequencies (inclusion count
 #' divided by sample size). To avoid collinearity, the first case is omitted
 #' as the baseline, and the resulting coefficients are mean-centered.
+#'
+#' @examples
+#' data("test_data", package = "netinf")
+#'
+#' boot_res <- bootnet_with_indices(
+#'   test_data,
+#'   nBoots  = 100,        # for demonstration; use 5000+ in practice
+#'   default = "EBICglasso"
+#' )
+#'
+#' empic <- calculate_empirical_influence(boot_res)
+#'
+#' empic
 #'
 #' @export
 calculate_empirical_influence <- function(boot_result,...) {
@@ -53,6 +66,6 @@ calculate_empirical_influence <- function(boot_result,...) {
   l <- l - mean(l)
 
   class(l) <-"empiricalInfluence"
-  
+
   return(l)
 }

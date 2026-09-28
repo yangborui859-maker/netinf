@@ -6,8 +6,9 @@
 #' @param data A data frame or matrix. Row names are reset to `1:nrow(data)`
 #'   before bootstrapping.
 #' @param keep_data If `FALSE` (default), the stored bootstrap data
-#'   frames are removed from each element of `boots` after the indices have
-#'   been extracted. If `TRUE`, the data frames are retained.
+#'   frames (`data`) and the estimation internals (`results`, `.input`,
+#'   `estimator`)  are removed from each element of `boots` after the indices have
+#'   been extracted. If `TRUE`, all of them are retained.
 #' @param ... Additional arguments passed to [bootnet::bootnet()]. Note that
 #'   these are not listed explicitly in the function signature; please refer to
 #'   [bootnet::bootnet()] for the full list of supported arguments.
@@ -30,6 +31,17 @@
 #' that R adds for duplicated row names.
 #'
 #' @seealso [bootnet::bootnet()], [bootnet::estimateNetwork()]
+#'
+#' @examples
+#' data("test_data", package = "netinf")
+#'
+#' boot_res <- bootnet_with_indices(
+#'   test_data,
+#'   nBoots  = 100,       # 100 For demonstration (5000 or more is recommended in practice)
+#'   default = "EBICglasso"
+#' )
+#'
+#' boot_res
 #'
 #' @export
 bootnet_with_indices <- function(data,

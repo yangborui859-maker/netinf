@@ -49,6 +49,26 @@
 #'
 #' @seealso [bootnet_with_indices()], [bootnet::estimateNetwork()]
 #'
+#' @examples
+#' data("test_data", package = "netinf")
+#'
+#' boot_res <- bootnet_with_indices(
+#'   test_data,
+#'   nBoots  = 100,        # for demonstration; use 5000+ in practice
+#'   default = "EBICglasso"
+#' )
+#'
+#' # Sort by gCD within each metric (descending)
+#' gcd_res <- calculate_centrality_gCD(
+#'   data        = test_data,
+#'   boot_result = boot_res,
+#'   case_ids    = 1:5,
+#'   metric = c("Strength", "Closeness", "Betweenness"),
+#'   sort        = "decreasing",
+#'   default     = "EBICglasso"
+#' )
+#' gcd_res
+#'
 #' @export
 calculate_centrality_gCD <- function(data,
                                      boot_result,

@@ -31,6 +31,18 @@
 #'     \item `boot_result`: original bootstrap result object.
 #'     \item `data`: original data used.
 #'   }
+#'
+#' @examples
+#' data("test_data", package = "netinf")
+#'
+#' diag <- influence_diagnostic(
+#'   data               = test_data,
+#'   nBoots             = 100,        # for demonstration; use 5000+ in practice
+#'   top_n              = 2,
+#'   centrality_metrics = c("Strength", "Closeness", "Betweenness"),
+#'   verbose            = FALSE
+#' )
+#'
 #' @export
 influence_diagnostic <- function(data,
                                   nBoots = 1000,

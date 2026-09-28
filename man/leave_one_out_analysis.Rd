@@ -64,3 +64,34 @@ When multiple selection arguments are supplied, the priority is
 \code{remove_cases} > \code{threshold} > \code{top_n}. A warning is issued when a
 lower-priority argument is ignored.
 }
+\examples{
+data("test_data", package = "netinf")
+
+boot_res <- bootnet_with_indices(
+  test_data,
+  nBoots  = 100,        # for demonstration; use 5000+ in practice
+  default = "EBICglasso"
+)
+empic <- calculate_empirical_influence(boot_res)
+
+# Single-case removal of the top 2 candidates
+loo_res <- leave_one_out_analysis(
+  empic, test_data,
+  top_n   = 2,
+  default = "EBICglasso",
+  verbose = FALSE
+)
+
+loo_res
+
+# Multi-case removal (all three at once)
+loo_multi <- leave_one_out_analysis(
+  empic, test_data,
+  remove_cases = c(1, 2, 3),
+  default      = "EBICglasso",
+  verbose      = FALSE
+)
+
+loo_multi
+
+}

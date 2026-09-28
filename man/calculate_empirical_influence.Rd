@@ -33,3 +33,17 @@ strength values on the standardized inclusion frequencies (inclusion count
 divided by sample size). To avoid collinearity, the first case is omitted
 as the baseline, and the resulting coefficients are mean-centered.
 }
+\examples{
+data("test_data", package = "netinf")
+
+boot_res <- bootnet_with_indices(
+  test_data,
+  nBoots  = 100,        # for demonstration; use 5000+ in practice
+  default = "EBICglasso"
+)
+
+empic <- calculate_empirical_influence(boot_res)
+
+empic
+
+}

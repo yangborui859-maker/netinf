@@ -59,6 +59,69 @@ visualization and centrality.
 }
 }
 
+\examples{
+# The package ships with a simulated dataset that contains
+# 99 regular cases and 1 influential case (the 100th row).
+data("test_data", package = "netinf")
+
+# All-in-one workflow
+set.seed(1)
+diag <- influence_diagnostic(
+  data               = test_data,
+  nBoots             = 100,
+  top_n              = 3,
+  centrality_metrics = c("Strength", "Closeness", "Betweenness"),
+  default            = "EBICglasso",
+  verbose            = FALSE
+)
+diag
+
+# Manual workflow
+set.seed(1)
+boot_res <- bootnet_with_indices(
+  test_data,
+  nBoots  = 100,  # Use nBoots = 5000 or more in practice; 100 here for speed.
+  default = "EBICglasso"
+)
+boot_res
+
+empic <- calculate_empirical_influence(boot_res)
+empic
+
+loo_res <- leave_one_out_analysis(
+  empic, test_data,
+  top_n   = 3,
+  default = "EBICglasso",
+  verbose = FALSE
+)
+loo_res
+
+gcd_res <- calculate_centrality_gCD(
+  data        = test_data,
+  boot_result = boot_res,
+  case_ids    = loo_res$case_ids,
+  metric      = c("Strength", "Closeness", "Betweenness"),
+  default     = "EBICglasso"
+)
+gcd_res
+
+# The all-in-one function produces the same results as the manual workflow.
+all.equal(
+  as.numeric(diag$empirical_influence$influence),
+  as.numeric(empic)
+)
+
+all.equal(
+  diag$loo_validation$case_ids,
+  loo_res$case_ids
+)
+
+all.equal(
+  diag$centrality_gCD$gCD,
+  gcd_res$gCD
+)
+
+}
 \author{
 Borui Yang and Shu Fai Cheung
 }

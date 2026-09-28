@@ -63,3 +63,15 @@ An object of class \code{"influenceDiagnostic"} containing:
 All-in-one function that performs empirical influence screening,
 leave-one-out validation, and centrality gCD computation.
 }
+\examples{
+data("test_data", package = "netinf")
+
+diag <- influence_diagnostic(
+  data               = test_data,
+  nBoots             = 100,        # for demonstration; use 5000+ in practice
+  top_n              = 2,
+  centrality_metrics = c("Strength", "Closeness", "Betweenness"),
+  verbose            = FALSE
+)
+
+}

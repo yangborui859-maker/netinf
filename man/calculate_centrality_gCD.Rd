@@ -9,6 +9,7 @@ calculate_centrality_gCD(
   boot_result,
   case_ids = NULL,
   metric = c("Strength", "Closeness", "Betweenness"),
+  sort = c("none", "increasing", "decreasing"),
   nCores = 1,
   ...
 )
@@ -28,6 +29,13 @@ matrix of the centrality measures.}
 
 \item{metric}{Character vector of centrality measures to compute. Can be one
 or more of \code{"Strength"}, \code{"Closeness"}, \code{"Betweenness"}.}
+
+\item{sort}{Character. How to sort the output data frame:
+\describe{
+\item{\code{"none"}}{(default) Original case order within each metric.}
+\item{\code{"increasing"}}{Sort by gCD within each metric, ascending.}
+\item{\code{"decreasing"}}{Sort by gCD within each metric, descending.}
+}}
 
 \item{nCores}{Integer. Number of CPU cores for parallel estimation of the
 leave-one-out networks. Default is \code{1} (sequential). Values greater than 1
@@ -62,6 +70,27 @@ where \eqn{\theta} is the vector of centrality values in the full sample,
 \eqn{\theta_{(-i)}} is the vector after removing case \eqn{i}, and \eqn{V}
 is the bootstrap covariance matrix. If \eqn{V} is singular, the
 Moore-Penrose pseudo-inverse from \code{\link[MASS:ginv]{MASS::ginv()}} will be used.
+}
+\examples{
+data("test_data", package = "netinf")
+
+boot_res <- bootnet_with_indices(
+  test_data,
+  nBoots  = 100,        # for demonstration; use 5000+ in practice
+  default = "EBICglasso"
+)
+
+# Sort by gCD within each metric (descending)
+gcd_res <- calculate_centrality_gCD(
+  data        = test_data,
+  boot_result = boot_res,
+  case_ids    = 1:5,
+  metric = c("Strength", "Closeness", "Betweenness"),
+  sort        = "decreasing",
+  default     = "EBICglasso"
+)
+gcd_res
+
 }
 \seealso{
 \code{\link[=bootnet_with_indices]{bootnet_with_indices()}}, \code{\link[bootnet:estimateNetwork]{bootnet::estimateNetwork()}}
