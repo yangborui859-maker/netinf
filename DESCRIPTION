@@ -1,10 +1,10 @@
 Package: netinf
 Title: Diagnostics for Influential Cases in Network Analysis
 Version: 0.1.0.0
-Authors@R: 
-    c(person("Borui", "Yang", , "yangborui859@gmail.com", role = c("aut", "cre")),
-    person("Shu Fai", "Cheung", , "shufai.cheung@gmail.com", role = c("aut")))
-Description: Provides tools to identify influential cases in network analysis. 
+Authors@R:
+    c(person("Borui", "Yang", , "yangborui859@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0009-0006-7532-8950")),
+    person("Shu Fai", "Cheung", , "shufai.cheung@gmail.com", role = c("aut"), comment = c(ORCID = "0000-0002-9871-9448")))
+Description: Provides tools to identify influential cases in network analysis.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -15,14 +15,17 @@ Imports:
     ggrepel,
     MASS,
     pbapply,
+    psychTools,
     qgraph,
     utils,
     rlang
-Suggests: 
+Suggests:
     knitr,
     rmarkdown,
-    lavaan,
     testthat (>= 3.0.0),
     tibble
 VignetteBuilder: knitr
 Config/Needs/website: pkgdown
+Depends:
+    R (>= 3.5)
+LazyData: true

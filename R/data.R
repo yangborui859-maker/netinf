@@ -1,0 +1,24 @@
+#' Simulated Network Data with an Influential Case
+#'
+#' A dataset with 100 cases and 10 variables. The first 99 cases are
+#' sampled from the `bfi` dataset (Big Five Inventory) in the
+#' \pkg{psychTools} package; the 100th case is an **influential case**—its
+#' first nine variables are shifted by \eqn{+2} standard deviations from
+#' the mean of the first 99 cases. Used in examples, tests, and vignettes
+#' of `netinf`.
+#'
+#' @format A data frame with 100 rows and 10 variables:
+#' \describe{
+#'   \item{x1, x2, x3, x4, x5, x6, x7, x8, x9, x10}{Numeric. Big Five
+#'     Inventory items (Likert 1–6). The 100th row is the influential case.}
+#' }
+#'
+#' @source Derived from the `bfi` dataset in the \pkg{psychTools} package
+#'   (Revelle, 2024). The 100th row is constructed manually by shifting
+#'   `x1`–`x9` by \eqn{+2} standard deviations.
+#'
+#' @examples
+#' data("test_data", package = "netinf")
+#' head(test_data)
+#' tail(test_data, 1)   # the influential case
+"test_data"
