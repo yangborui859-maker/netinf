@@ -89,10 +89,7 @@ bootnet_with_indices <- function(data,
       boot_res$boots[[i]]$results   <- NULL
       boot_res$boots[[i]]$.input    <- NULL
       boot_res$boots[[i]]$estimator <- NULL
-
-      if (i %% 1000 == 0) invisible(gc())
     }
-  invisible(gc())
   }
 
   boot_res$bootIndices <- boot_indices
