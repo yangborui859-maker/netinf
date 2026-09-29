@@ -5,6 +5,12 @@ Authors@R:
     c(person("Borui", "Yang", , "yangborui859@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0009-0006-7532-8950")),
     person("Shu Fai", "Cheung", , "shufai.cheung@gmail.com", role = c("aut"), comment = c(ORCID = "0000-0002-9871-9448")))
 Description: Provides tools to identify influential cases in network analysis.
+    This package complements 'bootnet' (Epskamp, Borsboom, and Fried, 2018) <doi:10.3758/s13428-017-0862-1> by adding a
+    complete workflow for influence diagnostics: extracting case indices
+    from bootstrap samples, computing empirical influence values via
+    regression on inclusion counts, validating candidate cases via
+    leave-one-out and leave-multiple-out analysis, and quantifying
+    centrality changes via a generalized Cook's distance.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
