@@ -26,7 +26,7 @@ For a detailed walkthrough, see the
 ```r
 install.packages("devtools")
 devtools::install_github("yangborui859-maker/Influential-cases-in-Network-analysis")
-...
+```
 
 # Issues
 If you have any suggestions and found any bugs, please feel
