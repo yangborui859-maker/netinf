@@ -20,7 +20,7 @@ https://yangborui859-maker.github.io/netinf/
 ## Getting started
 
 For a detailed walkthrough, see the
-[Getting started guide](articles/netinf-guide.html).
+[Getting started guide](https://yangborui859-maker.github.io/netinf/articles/netinf-guide.html).
 
 ## Installation
 ```r
