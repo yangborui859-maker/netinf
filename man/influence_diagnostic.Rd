@@ -2,14 +2,14 @@
 % Please edit documentation in R/influence_diagnostic.R
 \name{influence_diagnostic}
 \alias{influence_diagnostic}
-\title{Influence Diagnostic for Network Models}
+\title{Case Influence Diagnostic for Network Models}
 \usage{
 influence_diagnostic(
   data,
   nBoots = 1000,
   remove_cases = NULL,
-  top_n = NULL,
   threshold = NULL,
+  top_n = NULL,
   direction = c("both", "positive", "negative"),
   default = "EBICglasso",
   verbose = TRUE,
@@ -26,16 +26,19 @@ object is provided, it is used directly and \code{nBoots} is ignored.}
 
 \item{nBoots}{Number of bootstrap samples. Default is 1000.}
 
-\item{remove_cases}{Optional numeric vector of case IDs to remove manually.}
-
-\item{top_n}{Number of top influential cases to select when \code{remove_cases}
-and \code{threshold} are not specified.}
+\item{remove_cases}{Optional numeric vector of case IDs to remove manually for \code{\link[=leave_one_out_analysis]{leave_one_out_analysis()}}.}
 
 \item{threshold}{Optional threshold for selecting cases based on absolute
-influence values.}
+influence values for \code{\link[=leave_one_out_analysis]{leave_one_out_analysis()}}.}
 
-\item{direction}{Character, direction of selection: \code{"both"}, \code{"positive"},
-or \code{"negative"}.}
+\item{top_n}{Number of top influential cases to select for \code{\link[=leave_one_out_analysis]{leave_one_out_analysis()}} when \code{remove_cases}
+and \code{threshold} are not specified.}
+
+\item{direction}{Character. Direction of case selection when
+\code{threshold} or \code{top_n} is used: \code{"both"} (default) selects by
+absolute influence magnitude; \code{"positive"} selects only cases
+with positive influence; \code{"negative"} selects only cases with
+negative influence. Ignored when \code{remove_cases} is supplied.}
 
 \item{default}{Network estimation method. Default is \code{"EBICglasso"}.}
 
@@ -45,7 +48,7 @@ or \code{"negative"}.}
 in Phase 3. Default is \code{c("Strength", "Closeness", "Betweenness")}.}
 
 \item{nCores}{Integer, number of CPU cores for parallel computation
-in Phase 3. Default is 1 (sequential).}
+in Phase 3. Default is 1.}
 
 \item{...}{Additional arguments passed to \code{\link[bootnet:estimateNetwork]{bootnet::estimateNetwork()}}.}
 }
@@ -70,6 +73,7 @@ diag <- influence_diagnostic(
   data               = test_data,
   nBoots             = 100,        # for demonstration; use 5000+ in practice
   top_n              = 2,
+  default            = "EBICglasso"
   centrality_metrics = c("Strength", "Closeness", "Betweenness"),
   verbose            = FALSE
 )
