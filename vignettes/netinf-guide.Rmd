@@ -629,7 +629,7 @@ change (y), with bubble size representing gCD.
 gcds_md_plot(diag, data = data, metric = "Strength")
 ```
 
-**Or** using the output of `calculate_centrality_gCD()` directly:
+**Or** using the output of Step 4 directly:
 
 ```{r}
 gcds_md_plot(gcd_res, data = data, metric = "Strength")
