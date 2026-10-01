@@ -7,13 +7,13 @@
 \title{netinf: Diagnostic Influetial cases for Network Analysis}
 \description{
 \code{netinf} provides tools to identify influential cases in psychological
-network analysis. It complements \code{\link[bootnet:bootnet]{bootnet::bootnet()}} by adding a
-complete workflow for influence diagnostics:
+network analysis. Built on 'bootnet' (Epskamp, Borsboom, and Fried, 2018)
+\url{doi:10.3758/s13428-017-0862-1}, it reuses the same bootstrap samples
+to perform case influence diagnostics, avoiding a separate bootstrap step.
 }
 \details{
 \itemize{
-\item \code{\link[=bootnet_with_indices]{bootnet_with_indices()}} extracts case indices from bootstrap samples,
-which is not directly available from \code{bootnet}.
+\item \code{\link[=bootnet_with_indices]{bootnet_with_indices()}} extracts case indices from bootstrap samples.
 \item \code{\link[=calculate_empirical_influence]{calculate_empirical_influence()}} computes one influence value per case
 via regression on inclusion counts.
 \item \code{\link[=leave_one_out_analysis]{leave_one_out_analysis()}} validates candidate cases by removing them
@@ -99,27 +99,11 @@ loo_res
 gcd_res <- calculate_centrality_gCD(
   data        = test_data,
   boot_result = boot_res,
-  case_ids    = loo_res$case_ids,
+  case_ids    = 37,
   metric      = c("Strength", "Closeness", "Betweenness"),
   default     = "EBICglasso"
 )
 gcd_res
-
-# The all-in-one function produces the same results as the manual workflow.
-all.equal(
-  as.numeric(diag$empirical_influence$influence),
-  as.numeric(empic)
-)
-
-all.equal(
-  diag$loo_validation$case_ids,
-  loo_res$case_ids
-)
-
-all.equal(
-  diag$centrality_gCD$gCD,
-  gcd_res$gCD
-)
 
 }
 \author{
