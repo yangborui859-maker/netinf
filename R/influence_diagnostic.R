@@ -1,4 +1,4 @@
-#' Influence Diagnostic for Network Models
+#' Case Influence Diagnostic for Network Models
 #'
 #' All-in-one function that performs empirical influence screening,
 #' leave-one-out validation, and centrality gCD computation.
@@ -8,19 +8,22 @@
 #'   internally via [bootnet_with_indices()]. If a `bootnetWithIndices`
 #'   object is provided, it is used directly and `nBoots` is ignored.
 #' @param nBoots Number of bootstrap samples. Default is 1000.
-#' @param remove_cases Optional numeric vector of case IDs to remove manually.
-#' @param top_n Number of top influential cases to select when `remove_cases`
-#'   and `threshold` are not specified.
+#' @param remove_cases Optional numeric vector of case IDs to remove manually for [leave_one_out_analysis()].
 #' @param threshold Optional threshold for selecting cases based on absolute
-#'   influence values.
-#' @param direction Character, direction of selection: `"both"`, `"positive"`,
-#'   or `"negative"`.
+#'   influence values for [leave_one_out_analysis()].
+#' @param top_n Number of top influential cases to select for [leave_one_out_analysis()] when `remove_cases`
+#'   and `threshold` are not specified.
+#' @param direction Character. Direction of case selection when
+#'   `threshold` or `top_n` is used: `"both"` (default) selects by
+#'   absolute influence magnitude; `"positive"` selects only cases
+#'   with positive influence; `"negative"` selects only cases with
+#'   negative influence. Ignored when `remove_cases` is supplied.
 #' @param default Network estimation method. Default is `"EBICglasso"`.
 #' @param verbose Logical, whether to print progress messages.
 #' @param centrality_metrics Character vector of centrality measures to compute
 #'   in Phase 3. Default is `c("Strength", "Closeness", "Betweenness")`.
 #' @param nCores Integer, number of CPU cores for parallel computation
-#'   in Phase 3. Default is 1 (sequential).
+#'   in Phase 3. Default is 1.
 #' @param ... Additional arguments passed to [bootnet::estimateNetwork()].
 #'
 #' @return An object of class `"influenceDiagnostic"` containing:
@@ -39,6 +42,7 @@
 #'   data               = test_data,
 #'   nBoots             = 100,        # for demonstration; use 5000+ in practice
 #'   top_n              = 2,
+#'   default            = "EBICglasso"
 #'   centrality_metrics = c("Strength", "Closeness", "Betweenness"),
 #'   verbose            = FALSE
 #' )
@@ -47,8 +51,8 @@
 influence_diagnostic <- function(data,
                                   nBoots = 1000,
                                   remove_cases = NULL,
-                                  top_n = NULL,
                                   threshold = NULL,
+                                  top_n = NULL,
                                   direction = c("both", "positive", "negative"),
                                   default = "EBICglasso",
                                   verbose = TRUE,
