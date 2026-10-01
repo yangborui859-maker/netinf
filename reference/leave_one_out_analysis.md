@@ -117,8 +117,6 @@ loo_res <- leave_one_out_analysis(
   default = "EBICglasso",
   verbose = FALSE
 )
-#> Warning: A dense regularized network was selected (lambda < 0.1 * lambda.max). Recent work indicates a possible drop in specificity. Interpret the presence of the smallest edges with care. Setting threshold = TRUE will enforce higher specificity, at the cost of sensitivity.
-#> Warning: A dense regularized network was selected (lambda < 0.1 * lambda.max). Recent work indicates a possible drop in specificity. Interpret the presence of the smallest edges with care. Setting threshold = TRUE will enforce higher specificity, at the cost of sensitivity.
 
 loo_res
 #> Leave-One-Out Analysis Results
@@ -130,16 +128,16 @@ loo_res
 #> 
 #> Summary:
 #>   case_id empirical_influence global_weight-strength_change
-#> 1      74            319.3856                   -0.02530137
-#> 2      77           -295.9599                   -0.01569948
+#> 1      99            1427.752                  -0.017507028
+#> 2      19            1197.723                   0.004329257
 #>   global_weight-strength_change(%) n_edges_disappeared n_edges_appeared
-#> 1                       -0.7003976                   0                0
-#> 2                       -0.4345960                   0                0
+#> 1                       -0.4846330                   0                0
+#> 2                        0.1198433                   0                0
 #>   n_edges_reversed
 #> 1                0
 #> 2                0
 #> 
-#> === Without Case 74: Structure Changes ===
+#> === Without Case 99: Structure Changes ===
 #> 
 #> Edges disappeared:
 #>   None
@@ -151,7 +149,7 @@ loo_res
 #>   None
 #> 
 #> 
-#> === Without Case 77: Structure Changes ===
+#> === Without Case 19: Structure Changes ===
 #> 
 #> Edges disappeared:
 #>   None
