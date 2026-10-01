@@ -4,9 +4,13 @@
 #' mean absolute centrality change on the y-axis, and bubble size
 #' representing gCD.
 #'
-#' @param diag An object of class `"influenceDiagnostic"`, or a data frame
-#'   with a `"diff_vectors"` attribute.
-#' @param data Original data frame used in the analysis.
+#' @param diag An object of class `"influenceDiagnostic"` returned by #'   [influence_diagnostic()], or a data frame returned by
+#'   [calculate_centrality_gCD()].
+#' @param data Optional original data frame used in the analysis. If `NULL`
+#'   (default) and input is an `"influenceDiagnostic"` object, the data
+#'   is extracted from the input. Required when input is data
+#'   frame (from [calculate_centrality_gCD()]) that does not carry the
+#'   original data.
 #' @param metric Character, centrality metric to use for bubble size and
 #'   y-axis. Must be one of `"Strength"`, `"Closeness"`, `"Betweenness"`.
 #' @param circle_size Numeric, maximum point size.
@@ -27,7 +31,7 @@
 #' @return A `ggplot` object.
 #' @export
 gcds_md_plot <- function(diag,
-                        data,
+                        data = NULL,
                         metric = c("Strength", "Closeness", "Betweenness"),
                         circle_size = 2,
                         cutoff_md = FALSE,
@@ -79,6 +83,14 @@ gcds_md_plot <- function(diag,
     stop("diag must be an influenceDiagnostic object or a data frame with diff_vectors attribute.")
   }
 
+  if (is.null(data) && inherits(diag, "influenceDiagnostic")) {
+    data <- diag$data
+  }
+  if (is.null(data)) {
+    stop("'data' must be supplied, either explicitly or via an ",
+         "'influenceDiagnostic' object that contains it.")
+  }
+
   if (!metric %in% gcd_df$metric) {
     stop(metric, " not found in gCD results.")
   }
@@ -95,7 +107,7 @@ gcds_md_plot <- function(diag,
   diff_list <- diff_vectors[idx]
 
   change_vals <- vapply(diff_list, function(d) mean(abs(d)), numeric(1))
-  
+
   mahalanobis_distance <- function(data) {
   data <- data[sapply(data, is.numeric)]
   data <- stats::na.omit(data)
@@ -105,8 +117,17 @@ gcds_md_plot <- function(diag,
   names(md) <- rownames(data)
   md
 }
-  
+
   md_all <- mahalanobis_distance(data)
+
+  rn <- rownames(data)
+  expected_rn <- as.character(seq_len(nrow(data)))
+  if (!is.null(rn) && !identical(rn, expected_rn)) {
+  warning("Row names of 'data' are not the default 1:n. ",
+          "'case_ids' are treated as position indices, not row names.",
+          "Please check that 'data' matches the data used to compute the gCD results.")
+  }
+
   md_vals <- md_all[as.character(case_ids)]
 
   dat <- data.frame(
