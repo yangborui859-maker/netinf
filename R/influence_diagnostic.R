@@ -42,7 +42,7 @@
 #'   data               = test_data,
 #'   nBoots             = 100,        # for demonstration; use 5000+ in practice
 #'   top_n              = 2,
-#'   default            = "EBICglasso"
+#'   default            = "EBICglasso",
 #'   centrality_metrics = c("Strength", "Closeness", "Betweenness"),
 #'   verbose            = FALSE
 #' )
