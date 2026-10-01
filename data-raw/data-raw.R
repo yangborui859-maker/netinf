@@ -14,5 +14,6 @@ case_100 <- numeric(9)
 names(case_100) <- paste0("x", 1:9)
 case_100 <- means_99 + 2 * sds_99
 test_data <- rbind(data_99, case_100)
+rownames(test_data) <- seq_len(nrow(test_data))
 
 usethis::use_data(test_data, overwrite = TRUE)
