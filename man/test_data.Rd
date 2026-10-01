@@ -29,7 +29,6 @@ of \code{netinf}.
 }
 \examples{
 data("test_data", package = "netinf")
-head(test_data)
 tail(test_data, 1)   # the influential case
 }
 \keyword{datasets}
