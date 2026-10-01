@@ -3,16 +3,16 @@
 #' A lightweight wrapper around [bootnet::bootnet()] that extracts bootstrap
 #' case indices from the row names of the data stored in each bootstrap result.
 #'
-#' @param data A data frame or matrix. Row names are reset to `1:nrow(data)`
+#' @param data A data frame or matrix. Row names are reset to `1:nrow`
 #'   before bootstrapping.
 #' @param keep_data If `FALSE` (default), the stored bootstrap data
-#'   frames (`data`) and the estimation internals (`results`, `.input`,
+#'   frames and the estimation internals (`results`, `.input`,
 #'   `estimator`)  are removed from each element of `boots` after the indices have
 #'   been extracted. If `TRUE`, all of them are retained.
 #' @param ... Additional arguments passed to [bootnet::bootnet()]. Note that
 #'   these are not listed explicitly in the function signature; please refer to
 #'   [bootnet::bootnet()] for the full list of supported arguments.
-#'   The `default` argument is required, e.g. `default = "EBICglasso"`.
+#'   **The `default` argument is required, e.g. `default = "EBICglasso"`**.
 #' @return An object of class `"bootnetWithIndices"` that inherits from
 #'   `"bootnet"`. It contains all components returned by
 #'   [bootnet::bootnet()], plus:
