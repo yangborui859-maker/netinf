@@ -35,7 +35,8 @@
 #'     \item `gCD`: the generalized Cook's distance
 #'   }
 #'   The list of raw difference vectors (full-sample centrality minus
-#'   leave-one-out centrality) is attached as the attribute `"diff_vectors"`.
+#'   leave-one-out centrality) is attached as the attribute `"diff_vectors"`,
+#'   which can be used by [gcds_plot()] and [gcds_md_plot()] for visualization.
 #'
 #' @details
 #' For each centrality measure, the covariance matrix of node-level centrality
