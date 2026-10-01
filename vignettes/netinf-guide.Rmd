@@ -64,7 +64,7 @@ We can run each step manually, or use `influence_diagnostic()` to run all four s
 
 The core of network analysis is estimating a network structure (e.g., a partial correlation network, a GLASSO network). But **how stable is the estimated network?**
 
-The standard approach is **bootstrap**: draw $n$ cases with replacement from the original data and re-estimate the network. Repeating this $B$ times gives us $B$ "resampled networks", which we can use to assess the confidence intervals of edge weights, the stability of centrality, and so on. 
+The standard approach is **bootstrap**: draw $n$ cases with replacement from the original data and re-estimate the network. Repeating this $B$ times gives us $B$ "resampled networks", which we can use to assess the confidence intervals of edge weights, the stability of centrality, and so on.
 
 Mathematically, the $b$-th bootstrap sample is:
 
@@ -72,7 +72,7 @@ $$
 X^{(b)} = \{x_{i_1^{(b)}}, x_{i_2^{(b)}}, \dots, x_{i_n^{(b)}}\}
 $$
 
-where each $i_k^{(b)} \in \{1, 2, \dots, n\}$ is a **case index drawn with replacement** from the original data. 
+where each $i_k^{(b)} \in \{1, 2, \dots, n\}$ is a **case index drawn with replacement** from the original data.
 
 ## The problem: `bootnet` does not store these indices by default
 
@@ -98,7 +98,7 @@ The returned object is a `bootnetWithIndices` object: a `bootnet` result with an
 library(netinf)
 ```
 
-We use a simulated dataset based on the 9 variables from the `HolzingerSwineford1939` dataset in `lavaan`.
+We use a simulated dataset based on the 9 variables from the HolzingerSwineford1939 dataset in lavaan.
 
 ```{r}
 set.seed(123)
@@ -114,10 +114,9 @@ case_100 <- numeric(9)
 
 #One influential case
 names(case_100) <- paste0("x", 1:9)
-high_vars <- c("x1", "x2", "x4", "x6", "x7", "x3", "x5", "x8", "x9")
-case_100 <- means_99
-case_100[high_vars] <- means_99[high_vars] + 2 * sds_99[high_vars]
+case_100 <- means_99 + 2 * sds_99
 data <- rbind(data_99, case_100)
+rownames(data) <- seq_len(nrow(data))
 ```
 
 ## Calling `bootnet_with_indices()`
@@ -126,7 +125,7 @@ data <- rbind(data_99, case_100)
 set.seed(1)
 boot_res <- bootnet_with_indices(
   data,
-  nBoots = 5000,               
+  nBoots = 5000,
   default = "EBICglasso"
 )
 ```
@@ -148,7 +147,7 @@ str(boot_res$bootIndices[[1]])    # indices from the first bootstrap
 
 `bootIndices[[b]]` is a vector of length $n$. Its $k$-th element indicates which row of the original data was drawn at position $k$ in the $b$-th bootstrap sample.
 
-These indices are the input to `calculate_empirical_influence()`, which turns them into a numeric influence value per case. 
+These indices are the input to `calculate_empirical_influence()`, which turns them into a numeric influence value per case.
 
 # Step 2: calculate_empirical_influence {#step-2}
 
@@ -156,7 +155,7 @@ These indices are the input to `calculate_empirical_influence()`, which turns th
 
 This step use very little computing power to output some valuable information in addition to the work that researchers inevitably have to do. And this is why we do not conduct leave-one-out analysis directly.
 
-We need a **single number per case** that quantifies: *how much does this case influence the network's global structure?* 
+We need a **single number per case** that quantifies: *how much does this case influence the network's global structure?*
 
 `calculate_empirical_influence()` answers this question by regressing a network-level summary (global strength) on the inclusion counts of each case.
 
@@ -168,7 +167,7 @@ $$
 \text{GS}^{(b)} = \sum_{j < k} |w_{jk}^{(b)}|
 $$
 
-where $w_{jk}^{(b)}$ is the edge weight between nodes $j$ and $k$ in the $b$-th bootstrap network. 
+where $w_{jk}^{(b)}$ is the edge weight between nodes $j$ and $k$ in the $b$-th bootstrap network.
 
 ### Inclusion counts
 
@@ -188,7 +187,7 @@ $$
 \text{GS}^{(b)} = \beta_0 + \sum_{i=1}^{n} \beta_i \cdot c_i^{(b)} + \varepsilon^{(b)}
 $$
 
-The coefficient of empirical influence $\beta_i$ measures **how much case $i$ contributes to global strength**. 
+The coefficient of empirical influence $\beta_i$ measures **how much case $i$ contributes to global strength**.
 
 ### Two details
 
@@ -250,7 +249,7 @@ If `nBoots` is too small, the regression may not stable. Roughly speaking, 5000+
 
 ### 2. Sparse network need more boots
 
-If all bootstrap networks have almost the same global strength (e.g., because the network is nearly empty), the response variable has  almost zero variance and the regression may fails when `nBoots` is small. 
+If all bootstrap networks have almost the same global strength (e.g., because the network is nearly empty), the response variable has  almost zero variance and the regression may fails when `nBoots` is small.
 
 ## Next step
 
@@ -423,7 +422,7 @@ cases are correlated.
 # Step 4: calculate_centrality_gCD {#step-4}
 
 ## Why this step exists
-`leave_one_out_analysis()` gave a comprehensive description of how a influential cases 
+`leave_one_out_analysis()` gave a comprehensive description of how a influential cases
 works in a network analysis, and the following function `calculate_centrality_gCD()`will
 uses a generalized Cook's distance(gCD) to summarize the overall change in the
 **centrality vector**, providing a single, easy-to-interpret index to guide users' decision.
@@ -549,18 +548,89 @@ The next section shows how to run all four steps in **one call** with
 Step 1 (`bootnet_with_indices()`) is **optional** and depends on the input:
 if you pass raw data, the function runs four steps for you; if you pass an `bootnetWithIndices` object, the function skips the first step and reuses your existing bootstrap result. Which input to use depends on your workflow.
 
----
+```{r}
+diag <- influence_diagnostic(
+  data               = data,
+  nBoots             = 5000,
+  top_n              = 3,
+  centrality_metrics = "Strength",
+  default            = "EBICglasso",
+  verbose            = FALSE
+)
+
+diag
+```
+
 
 # Visualization {#visualization}
 
+The three plotting functions accept either the output of
+[`influence_diagnostic()`][influence_diagnostic] (all-in-one) or the
+output of the individual step functions
+([`calculate_empirical_influence()`][calculate_empirical_influence]
+and [`calculate_centrality_gCD()`][calculate_centrality_gCD]).
+
 ## influence_plot {#plot-influence}
 
-*Coming soon.*
+`influence_plot()` shows the empirical influence value of each case.
+
+**Accepted inputs:**
+
+- An `influenceDiagnostic` object (from [influence_diagnostic()])
+- An `empiricalInfluence` vector (from [calculate_empirical_influence()])
+- A named numeric vector, matrix, or data frame
+
+**Example** using the all-in-one object:
+```{r}
+influence_plot(diag, largest_x = 3)
+```
+
+**Or** using the output of  `calculate_empirical_influence()` directly:
+```{r}
+influence_plot(empic, largest_x = 3)
+```
 
 ## gcds_plot {#plot-gcds}
 
-*Coming soon.*
+`gcds_plot()` shows gCD on the x-axis and centrality change on the
+y-axis, with a separate panel per centrality measure.
+
+**Accepted inputs:**
+- An `influenceDiagnostic` object (from [influence_diagnostic()])
+- A data frame returned by [calculate_centrality_gCD()] (with a
+  `"diff_vectors"` attribute)
+
+**Example** using the all-in-one object:
+```{r}
+gcds_plot(diag, metrics = "Strength")
+```
+
+**Or** using the output of `calculate_centrality_gCD()` directly:
+```{r}
+gcds_plot(gcd_res, metrics = "Strength")
+```
 
 ## gcds_md_plot {#plot-gcds-md}
 
-*Coming soon.*
+`gcds_md_plot()` adds Mahalanobis distance to the picture: cases are
+plotted by Mahalanobis distance (x) and mean absolute centrality
+change (y), with bubble size representing gCD.
+
+**Accepted inputs:**
+
+- An `influenceDiagnostic` object (from [influence_diagnostic()])
+- A data frame returned by [calculate_centrality_gCD()] (with a
+  `"diff_vectors"` attribute)
+- Plus the original `data` argument
+
+**Example** using the all-in-one object:
+
+```{r}
+gcds_md_plot(diag, data = data, metric = "Strength")
+```
+
+**Or** using the output of Step 4 directly:
+
+```{r}
+gcds_md_plot(gcd_res, data = data, metric = "Strength")
+```

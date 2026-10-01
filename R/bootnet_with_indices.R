@@ -3,15 +3,16 @@
 #' A lightweight wrapper around [bootnet::bootnet()] that extracts bootstrap
 #' case indices from the row names of the data stored in each bootstrap result.
 #'
-#' @param data A data frame or matrix. Row names are reset to `1:nrow(data)`
-#'   before bootstrapping. 
+#' @param data A data frame or matrix. Row names are reset to `1:nrow`
+#'   before bootstrapping.
 #' @param keep_data If `FALSE` (default), the stored bootstrap data
-#'   frames are removed from each element of `boots` after the indices have
-#'   been extracted. If `TRUE`, the data frames are retained.
+#'   frames and the estimation internals (`results`, `.input`,
+#'   `estimator`)  are removed from each element of `boots` after the indices have
+#'   been extracted. If `TRUE`, all of them are retained.
 #' @param ... Additional arguments passed to [bootnet::bootnet()]. Note that
 #'   these are not listed explicitly in the function signature; please refer to
 #'   [bootnet::bootnet()] for the full list of supported arguments.
-#'   The `default` argument is required, e.g. `default = "EBICglasso"`.
+#'   **The `default` argument is required, e.g. `default = "EBICglasso"`**.
 #' @return An object of class `"bootnetWithIndices"` that inherits from
 #'   `"bootnet"`. It contains all components returned by
 #'   [bootnet::bootnet()], plus:
@@ -30,6 +31,17 @@
 #' that R adds for duplicated row names.
 #'
 #' @seealso [bootnet::bootnet()], [bootnet::estimateNetwork()]
+#'
+#' @examples
+#' data("test_data", package = "netinf")
+#'
+#' boot_res <- bootnet_with_indices(
+#'   test_data,
+#'   nBoots  = 100,       # 100 For demonstration (5000 or more is recommended in practice)
+#'   default = "EBICglasso"
+#' )
+#'
+#' boot_res
 #'
 #' @export
 bootnet_with_indices <- function(data,
@@ -60,7 +72,7 @@ bootnet_with_indices <- function(data,
 
   boot_res <- bootnet::bootnet(
     data,
-    memorysaver = FALSE,          
+    memorysaver = FALSE,
     ...
   )
 
@@ -72,10 +84,12 @@ bootnet_with_indices <- function(data,
 
 
   if (!keep_data) {
-    boot_res$boots <- lapply(boot_res$boots, function(boot_i) {
-      boot_i$data <- NULL
-      boot_i
-    })
+    for (i in seq_along(boot_res$boots)){
+      boot_res$boots[[i]]$data <- NULL
+      boot_res$boots[[i]]$results   <- NULL
+      boot_res$boots[[i]]$.input    <- NULL
+      boot_res$boots[[i]]$estimator <- NULL
+    }
   }
 
   boot_res$bootIndices <- boot_indices

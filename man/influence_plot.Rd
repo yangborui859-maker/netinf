@@ -22,7 +22,10 @@ influence_plot(
 )
 }
 \arguments{
-\item{object}{An object of class \code{"influenceDiagnostic"} or a named numeric vector.}
+\item{object}{An object of class \code{"influenceDiagnostic"} returned by
+\code{\link[=influence_diagnostic]{influence_diagnostic()}} or an \code{"empiricalInfluence"} vector returned
+by \code{\link[=calculate_empirical_influence]{calculate_empirical_influence()}},
+matrix, or data frame containing one or more numeric columns.}
 
 \item{column}{If \code{object} is a matrix or data frame, the column to plot.}
 

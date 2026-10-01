@@ -7,17 +7,18 @@
 bootnet_with_indices(data, keep_data = FALSE, ...)
 }
 \arguments{
-\item{data}{A data frame or matrix. Row names are reset to \code{1:nrow(data)}
+\item{data}{A data frame or matrix. Row names are reset to \code{1:nrow}
 before bootstrapping.}
 
 \item{keep_data}{If \code{FALSE} (default), the stored bootstrap data
-frames are removed from each element of \code{boots} after the indices have
-been extracted. If \code{TRUE}, the data frames are retained.}
+frames and the estimation internals (\code{results}, \code{.input},
+\code{estimator})  are removed from each element of \code{boots} after the indices have
+been extracted. If \code{TRUE}, all of them are retained.}
 
 \item{...}{Additional arguments passed to \code{\link[bootnet:bootnet]{bootnet::bootnet()}}. Note that
 these are not listed explicitly in the function signature; please refer to
 \code{\link[bootnet:bootnet]{bootnet::bootnet()}} for the full list of supported arguments.
-The \code{default} argument is required, e.g. \code{default = "EBICglasso"}.}
+\strong{The \code{default} argument is required, e.g. \code{default = "EBICglasso"}}.}
 }
 \value{
 An object of class \code{"bootnetWithIndices"} that inherits from
@@ -40,6 +41,18 @@ This function relies on \code{\link[bootnet:bootnet]{bootnet::bootnet()}} being 
 bootstrap result. The original case indices are then recovered from the row
 names of those stored data frames, after removing the \code{.1}, \code{.2}, ... suffixes
 that R adds for duplicated row names.
+}
+\examples{
+data("test_data", package = "netinf")
+
+boot_res <- bootnet_with_indices(
+  test_data,
+  nBoots  = 100,       # 100 For demonstration (5000 or more is recommended in practice)
+  default = "EBICglasso"
+)
+
+boot_res
+
 }
 \seealso{
 \code{\link[bootnet:bootnet]{bootnet::bootnet()}}, \code{\link[bootnet:estimateNetwork]{bootnet::estimateNetwork()}}

@@ -29,8 +29,11 @@ influence values.}
 \item{top_n}{Number of top influential cases to select when \code{remove_cases}
 and \code{threshold} are not specified.}
 
-\item{direction}{Character, direction of selection: \code{"both"}, \code{"positive"},
-or \code{"negative"}.}
+\item{direction}{Character. Direction of case selection when
+\code{threshold} or \code{top_n} is used: \code{"both"} (default) selects by
+absolute influence magnitude; \code{"positive"} selects only cases
+with positive influence; \code{"negative"} selects only cases with
+negative influence. Ignored when \code{remove_cases} is supplied.}
 
 \item{digits}{Optional integer. If supplied, controls the number of
 decimal places used when formatting edge changes. Default \code{NULL}
@@ -63,4 +66,35 @@ of cases, a warning is issued and all cases are used.
 When multiple selection arguments are supplied, the priority is
 \code{remove_cases} > \code{threshold} > \code{top_n}. A warning is issued when a
 lower-priority argument is ignored.
+}
+\examples{
+data("test_data", package = "netinf")
+
+boot_res <- bootnet_with_indices(
+  test_data,
+  nBoots  = 100,        # for demonstration; use 5000+ in practice
+  default = "EBICglasso"
+)
+empic <- calculate_empirical_influence(boot_res)
+
+# Single-case removal of the top 2 candidates
+loo_res <- leave_one_out_analysis(
+  empic, test_data,
+  top_n   = 2,                   # select the top 2 cases by absolute influence of empic
+  default = "EBICglasso",
+  verbose = FALSE
+)
+
+loo_res
+
+# Multi-case removal (all three at once)
+loo_multi <- leave_one_out_analysis(
+  empic, test_data,
+  remove_cases = c(11, 22, 33),    # select the cases with rowname11/22/33 in 'test_data'
+  default      = "EBICglasso",
+  verbose      = FALSE
+)
+
+loo_multi
+
 }

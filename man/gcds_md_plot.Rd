@@ -6,7 +6,7 @@
 \usage{
 gcds_md_plot(
   diag,
-  data,
+  data = NULL,
   metric = c("Strength", "Closeness", "Betweenness"),
   circle_size = 2,
   cutoff_md = FALSE,
@@ -25,10 +25,14 @@ gcds_md_plot(
 )
 }
 \arguments{
-\item{diag}{An object of class \code{"influenceDiagnostic"}, or a data frame
-with a \code{"diff_vectors"} attribute.}
+\item{diag}{An object of class \code{"influenceDiagnostic"} returned by #'   \code{\link[=influence_diagnostic]{influence_diagnostic()}}, or a data frame returned by
+\code{\link[=calculate_centrality_gCD]{calculate_centrality_gCD()}}.}
 
-\item{data}{Original data frame used in the analysis.}
+\item{data}{Optional original data frame used in the analysis. If \code{NULL}
+(default) and input is an \code{"influenceDiagnostic"} object, the data
+is extracted from the input. Required when input is data
+frame (from \code{\link[=calculate_centrality_gCD]{calculate_centrality_gCD()}}) that does not carry the
+original data.}
 
 \item{metric}{Character, centrality metric to use for bubble size and
 y-axis. Must be one of \code{"Strength"}, \code{"Closeness"}, \code{"Betweenness"}.}
