@@ -10,8 +10,11 @@
 #'   influence values.
 #' @param top_n Number of top influential cases to select when `remove_cases`
 #'   and `threshold` are not specified.
-#' @param direction Character, direction of selection: `"both"`, `"positive"`,
-#'   or `"negative"`.
+#' @param direction Character. Direction of case selection when
+#'   `threshold` or `top_n` is used: `"both"` (default) selects by
+#'   absolute influence magnitude; `"positive"` selects only cases
+#'   with positive influence; `"negative"` selects only cases with
+#'   negative influence. Ignored when `remove_cases` is supplied.
 #' @param verbose Logical, whether to print progress messages.
 #' @param digits Optional integer. If supplied, controls the number of
 #'   decimal places used when formatting edge changes. Default `NULL`
@@ -47,7 +50,7 @@
 #' # Single-case removal of the top 2 candidates
 #' loo_res <- leave_one_out_analysis(
 #'   empic, test_data,
-#'   top_n   = 2,
+#'   top_n   = 2,                   # select the top 2 cases by absolute influence of empic
 #'   default = "EBICglasso",
 #'   verbose = FALSE
 #' )
@@ -57,7 +60,7 @@
 #' # Multi-case removal (all three at once)
 #' loo_multi <- leave_one_out_analysis(
 #'   empic, test_data,
-#'   remove_cases = c(1, 2, 3),
+#'   remove_cases = c(11, 22, 33),    # select the cases with rowname11/22/33 in 'test_data'
 #'   default      = "EBICglasso",
 #'   verbose      = FALSE
 #' )
