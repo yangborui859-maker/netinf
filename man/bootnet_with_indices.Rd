@@ -7,18 +7,18 @@
 bootnet_with_indices(data, keep_data = FALSE, ...)
 }
 \arguments{
-\item{data}{A data frame or matrix. Row names are reset to \code{1:nrow(data)}
+\item{data}{A data frame or matrix. Row names are reset to \code{1:nrow}
 before bootstrapping.}
 
 \item{keep_data}{If \code{FALSE} (default), the stored bootstrap data
-frames (\code{data}) and the estimation internals (\code{results}, \code{.input},
+frames and the estimation internals (\code{results}, \code{.input},
 \code{estimator})  are removed from each element of \code{boots} after the indices have
 been extracted. If \code{TRUE}, all of them are retained.}
 
 \item{...}{Additional arguments passed to \code{\link[bootnet:bootnet]{bootnet::bootnet()}}. Note that
 these are not listed explicitly in the function signature; please refer to
 \code{\link[bootnet:bootnet]{bootnet::bootnet()}} for the full list of supported arguments.
-The \code{default} argument is required, e.g. \code{default = "EBICglasso"}.}
+\strong{The \code{default} argument is required, e.g. \code{default = "EBICglasso"}}.}
 }
 \value{
 An object of class \code{"bootnetWithIndices"} that inherits from
