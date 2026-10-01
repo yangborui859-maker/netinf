@@ -2,4 +2,4 @@
 
 ### All vignettes
 
-- [netinf-guide](https://yangborui859-maker.github.io/Influential-cases-in-Network-analysis/articles/netinf-guide.md):
+- [netinf-guide](https://yangborui859-maker.github.io/netinf/articles/netinf-guide.md):

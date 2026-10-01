@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Diagnostics for Influential Cases in Network Analysis">
-<meta name="description" content="Provides tools to identify influential cases in network analysis.">
-<meta property="og:description" content="Provides tools to identify influential cases in network analysis.">
+<meta name="description" content="Provides tools to identify influential cases in network analysis. This package complements bootnet (Epskamp, Borsboom, and Fried, 2018) &lt;doi:10.3758/s13428-017-0862-1&gt; by adding a complete workflow for influence diagnostics: extracting case indices from bootstrap samples, computing empirical influence values via regression on inclusion counts, validating candidate cases via leave-one-out and leave-multiple-out analysis, and quantifying centrality changes via a generalized Cook's distance.">
+<meta property="og:description" content="Provides tools to identify influential cases in network analysis. This package complements bootnet (Epskamp, Borsboom, and Fried, 2018) &lt;doi:10.3758/s13428-017-0862-1&gt; by adding a complete workflow for influence diagnostics: extracting case indices from bootstrap samples, computing empirical influence values via regression on inclusion counts, validating candidate cases via leave-one-out and leave-multiple-out analysis, and quantifying centrality changes via a generalized Cook's distance.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -51,10 +51,15 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
+  <main id="main" class="col-md-9">
+<p>(Version 0.1.0, updated on 2026-09-29)</p>
+<div class="section level1">
 <div class="page-header"><h1 id="netinf">netinf<a class="anchor" aria-label="anchor" href="#netinf"></a>
 </h1></div>
-<p><code>netinf</code> is an R package for identifying influential cases in network analysis。</p>
+<p><strong>(Work-in-progress. Not ready for use)</strong></p>
+<p><code>netinf</code> is an R package for identifying influential cases in network analysis. It complements the <code>bootnet</code> package by adding a complete workflow for influence diagnostics: extracting case indices from bootstrap samples, computing empirical influence values, validating candidate cases via leave-one-out and leave-multiple-out analysis, and quantifying centrality changes via a generalized Cook’s distance.</p>
+<p>For more information on this package, please visit its GitHub page:</p>
+<p><a href="https://yangborui859-maker.github.io/netinf/" class="uri">https://yangborui859-maker.github.io/netinf/</a></p>
 <div class="section level2">
 <h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h2>
@@ -63,14 +68,22 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>```r install.packages(“devtools”) devtools::install_github(“yangborui859-maker/Influential-cases-in-Network-analysis”) …</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"yangborui859-maker/netinf"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="issues">Issues<a class="anchor" aria-label="anchor" href="#issues"></a>
+</h2>
+<p>If you have any suggestions and found any bugs, please feel free to open a GitHub issue. Thanks.</p>
 </div>
 </div>
+
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small>GPL (&gt;= 3)</small></li>
+<li><small>GPL (&gt;= 2)</small></li>
 </ul>
 </div>
 
@@ -85,12 +98,21 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Borui Yang <br><small class="roles"> Author, maintainer </small>   </li>
-<li>Shu Fai Cheung <br><small class="roles"> Author </small>   </li>
+<li>Borui Yang <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0009-0006-7532-8950" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Shu Fai Cheung <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-9871-9448" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: Experimental"></a></li>
+<li><a href="https://www.repostatus.org/#wip" class="external-link"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a></li>
+<li><a href="https://github.com/yangborui859-maker/netinf" class="external-link"><img src="https://img.shields.io/github/languages/code-size/yangborui859-maker/netinf.svg" alt="Code size"></a></li>
+<li><a href="https://github.com/yangborui859-maker/netinf/commits/main" class="external-link"><img src="https://img.shields.io/github/last-commit/yangborui859-maker/netinf.svg" alt="Last Commit at Main"></a></li>
+<li><a href="https://github.com/yangborui859-maker/netinf/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/yangborui859-maker/netinf/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>

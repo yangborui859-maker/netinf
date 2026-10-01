@@ -3,8 +3,9 @@
 ## Authors
 
 - **Borui Yang**. Author, maintainer.
+  [](https://orcid.org/0009-0006-7532-8950)
 
-- **Shu Fai Cheung**. Author.
+- **Shu Fai Cheung**. Author. [](https://orcid.org/0000-0002-9871-9448)
 
 ## Citation
 

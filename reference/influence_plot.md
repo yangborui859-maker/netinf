@@ -28,7 +28,11 @@ influence_plot(
 
 - object:
 
-  An object of class `"influenceDiagnostic"` or a named numeric vector.
+  An object of class `"influenceDiagnostic"` returned by
+  [`influence_diagnostic()`](https://yangborui859-maker.github.io/netinf/reference/influence_diagnostic.md)
+  or an `"empiricalInfluence"` vector returned by
+  [`calculate_empirical_influence()`](https://yangborui859-maker.github.io/netinf/reference/calculate_empirical_influence.md),
+  matrix, or data frame containing one or more numeric columns.
 
 - column:
 

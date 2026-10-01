@@ -9,7 +9,7 @@ gCD.
 ``` r
 gcds_md_plot(
   diag,
-  data,
+  data = NULL,
   metric = c("Strength", "Closeness", "Betweenness"),
   circle_size = 2,
   cutoff_md = FALSE,
@@ -32,12 +32,18 @@ gcds_md_plot(
 
 - diag:
 
-  An object of class `"influenceDiagnostic"`, or a data frame with a
-  `"diff_vectors"` attribute.
+  An object of class `"influenceDiagnostic"` returned by \#'
+  [`influence_diagnostic()`](https://yangborui859-maker.github.io/netinf/reference/influence_diagnostic.md),
+  or a data frame returned by
+  [`calculate_centrality_gCD()`](https://yangborui859-maker.github.io/netinf/reference/calculate_centrality_gCD.md).
 
 - data:
 
-  Original data frame used in the analysis.
+  Optional original data frame used in the analysis. If `NULL` (default)
+  and input is an `"influenceDiagnostic"` object, the data is extracted
+  from the input. Required when input is data frame (from
+  [`calculate_centrality_gCD()`](https://yangborui859-maker.github.io/netinf/reference/calculate_centrality_gCD.md))
+  that does not carry the original data.
 
 - metric:
 

@@ -24,7 +24,11 @@ gcds_plot(
 
 - diag:
 
-  An object of class `"influenceDiagnostic"`.
+  An object of class `"influenceDiagnostic"` returned by
+  [`influence_diagnostic()`](https://yangborui859-maker.github.io/netinf/reference/influence_diagnostic.md),
+  or a data frame returned by
+  [`calculate_centrality_gCD()`](https://yangborui859-maker.github.io/netinf/reference/calculate_centrality_gCD.md)
+  (with a `"diff_vectors"` attribute).
 
 - metrics:
 
