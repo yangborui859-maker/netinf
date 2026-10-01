@@ -3,7 +3,9 @@
 #' Creates a faceted plot with gCD on the x-axis and centrality change
 #' on the y-axis, similar to semfindr's est_change_gcd_plot.
 #'
-#' @param diag An object of class `"influenceDiagnostic"`.
+#' @param diag An object of class `"influenceDiagnostic"` returned by
+#'   [influence_diagnostic()], or a data frame returned by
+#'   [calculate_centrality_gCD()] (with a `"diff_vectors"` attribute).
 #' @param metrics Character vector of centrality measures to plot.
 #'   Can include `"Strength"`, `"Closeness"`, `"Betweenness"`.
 #' @param node Optional character, if provided, plot change for this node only.
@@ -43,7 +45,7 @@ gcds_plot <- function(diag,
   if (is.null(gcd_df) || is.null(diff_vectors)) {
     stop("diag must contain centrality_gCD and centrality_diff_vectors.")
   }
-   
+
   metrics <- match.arg(metrics, several.ok = TRUE)
 
   all_dat <- list()

@@ -3,7 +3,10 @@
 #' Creates a plot of empirical influence values for each case.
 #' The plot can optionally mark cases with the largest absolute influence.
 #'
-#' @param object An object of class `"influenceDiagnostic"` or a named numeric vector.
+#' @param object An object of class `"influenceDiagnostic"` returned by
+#'   [influence_diagnostic()] or an `"empiricalInfluence"` vector returned
+#'   by [calculate_empirical_influence()],
+#'   matrix, or data frame containing one or more numeric columns.
 #' @param column If `object` is a matrix or data frame, the column to plot.
 #' @param plot_title Title of the plot.
 #' @param x_label Label for the y-axis.
@@ -69,7 +72,7 @@ influence_plot <- function(object,
   if (length(object) == 0) {
     stop("No cases have valid values.")
   }
-  
+
   if (is.null(names(object))) {
     message("Note: no row names found; using 1:n as case IDs.")
     names(object) <- seq_along(object)

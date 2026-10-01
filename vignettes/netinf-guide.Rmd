@@ -116,6 +116,7 @@ case_100 <- numeric(9)
 names(case_100) <- paste0("x", 1:9)
 case_100 <- means_99 + 2 * sds_99
 data <- rbind(data_99, case_100)
+rownames(data) <- seq_len(nrow(data))
 ```
 
 ## Calling `bootnet_with_indices()`
@@ -547,18 +548,89 @@ The next section shows how to run all four steps in **one call** with
 Step 1 (`bootnet_with_indices()`) is **optional** and depends on the input:
 if you pass raw data, the function runs four steps for you; if you pass an `bootnetWithIndices` object, the function skips the first step and reuses your existing bootstrap result. Which input to use depends on your workflow.
 
----
+```{r}
+diag <- influence_diagnostic(
+  data               = data,
+  nBoots             = 5000,
+  top_n              = 3,
+  centrality_metrics = "Strength",
+  default            = "EBICglasso",
+  verbose            = FALSE
+)
+
+diag
+```
+
 
 # Visualization {#visualization}
 
+The three plotting functions accept either the output of
+[`influence_diagnostic()`][influence_diagnostic] (all-in-one) or the
+output of the individual step functions
+([`calculate_empirical_influence()`][calculate_empirical_influence]
+and [`calculate_centrality_gCD()`][calculate_centrality_gCD]).
+
 ## influence_plot {#plot-influence}
 
-*Coming soon.*
+`influence_plot()` shows the empirical influence value of each case.
+
+**Accepted inputs:**
+
+- An `influenceDiagnostic` object (from [influence_diagnostic()])
+- An `empiricalInfluence` vector (from [calculate_empirical_influence()])
+- A named numeric vector, matrix, or data frame
+
+**Example** using the all-in-one object:
+```{r}
+influence_plot(diag, largest_x = 3)
+```
+
+**Or** using the output of  `calculate_empirical_influence()` directly:
+```{r}
+influence_plot(empic, largest_x = 3)
+```
 
 ## gcds_plot {#plot-gcds}
 
-*Coming soon.*
+`gcds_plot()` shows gCD on the x-axis and centrality change on the
+y-axis, with a separate panel per centrality measure.
+
+**Accepted inputs:**
+- An `influenceDiagnostic` object (from [influence_diagnostic()])
+- A data frame returned by [calculate_centrality_gCD()] (with a
+  `"diff_vectors"` attribute)
+
+**Example** using the all-in-one object:
+```{r}
+gcds_plot(diag, metrics = "Strength")
+```
+
+**Or** using the output of `calculate_centrality_gCD()` directly:
+```{r}
+gcds_plot(gcd_res, metrics = "Strength")
+```
 
 ## gcds_md_plot {#plot-gcds-md}
 
-*Coming soon.*
+`gcds_md_plot()` adds Mahalanobis distance to the picture: cases are
+plotted by Mahalanobis distance (x) and mean absolute centrality
+change (y), with bubble size representing gCD.
+
+**Accepted inputs:**
+
+- An `influenceDiagnostic` object (from [influence_diagnostic()])
+- A data frame returned by [calculate_centrality_gCD()] (with a
+  `"diff_vectors"` attribute)
+- Plus the original `data` argument
+
+**Example** using the all-in-one object:
+
+```{r}
+gcds_md_plot(diag, data = data, metric = "Strength")
+```
+
+**Or** using the output of Step 4 directly:
+
+```{r}
+gcds_md_plot(gcd_res, data = data, metric = "Strength")
+```

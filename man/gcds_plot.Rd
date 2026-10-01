@@ -18,7 +18,9 @@ gcds_plot(
 )
 }
 \arguments{
-\item{diag}{An object of class \code{"influenceDiagnostic"}.}
+\item{diag}{An object of class \code{"influenceDiagnostic"} returned by
+\code{\link[=influence_diagnostic]{influence_diagnostic()}}, or a data frame returned by
+\code{\link[=calculate_centrality_gCD]{calculate_centrality_gCD()}} (with a \code{"diff_vectors"} attribute).}
 
 \item{metrics}{Character vector of centrality measures to plot.
 Can include \code{"Strength"}, \code{"Closeness"}, \code{"Betweenness"}.}
