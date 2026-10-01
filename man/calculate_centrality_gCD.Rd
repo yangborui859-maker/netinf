@@ -53,7 +53,8 @@ A data frame with one row per case-metric combination and columns:
 \item \code{gCD}: the generalized Cook's distance
 }
 The list of raw difference vectors (full-sample centrality minus
-leave-one-out centrality) is attached as the attribute \code{"diff_vectors"}.
+leave-one-out centrality) is attached as the attribute \code{"diff_vectors"},
+which can be used by \code{\link[=gcds_plot]{gcds_plot()}} and \code{\link[=gcds_md_plot]{gcds_md_plot()}} for visualization.
 }
 \description{
 Computes generalized Cook's distance (gCD) for centrality measures
