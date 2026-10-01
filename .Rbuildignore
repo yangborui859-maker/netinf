@@ -6,3 +6,5 @@
 ^\.github$
 ^LICENSE\.md$
 ^data-raw$
+^README\.html$
+^README_files$
