@@ -46,8 +46,10 @@ Or run all four steps in one call with
 [`influence_diagnostic()`](https://yangborui859-maker.github.io/netinf/reference/influence_diagnostic.md).
 
 See
-[`vignette("netinf-guide", package = "netinf")`](https://yangborui859-maker.github.io/netinf/articles/netinf-guide.md)
-for a full walkthrough.
+[`vignette("netinf-quickstart", package = "netinf")`](https://yangborui859-maker.github.io/netinf/articles/netinf-quickstart.md)
+for a quick start, or
+[`vignette("netinf-detailedguide", package = "netinf")`](https://yangborui859-maker.github.io/netinf/articles/netinf-detailedguide.md)for
+a full walkthrough.
 
 ## Visualization
 
@@ -67,6 +69,16 @@ for a full walkthrough.
 
 - [qgraph](https://cran.r-project.org/package=qgraph) for network
   visualization and centrality.
+
+## See also
+
+Useful links:
+
+- <https://yangborui859-maker.github.io/netinf/>
+
+- <https://github.com/yangborui859-maker/netinf>
+
+- Report bugs at <https://github.com/yangborui859-maker/netinf/issues>
 
 ## Author
 

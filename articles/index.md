@@ -1,5 +1,13 @@
 # Articles
 
-### All vignettes
+### Get started
 
-- [netinf-guide](https://yangborui859-maker.github.io/netinf/articles/netinf-guide.md):
+A brief introduction
+
+- [netinf-quickstart](https://yangborui859-maker.github.io/netinf/articles/netinf-quickstart.md):
+
+### In-depth
+
+A comprehensive illustration of this netinf
+
+- [netinf-detailedguide](https://yangborui859-maker.github.io/netinf/articles/netinf-detailedguide.md):

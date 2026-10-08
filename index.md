@@ -17,8 +17,12 @@ For more information on this package, please visit its GitHub page:
 
 ## Getting started
 
-For a detailed walkthrough, see the [Getting started
-guide](https://yangborui859-maker.github.io/netinf/articles/netinf-guide.html).
+New to `netinf`? Start with the [Quick
+Start](https://yangborui859-maker.github.io/netinf/articles/netinf-quickstart.html)
+for a brief introduction.
+
+For a detailed walkthrough, see the [Detailed
+Guide](https://yangborui859-maker.github.io/netinf/articles/netinf-detailedguide.html).
 
 ## Installation
 
