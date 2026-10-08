@@ -47,6 +47,7 @@
 #'   verbose            = FALSE
 #' )
 #'
+#' diag
 #' @export
 influence_diagnostic <- function(data,
                                   nBoots = 1000,
