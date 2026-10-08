@@ -447,5 +447,3 @@ gcds_md_plot(gcd_res, data = test_data, metric = "Strength")
 - [Detailed
   Guide](https://yangborui859-maker.github.io/netinf/articles/netinf-detailedguide.md)
   — theory, formulas, and interpretation for each step.
-- [`?influence_diagnostic`](https://yangborui859-maker.github.io/netinf/reference/influence_diagnostic.md)
-  — function reference.
