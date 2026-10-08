@@ -158,6 +158,174 @@ in Phase 3. Default is 1.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     - using glasso::glasso</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>A dense regularized network was selected (lambda &lt; 0.1 * lambda.max). Recent work indicates a possible drop in specificity. Interpret the presence of the smallest edges with care. Setting threshold = TRUE will enforce higher specificity, at the cost of sensitivity.</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">diag</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Influence Diagnostic Results</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ============================</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Phase 1: Empirical Influence Screening</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Number of cases: 100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Selected candidates: 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Selection method: top_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Direction: both</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> All Case Influence Values (sorted by absolute influence):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  case_id     influence</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       74  319.38558194</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       77 -295.95990969</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       56 -292.72222907</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       70  270.65769419</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       35  263.25047241</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       17 -241.59231899</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      100 -212.57701675</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       96 -201.90366197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       31  200.17204732</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       44 -197.17194977</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       69 -192.06030929</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       34  189.07477677</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       49 -187.07506771</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       43  186.62187256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        9  185.45929293</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       50  184.64032839</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       68  176.09202805</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       15 -174.80036823</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       37 -172.19533276</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       84  162.70519898</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       59 -153.12186530</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       22  152.66238697</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        6  150.53001729</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       25  149.77856296</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       29  140.40985270</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       30 -136.68985045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       98  136.36005522</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       10 -132.44333058</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        4 -129.82831315</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       48 -129.79005339</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       32  128.70788785</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       94 -125.72032208</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       80 -124.20218442</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       58  122.27764061</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       71  120.18855694</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       99 -118.76351768</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       66 -118.68724831</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       21  116.42408423</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       46 -112.62550006</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       78  100.50601783</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       23  -98.11441375</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       62  -92.62302161</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       42   89.65385666</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       27   89.62349722</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       82  -83.25179358</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       86   82.31173775</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       55  -80.73084147</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       36  -79.74492626</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       52   79.17212985</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       45   76.78124722</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       92   74.82929667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       67   74.54367218</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        8  -72.81527290</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       89  -72.64767021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       64   72.03008647</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       47   71.69823307</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       24   70.45748808</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       53  -67.97327948</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       33   66.53306881</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       39   66.19866776</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       40  -63.42863363</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       81   62.91030955</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       63   62.36221619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       73   60.87970653</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       54  -57.68632138</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       87  -56.40307012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        1  -51.91447174</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       91  -49.66647865</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       93   48.01634026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       83  -44.02578944</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       20  -43.13714711</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       76   39.68198333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       61   39.07090013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       57  -39.06629494</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       85   38.62766794</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       75  -38.45711530</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       90  -37.20573537</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       19  -35.96267424</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       60  -33.09035653</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       72   32.17320473</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        2  -31.41793165</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       51  -31.23106672</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       16  -30.82835668</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       97   30.22019612</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       38   29.03661460</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       26   24.88737370</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        3  -23.90728854</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       28  -23.45936448</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       65  -19.45106523</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       88  -16.77150345</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       41  -16.26753614</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       13   16.25027348</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        7  -15.99248080</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       14   14.30715541</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       18   -8.69566480</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       95    7.38881032</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       11   -6.71622488</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        5   -5.09386591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       79    2.11523028</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       12    0.04268621</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Phase 2: Leave-One-Out Validation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> =================================</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Leave-One-Out Analysis Results</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ==============================</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selection method: top_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Direction: both</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of cases analyzed: 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Summary:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   case_id empirical_influence global_weight-strength_change</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      74            319.3856                   -0.02530137</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      77           -295.9599                   -0.01569948</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   global_weight-strength_change(%) n_edges_disappeared n_edges_appeared</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                       -0.7003976                   0                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                       -0.4345960                   0                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   n_edges_reversed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> === Without Case 74: Structure Changes ===</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Edges disappeared:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   None</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Edges appeared:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   None</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Edge sign reversals:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   None</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> === Without Case 77: Structure Changes ===</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Edges disappeared:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   None</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Edges appeared:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   None</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Edge sign reversals:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   None</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Phase 3: Centrality gCD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ========================</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   case_id      metric        gCD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      74    Strength 0.02916723</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      77    Strength 0.01301693</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      74   Closeness 0.02010426</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      77   Closeness 0.01867630</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      74 Betweenness 0.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      77 Betweenness 2.31951966</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
