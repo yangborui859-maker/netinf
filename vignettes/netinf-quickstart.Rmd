@@ -59,7 +59,7 @@ diag <- influence_diagnostic(
 The output contains three parts:
 
 - **Phase 1**: empirical influence values per case
-- **Phase 2**: leave-one-out validation of top candidates
+- **Phase 2**: leave-one-out validation of selected candidates
 - **Phase 3**: centrality gCD (generalized Cook's distance)
 
 ## Manual workflow

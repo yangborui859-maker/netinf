@@ -24,11 +24,11 @@ Imports:
     ggrepel,
     MASS,
     pbapply,
-    lavaan,
     qgraph,
     utils,
     rlang
 Suggests:
+    lavaan,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
