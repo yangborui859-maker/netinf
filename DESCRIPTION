@@ -12,6 +12,9 @@ Description: Provides tools to identify influential cases in network analysis.
     leave-one-out and leave-multiple-out analysis, and quantifying
     centrality changes via a generalized Cook's distance.
 License: GPL (>= 2)
+URL: https://yangborui859-maker.github.io/netinf/,
+    https://github.com/yangborui859-maker/netinf
+BugReports: https://github.com/yangborui859-maker/netinf/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Config/roxygen2/version: 8.1.0

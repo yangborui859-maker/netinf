@@ -26,7 +26,8 @@
 #'
 #' Or run all four steps in one call with [influence_diagnostic()].
 #'
-#' See `vignette("netinf-guide", package = "netinf")` for a full walkthrough.
+#' See `vignette("netinf-quickstart", package = "netinf")` for a quick start,
+#' or `vignette("netinf-detailedguide", package = "netinf")`for a full walkthrough.
 #'
 #' @section Visualization:
 #' * [influence_plot()] — plot of empirical influence values
