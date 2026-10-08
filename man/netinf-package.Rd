@@ -37,7 +37,8 @@ The recommended workflow:
 
 Or run all four steps in one call with \code{\link[=influence_diagnostic]{influence_diagnostic()}}.
 
-See \code{vignette("netinf-guide", package = "netinf")} for a full walkthrough.
+See \code{vignette("netinf-quickstart", package = "netinf")} for a quick start,
+or \code{vignette("netinf-detailedguide", package = "netinf")}for a full walkthrough.
 }
 
 \section{Visualization}{
@@ -104,6 +105,15 @@ gcd_res <- calculate_centrality_gCD(
   default     = "EBICglasso"
 )
 gcd_res
+
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://yangborui859-maker.github.io/netinf/}
+  \item \url{https://github.com/yangborui859-maker/netinf}
+  \item Report bugs at \url{https://github.com/yangborui859-maker/netinf/issues}
+}
 
 }
 \author{

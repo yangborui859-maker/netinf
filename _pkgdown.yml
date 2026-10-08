@@ -1,3 +1,13 @@
 url: https://yangborui859-maker.github.io/netinf/
 template:
   bootstrap: 5
+
+articles:
+  - title: "Get started"
+    desc: "A brief introduction"
+    contents:
+      - netinf-quickstart
+  - title: "In-depth"
+    desc: "A comprehensive illustration of this netinf"
+    contents:
+      - netinf-detailedguide

@@ -1,0 +1,198 @@
+---
+title: "netinf-quickstart"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{netinf-quickstart}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>",
+  fig.width  = 6,
+  fig.height = 4
+)
+```
+
+# Quick Start
+
+`netinf` identifies **influential cases** in psychological network analysis.
+It reuses the same bootstrap samples of `bootnet` for influence
+diagnostics.
+
+For the theory and formulas behind each step, see the
+[Detailed Guide](netinf-detailedguide.html).
+
+## Setup
+
+```{r}
+library(netinf)
+```
+
+## The data
+
+The package ships with a simulated dataset `test_data`: 100 cases × 9
+variables. The last case (row 100) is an artificially constructed
+influential case.
+
+```{r}
+data("test_data", package = "netinf")
+```
+
+## The all-in-one function
+
+For most users, `influence_diagnostic()` runs the whole workflow in one call:
+
+```{r, eval = FALSE}
+diag <- influence_diagnostic(
+  data               = test_data,
+  nBoots             = 5000,
+  centrality_metrics = c("Strength", "Closeness", "Betweenness"), # Select the statistics to calculate the generalized Cook distance.
+  default            = "EBICglasso",
+  verbose            = FALSE
+)
+
+```
+
+The output contains three parts:
+
+- **Phase 1**: empirical influence values per case
+- **Phase 2**: leave-one-out validation of top candidates
+- **Phase 3**: centrality gCD (generalized Cook's distance)
+
+## Manual workflow
+
+If you want to run each step yourself, the four functions form a pipeline.
+
+### Step 1: bootstrap with case indices
+
+`bootnet_with_indices()` runs `bootnet::bootnet()` and additionally stores
+the case index drawn in each bootstrap sample.
+
+```{r}
+set.seed(1)
+boot_res <- bootnet_with_indices(
+  test_data,
+  nBoots  = 5000,
+  default = "EBICglasso"
+)
+
+```
+
+### Step 2: empirical influence per case
+
+`calculate_empirical_influence()` turns the bootstrap indices into a numeric
+influence value per case.
+
+```{r}
+empic <- calculate_empirical_influence(boot_res)
+
+print(empic, n = 10)   # 10 cases with largest absolute value
+```
+
+### Step 3: leave-one-out validation
+
+`leave_one_out_analysis()` removes the selected candidates and re-estimates the
+network to see what changes.
+
+There are three ways to select cases:
+
+- `top_n`: top N by absolute influence from `calculate_empirical_influence()`
+- `threshold`: cases above a cutoff (with `direction` to pick the tail) from `calculate_empirical_influence()`
+- `remove_cases`: manually specified IDs
+
+**Option 1 — top N:**
+
+```{r}
+loo_res <- leave_one_out_analysis(
+  influence_result = empic,
+  data             = test_data,
+  top_n            = 3,
+  default          = "EBICglasso"
+)
+
+loo_res
+```
+
+**Option 2 — by threshold:**
+
+```{r}
+loo_thr <- leave_one_out_analysis(
+  influence_result = empic,
+  data             = test_data,
+  threshold        = 8,
+  direction        = "both",        # "both" | "positive" | "negative"
+  default          = "EBICglasso"
+)
+
+loo_thr
+```
+
+**Option 3 — manually remove specific cases (multiple → leave-multiple-out):**
+
+```{r}
+lmo_res <- leave_one_out_analysis(
+  influence_result = empic,
+  data             = test_data,
+  remove_cases     = c(3, 7, 12),
+  default          = "EBICglasso"
+)
+
+lmo_res
+```
+
+### Step 4: centrality gCD
+
+`calculate_centrality_gCD()` quantifies how much each case shifts the
+centrality vector.
+
+```{r}
+gcd_res <- calculate_centrality_gCD(
+  data        = test_data,
+  boot_result = boot_res,
+  case_ids    = c(100, 75, 50, 25),
+  metric      = c("Strength", "Closeness", "Betweenness"),
+  default     = "EBICglasso"
+)
+
+gcd_res
+```
+
+## Visualization
+
+Three plot functions work with either the all-in-one object or individual
+step outputs.
+
+### influence_plot
+
+```{r}
+influence_plot(empic, largest_x = 3)
+```
+
+### gcds_plot
+
+```{r}
+gcds_plot(gcd_res, metrics = "Strength")
+```
+
+### gcds_md_plot
+
+```{r}
+gcds_md_plot(gcd_res, data = test_data, metric = "Strength")
+```
+
+## Tips
+
+- If you already ran `bootnet_with_indices()`, pass the result to
+  `influence_diagnostic()` to skip Step 1:
+- Only `default = "EBICglasso"` is currently supported.
+- `calculate_centrality_gCD()` needs `case_ids`; these can be any cases you
+  want to diagnose—they do not have to come from `leave_one_out_analysis()`.
+
+## Next steps
+
+- [Detailed Guide](netinf-detailedguide.html) — theory, formulas, and
+  interpretation for each step.
+- `?influence_diagnostic` — function reference.

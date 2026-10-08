@@ -1,8 +1,8 @@
 ---
-title: "netinf-guide"
+title: "netinf-detailedguide"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{netinf-guide}
+  %\VignetteIndexEntry{netinf-detailedguide}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
