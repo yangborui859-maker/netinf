@@ -195,4 +195,3 @@ gcds_md_plot(gcd_res, data = test_data, metric = "Strength")
 
 - [Detailed Guide](netinf-detailedguide.html) — theory, formulas, and
   interpretation for each step.
-- `?influence_diagnostic` — function reference.
