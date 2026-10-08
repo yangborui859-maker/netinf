@@ -78,4 +78,5 @@ diag <- influence_diagnostic(
   verbose            = FALSE
 )
 
+diag
 }
