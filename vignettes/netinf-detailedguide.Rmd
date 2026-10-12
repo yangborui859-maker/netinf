@@ -105,7 +105,6 @@ set.seed(123)
 dat <- lavaan::HolzingerSwineford1939
 datused <- dat[, paste0("x", 1:9)]
 
-#Following Fried's suggestion(2017),N/P > 10
 sample_idx <- sample(1:nrow(datused), 99)
 data_99 <- datused[sample_idx, ]
 means_99 <- colMeans(data_99)
