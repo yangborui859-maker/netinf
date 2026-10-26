@@ -141,60 +141,15 @@ diag
 #> 
 #> Leave-One-Out Analysis Results
 #> ==============================
-#> 
 #> Selection method: top_3
-#> Direction: both
 #> Number of cases analyzed: 3
 #> 
-#> Summary:
-#>   case_id empirical_influence global_weight-strength_change
-#> 1      59            1350.525                  -0.034588398
-#> 2      90           -1295.154                   0.001154765
-#> 3       9            1169.157                  -0.017530418
-#>   global_weight-strength_change(%) n_edges_disappeared n_edges_appeared
-#> 1                      -0.95748285                   0                0
-#> 2                       0.03196644                   0                0
-#> 3                      -0.48528049                   0                0
-#>   n_edges_reversed
-#> 1                0
-#> 2                0
-#> 3                0
+#> Summary of Structural Changes:
+#>  Total_Edges_Changed Number_of_Cases
+#>                    0               3
 #> 
-#> === Without Case 59: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   None
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
-#> 
-#> 
-#> === Without Case 90: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   None
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
-#> 
-#> 
-#> === Without Case 9: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   None
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
-#> 
+#> * Use `print(x, n = 5)` to view the top 5 influential cases and their detailed edge changes.
+#> * Use `print(x, detailed = TRUE)` to view all cases.
 #> Phase 3: Centrality gCD
 #> =================================
 #> 
@@ -275,60 +230,15 @@ loo_res <- leave_one_out_analysis(
 loo_res
 #> Leave-One-Out Analysis Results
 #> ==============================
-#> 
 #> Selection method: top_3
-#> Direction: both
 #> Number of cases analyzed: 3
 #> 
-#> Summary:
-#>   case_id empirical_influence global_weight-strength_change
-#> 1      59            1350.525                  -0.034588398
-#> 2      90           -1295.154                   0.001154765
-#> 3       9            1169.157                  -0.017530418
-#>   global_weight-strength_change(%) n_edges_disappeared n_edges_appeared
-#> 1                      -0.95748285                   0                0
-#> 2                       0.03196644                   0                0
-#> 3                      -0.48528049                   0                0
-#>   n_edges_reversed
-#> 1                0
-#> 2                0
-#> 3                0
+#> Summary of Structural Changes:
+#>  Total_Edges_Changed Number_of_Cases
+#>                    0               3
 #> 
-#> === Without Case 59: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   None
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
-#> 
-#> 
-#> === Without Case 90: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   None
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
-#> 
-#> 
-#> === Without Case 9: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   None
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
-#> 
+#> * Use `print(x, n = 5)` to view the top 5 influential cases and their detailed edge changes.
+#> * Use `print(x, detailed = TRUE)` to view all cases.
 
 gcd_res <- calculate_centrality_gCD(
   data        = test_data,

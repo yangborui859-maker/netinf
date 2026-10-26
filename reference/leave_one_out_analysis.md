@@ -121,45 +121,15 @@ loo_res <- leave_one_out_analysis(
 loo_res
 #> Leave-One-Out Analysis Results
 #> ==============================
-#> 
 #> Selection method: top_2
-#> Direction: both
 #> Number of cases analyzed: 2
 #> 
-#> Summary:
-#>   case_id empirical_influence global_weight-strength_change
-#> 1      99            1427.752                  -0.017507028
-#> 2      19            1197.723                   0.004329257
-#>   global_weight-strength_change(%) n_edges_disappeared n_edges_appeared
-#> 1                       -0.4846330                   0                0
-#> 2                        0.1198433                   0                0
-#>   n_edges_reversed
-#> 1                0
-#> 2                0
+#> Summary of Structural Changes:
+#>  Total_Edges_Changed Number_of_Cases
+#>                    0               2
 #> 
-#> === Without Case 99: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   None
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
-#> 
-#> 
-#> === Without Case 19: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   None
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
-#> 
+#> * Use `print(x, n = 5)` to view the top 5 influential cases and their detailed edge changes.
+#> * Use `print(x, detailed = TRUE)` to view all cases.
 
 # Multi-case removal (all three at once)
 loo_multi <- leave_one_out_analysis(

@@ -711,64 +711,17 @@ specified, only leave-multiple-out now)<a class="anchor" aria-label="anchor" hre
 <code class="sourceCode R"><span><span class="va">loo_res</span></span>
 <span><span class="co">#&gt; Leave-One-Out Analysis Results</span></span>
 <span><span class="co">#&gt; ==============================</span></span>
-<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Selection method: top_3</span></span>
-<span><span class="co">#&gt; Direction: both</span></span>
 <span><span class="co">#&gt; Number of cases analyzed: 3</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Summary:</span></span>
-<span><span class="co">#&gt;   case_id empirical_influence global_weight-strength_change</span></span>
-<span><span class="co">#&gt; 1     100           10.554229                  0.7557114974</span></span>
-<span><span class="co">#&gt; 2      73            9.837622                  0.0973086900</span></span>
-<span><span class="co">#&gt; 3      23            8.166919                  0.0009796011</span></span>
-<span><span class="co">#&gt;   global_weight-strength_change(%) n_edges_disappeared n_edges_appeared</span></span>
-<span><span class="co">#&gt; 1                      20.91975478                   6                0</span></span>
-<span><span class="co">#&gt; 2                       2.69371836                   1                0</span></span>
-<span><span class="co">#&gt; 3                       0.02711751                   0                0</span></span>
-<span><span class="co">#&gt;   n_edges_reversed</span></span>
-<span><span class="co">#&gt; 1                0</span></span>
-<span><span class="co">#&gt; 2                0</span></span>
-<span><span class="co">#&gt; 3                0</span></span>
+<span><span class="co">#&gt; Summary of Structural Changes:</span></span>
+<span><span class="co">#&gt;  Total_Edges_Changed Number_of_Cases</span></span>
+<span><span class="co">#&gt;                    6               1</span></span>
+<span><span class="co">#&gt;                    1               1</span></span>
+<span><span class="co">#&gt;                    0               1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; === Without Case 100: Structure Changes ===</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edges disappeared:</span></span>
-<span><span class="co">#&gt;   x2 -- x6 : 0.038092121741292263 -&gt; 0 </span></span>
-<span><span class="co">#&gt;   x2 -- x7 : -0.070443780586514806 -&gt; 0 </span></span>
-<span><span class="co">#&gt;   x4 -- x7 : 0.025130867389584893 -&gt; 0 </span></span>
-<span><span class="co">#&gt;   x6 -- x7 : 0.027369962399648878 -&gt; 0 </span></span>
-<span><span class="co">#&gt;   x3 -- x8 : 0.040670512932712358 -&gt; 0 </span></span>
-<span><span class="co">#&gt;   x7 -- x9 : 0.032621213662403996 -&gt; 0 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edges appeared:</span></span>
-<span><span class="co">#&gt;   None</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edge sign reversals:</span></span>
-<span><span class="co">#&gt;   None</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; === Without Case 73: Structure Changes ===</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edges disappeared:</span></span>
-<span><span class="co">#&gt;   x1 -- x8 : 0.014833658354640828 -&gt; 0 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edges appeared:</span></span>
-<span><span class="co">#&gt;   None</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edge sign reversals:</span></span>
-<span><span class="co">#&gt;   None</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; === Without Case 23: Structure Changes ===</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edges disappeared:</span></span>
-<span><span class="co">#&gt;   None</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edges appeared:</span></span>
-<span><span class="co">#&gt;   None</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edge sign reversals:</span></span>
-<span><span class="co">#&gt;   None</span></span></code></pre></div>
+<span><span class="co">#&gt; * Use `print(x, n = 5)` to view the top 5 influential cases and their detailed edge changes.</span></span>
+<span><span class="co">#&gt; * Use `print(x, detailed = TRUE)` to view all cases.</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="for-loomultianalysis-multiple-cases-at-once">For <code>looMultiAnalysis</code> (multiple cases at once)<a class="anchor" aria-label="anchor" href="#for-loomultianalysis-multiple-cases-at-once"></a>
@@ -1068,65 +1021,17 @@ Which input to use depends on your workflow.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Leave-One-Out Analysis Results</span></span>
 <span><span class="co">#&gt; ==============================</span></span>
-<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Selection method: top_3</span></span>
-<span><span class="co">#&gt; Direction: both</span></span>
 <span><span class="co">#&gt; Number of cases analyzed: 3</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Summary:</span></span>
-<span><span class="co">#&gt;   case_id empirical_influence global_weight-strength_change</span></span>
-<span><span class="co">#&gt; 1     100           11.015356                  0.7557114974</span></span>
-<span><span class="co">#&gt; 2      73            8.442216                  0.0973086900</span></span>
-<span><span class="co">#&gt; 3      23            7.919515                  0.0009796011</span></span>
-<span><span class="co">#&gt;   global_weight-strength_change(%) n_edges_disappeared n_edges_appeared</span></span>
-<span><span class="co">#&gt; 1                      20.91975478                   6                0</span></span>
-<span><span class="co">#&gt; 2                       2.69371836                   1                0</span></span>
-<span><span class="co">#&gt; 3                       0.02711751                   0                0</span></span>
-<span><span class="co">#&gt;   n_edges_reversed</span></span>
-<span><span class="co">#&gt; 1                0</span></span>
-<span><span class="co">#&gt; 2                0</span></span>
-<span><span class="co">#&gt; 3                0</span></span>
+<span><span class="co">#&gt; Summary of Structural Changes:</span></span>
+<span><span class="co">#&gt;  Total_Edges_Changed Number_of_Cases</span></span>
+<span><span class="co">#&gt;                    6               1</span></span>
+<span><span class="co">#&gt;                    1               1</span></span>
+<span><span class="co">#&gt;                    0               1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; === Without Case 100: Structure Changes ===</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edges disappeared:</span></span>
-<span><span class="co">#&gt;   x2 -- x6 : 0.038092121741292263 -&gt; 0 </span></span>
-<span><span class="co">#&gt;   x2 -- x7 : -0.070443780586514806 -&gt; 0 </span></span>
-<span><span class="co">#&gt;   x4 -- x7 : 0.025130867389584893 -&gt; 0 </span></span>
-<span><span class="co">#&gt;   x6 -- x7 : 0.027369962399648878 -&gt; 0 </span></span>
-<span><span class="co">#&gt;   x3 -- x8 : 0.040670512932712358 -&gt; 0 </span></span>
-<span><span class="co">#&gt;   x7 -- x9 : 0.032621213662403996 -&gt; 0 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edges appeared:</span></span>
-<span><span class="co">#&gt;   None</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edge sign reversals:</span></span>
-<span><span class="co">#&gt;   None</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; === Without Case 73: Structure Changes ===</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edges disappeared:</span></span>
-<span><span class="co">#&gt;   x1 -- x8 : 0.014833658354640828 -&gt; 0 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edges appeared:</span></span>
-<span><span class="co">#&gt;   None</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edge sign reversals:</span></span>
-<span><span class="co">#&gt;   None</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; === Without Case 23: Structure Changes ===</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edges disappeared:</span></span>
-<span><span class="co">#&gt;   None</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edges appeared:</span></span>
-<span><span class="co">#&gt;   None</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Edge sign reversals:</span></span>
-<span><span class="co">#&gt;   None</span></span>
-<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; * Use `print(x, n = 5)` to view the top 5 influential cases and their detailed edge changes.</span></span>
+<span><span class="co">#&gt; * Use `print(x, detailed = TRUE)` to view all cases.</span></span>
 <span><span class="co">#&gt; Phase 3: Centrality gCD</span></span>
 <span><span class="co">#&gt; =================================</span></span>
 <span><span class="co">#&gt; </span></span>

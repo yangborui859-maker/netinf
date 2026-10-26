@@ -509,64 +509,17 @@ lmo_res <- leave_one_out_analysis(
 loo_res
 #> Leave-One-Out Analysis Results
 #> ==============================
-#> 
 #> Selection method: top_3
-#> Direction: both
 #> Number of cases analyzed: 3
 #> 
-#> Summary:
-#>   case_id empirical_influence global_weight-strength_change
-#> 1     100           10.554229                  0.7557114974
-#> 2      73            9.837622                  0.0973086900
-#> 3      23            8.166919                  0.0009796011
-#>   global_weight-strength_change(%) n_edges_disappeared n_edges_appeared
-#> 1                      20.91975478                   6                0
-#> 2                       2.69371836                   1                0
-#> 3                       0.02711751                   0                0
-#>   n_edges_reversed
-#> 1                0
-#> 2                0
-#> 3                0
+#> Summary of Structural Changes:
+#>  Total_Edges_Changed Number_of_Cases
+#>                    6               1
+#>                    1               1
+#>                    0               1
 #> 
-#> === Without Case 100: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   x2 -- x6 : 0.038092121741292263 -> 0 
-#>   x2 -- x7 : -0.070443780586514806 -> 0 
-#>   x4 -- x7 : 0.025130867389584893 -> 0 
-#>   x6 -- x7 : 0.027369962399648878 -> 0 
-#>   x3 -- x8 : 0.040670512932712358 -> 0 
-#>   x7 -- x9 : 0.032621213662403996 -> 0 
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
-#> 
-#> 
-#> === Without Case 73: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   x1 -- x8 : 0.014833658354640828 -> 0 
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
-#> 
-#> 
-#> === Without Case 23: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   None
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
+#> * Use `print(x, n = 5)` to view the top 5 influential cases and their detailed edge changes.
+#> * Use `print(x, detailed = TRUE)` to view all cases.
 ```
 
 #### For `looMultiAnalysis` (multiple cases at once)
@@ -829,65 +782,17 @@ diag
 #> 
 #> Leave-One-Out Analysis Results
 #> ==============================
-#> 
 #> Selection method: top_3
-#> Direction: both
 #> Number of cases analyzed: 3
 #> 
-#> Summary:
-#>   case_id empirical_influence global_weight-strength_change
-#> 1     100           11.015356                  0.7557114974
-#> 2      73            8.442216                  0.0973086900
-#> 3      23            7.919515                  0.0009796011
-#>   global_weight-strength_change(%) n_edges_disappeared n_edges_appeared
-#> 1                      20.91975478                   6                0
-#> 2                       2.69371836                   1                0
-#> 3                       0.02711751                   0                0
-#>   n_edges_reversed
-#> 1                0
-#> 2                0
-#> 3                0
+#> Summary of Structural Changes:
+#>  Total_Edges_Changed Number_of_Cases
+#>                    6               1
+#>                    1               1
+#>                    0               1
 #> 
-#> === Without Case 100: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   x2 -- x6 : 0.038092121741292263 -> 0 
-#>   x2 -- x7 : -0.070443780586514806 -> 0 
-#>   x4 -- x7 : 0.025130867389584893 -> 0 
-#>   x6 -- x7 : 0.027369962399648878 -> 0 
-#>   x3 -- x8 : 0.040670512932712358 -> 0 
-#>   x7 -- x9 : 0.032621213662403996 -> 0 
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
-#> 
-#> 
-#> === Without Case 73: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   x1 -- x8 : 0.014833658354640828 -> 0 
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
-#> 
-#> 
-#> === Without Case 23: Structure Changes ===
-#> 
-#> Edges disappeared:
-#>   None
-#> 
-#> Edges appeared:
-#>   None
-#> 
-#> Edge sign reversals:
-#>   None
-#> 
+#> * Use `print(x, n = 5)` to view the top 5 influential cases and their detailed edge changes.
+#> * Use `print(x, detailed = TRUE)` to view all cases.
 #> Phase 3: Centrality gCD
 #> =================================
 #> 

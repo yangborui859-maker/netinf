@@ -7,14 +7,23 @@ strength changes and structural changes for each case.
 
 ``` r
 # S3 method for class 'looAnalysis'
-print(x, ...)
+print(x, n = NULL, detailed = FALSE, ...)
 ```
 
 ## Arguments
 
 - x:
 
-  An object of class `"looAnalysis"`.
+  An object of class `"looAnalysis"`or `"looMultiAnalysis"`.
+
+- n:
+
+  The number of top n cases with the most structural changes (Edges) to
+  display for single-case LOO. Default is `NULL`.
+
+- detailed:
+
+  If `TRUE`, prints detailed edge weight changes. Default is `FALSE`.
 
 - ...:
 
