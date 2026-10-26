@@ -5,26 +5,18 @@
 #' gCD results if available.
 #'
 #' @param x An object of class `"influenceDiagnostic"`.
+#' @param n If specified, prints the top `n` cases. Default is `NULL`.
+#' @param detailed If `TRUE`, prints full details. Default is `FALSE`.
 #' @param ... Additional arguments (currently unused).
 #'
 #' @return Invisibly returns `x`.
 #' @export
-print.influenceDiagnostic <- function(x, ...) {
+print.influenceDiagnostic <- function(x, n = NULL, detailed = FALSE, ...) {
   cat("Influence Diagnostic Results\n")
   cat("============================\n\n")
   cat("Phase 1: Empirical Influence Screening\n")
-  cat(sprintf("  Number of cases: %d\n", length(x$empirical_influence$influence)))
-  cat(sprintf("  Selected candidates: %d\n", length(x$loo_validation$case_ids)))
-  cat(sprintf("  Selection method: %s\n", x$loo_validation$selection_method))
-  cat(sprintf("  Direction: %s\n\n", x$loo_validation$direction))
-  cat("All Case Influence Values (sorted by absolute influence):\n")
-  inf <- x$empirical_influence$influence
-  ord <- order(abs(inf), decreasing = TRUE)
-  influence_table <- data.frame(
-    case_id = ord,
-    influence = inf[ord]
-  )
-  print(influence_table, row.names = FALSE)
+  cat("=================================\n\n")
+  print(x$empirical_influence$influence, n = n, detailed = detailed)
   cat("\n")
 
   cat("Phase 2: Leave-One-Out Validation\n")
@@ -32,11 +24,9 @@ print.influenceDiagnostic <- function(x, ...) {
 
   print(x$loo_validation)
 
-  if (!is.null(x$centrality_gCD)) {
-    cat("\nPhase 3: Centrality gCD\n")
-    cat("========================\n\n")
-    print(x$centrality_gCD)
-  }
+  cat("Phase 3: Centrality gCD\n")
+  cat("=================================\n\n")
+  print(x$centrality_gCD, n = n, detailed = detailed)
 
   invisible(x)
 }
@@ -156,6 +146,64 @@ print.empiricalInfluence <- function(x, n = NULL, detailed = FALSE, ...) {
   cat("Summary Statistics of Influence Values:\n")
   print(round(stats, 3))
   cat("\n* Use `print(x, n = 5)` to view top cases, or `print(x, detailed = TRUE)` to view all.\n")
+
+  invisible(x)
+}
+
+#' Print Method for centralityGCD Objects
+#'
+#' Prints a summary of the generalized Cook's distance (gCD) results.
+#' By default, it prints summary statistics. If `n` is specified, it
+#' prints the top `n` cases with the largest gCD for each metric. If
+#' `detailed = TRUE`, it prints the full table.
+#'
+#' @param x An object of class `"centralityGCD"`.
+#' @param n If specified, prints the top `n` cases per metric.
+#' @param detailed If `TRUE`, prints the full sorted table of all cases.
+#' @param ... Additional arguments (currently unused).
+#'
+#' @return Invisibly returns `x`.
+#'
+#' @export
+print.centralityGCD <- function(x, n = NULL, detailed = FALSE, ...) {
+  df <- as.data.frame(x)
+  cat("\n=== Centrality generalized Cook's Distance (gCD) ===\n")
+
+  metrics <- unique(df$metric)
+
+  if (detailed) {
+    df <- df[order(df$metric, -df$gCD), ]
+    print(df, row.names = FALSE)
+    return(invisible(x))
+  }
+
+  if (!is.null(n)) {
+    cat(sprintf("Top %d cases per metric:\n\n", n))
+    for (m in metrics) {
+      sub_df <- df[df$metric == m, ]
+      sub_df <- sub_df[order(-sub_df$gCD), ]
+      top_n <- head(sub_df, n)
+      cat(sprintf("--- Metric: %s ---\n", m))
+      print(data.frame(Case_ID = top_n$case_id, gCD = round(top_n$gCD, 3)), row.names = FALSE)
+      cat("\n")
+    }
+    return(invisible(x))
+  }
+
+  cat("Summary Statistics of gCD by Metric:\n\n")
+  for (m in metrics) {
+    sub_val <- df$gCD[df$metric == m]
+    stats <- c(
+      Min = min(sub_val, na.rm = TRUE),
+      Median = median(sub_val, na.rm = TRUE),
+      Mean = mean(sub_val, na.rm = TRUE),
+      Max = max(sub_val, na.rm = TRUE)
+    )
+    cat(sprintf("Metric: %s\n", m))
+    print(round(stats, 3))
+    cat("\n")
+  }
+  cat("* Use `print(x, n = 5)` to view top cases per metric, or `print(x, detailed = TRUE)` to view all.\n")
 
   invisible(x)
 }
