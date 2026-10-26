@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">netinf</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,6 +145,14 @@ indices into a numeric influence value per case.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">empic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_empirical_influence.html">calculate_empirical_influence</a></span><span class="op">(</span><span class="va">boot_res</span><span class="op">)</span></span>
 <span></span>
+<span><span class="va">empic</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; === Empirical Influence ===</span></span>
+<span><span class="co">#&gt; Summary Statistics of Influence Values:</span></span>
+<span><span class="co">#&gt;    Min Median   Mean    Max     SD </span></span>
+<span><span class="co">#&gt; -7.784 -0.456  0.000 10.554  2.885 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; * Use `print(x, n = 5)` to view top cases, or `print(x, detailed = TRUE)` to view all.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">empic</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>   <span class="co"># 10 cases with largest absolute value</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; === Empirical Influence ===</span></span>
@@ -199,7 +207,7 @@ and re-estimates the network to see what changes.</p>
 <span><span class="co">#&gt; enforce higher specificity, at the cost of sensitivity.</span></span>
 <span><span class="co">#&gt;   |                                                                              |======================================================================| 100%</span></span>
 <span></span>
-<span><span class="va">loo_res</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">loo_res</span>, detailed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Leave-One-Out Analysis Results</span></span>
 <span><span class="co">#&gt; ==============================</span></span>
 <span><span class="co">#&gt; Selection method: top_3</span></span>
@@ -211,8 +219,60 @@ and re-estimates the network to see what changes.</p>
 <span><span class="co">#&gt;                    1               1</span></span>
 <span><span class="co">#&gt;                    0               1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; * Use `print(x, n = 5)` to view the top 5 influential cases and their detailed edge changes.</span></span>
-<span><span class="co">#&gt; * Use `print(x, detailed = TRUE)` to view all cases.</span></span></code></pre></div>
+<span><span class="co">#&gt; Top 3 cases ranked by Total Structural Changes:</span></span>
+<span><span class="co">#&gt;  case_id empirical_influence global_weight-strength_change</span></span>
+<span><span class="co">#&gt;      100           10.554229                  0.7557114974</span></span>
+<span><span class="co">#&gt;       73            9.837622                  0.0973086900</span></span>
+<span><span class="co">#&gt;       23            8.166919                  0.0009796011</span></span>
+<span><span class="co">#&gt;  global_weight-strength_change(%) n_edges_disappeared n_edges_appeared</span></span>
+<span><span class="co">#&gt;                       20.91975478                   6                0</span></span>
+<span><span class="co">#&gt;                        2.69371836                   1                0</span></span>
+<span><span class="co">#&gt;                        0.02711751                   0                0</span></span>
+<span><span class="co">#&gt;  n_edges_reversed</span></span>
+<span><span class="co">#&gt;                 0</span></span>
+<span><span class="co">#&gt;                 0</span></span>
+<span><span class="co">#&gt;                 0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; === Without Case 100: Structure Changes ===</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edges disappeared:</span></span>
+<span><span class="co">#&gt;   x2 -- x6 : 0.038092121741292263 -&gt; 0 </span></span>
+<span><span class="co">#&gt;   x2 -- x7 : -0.070443780586514806 -&gt; 0 </span></span>
+<span><span class="co">#&gt;   x4 -- x7 : 0.025130867389584893 -&gt; 0 </span></span>
+<span><span class="co">#&gt;   x6 -- x7 : 0.027369962399648878 -&gt; 0 </span></span>
+<span><span class="co">#&gt;   x3 -- x8 : 0.040670512932712358 -&gt; 0 </span></span>
+<span><span class="co">#&gt;   x7 -- x9 : 0.032621213662403996 -&gt; 0 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edges appeared:</span></span>
+<span><span class="co">#&gt;   None</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edge sign reversals:</span></span>
+<span><span class="co">#&gt;   None</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; === Without Case 73: Structure Changes ===</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edges disappeared:</span></span>
+<span><span class="co">#&gt;   x1 -- x8 : 0.014833658354640828 -&gt; 0 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edges appeared:</span></span>
+<span><span class="co">#&gt;   None</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edge sign reversals:</span></span>
+<span><span class="co">#&gt;   None</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; === Without Case 23: Structure Changes ===</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edges disappeared:</span></span>
+<span><span class="co">#&gt;   None</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edges appeared:</span></span>
+<span><span class="co">#&gt;   None</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edge sign reversals:</span></span>
+<span><span class="co">#&gt;   None</span></span></code></pre></div>
 <p><strong>Option 2 — by threshold:</strong></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">loo_thr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/leave_one_out_analysis.html">leave_one_out_analysis</a></span><span class="op">(</span></span>
@@ -234,7 +294,8 @@ and re-estimates the network to see what changes.</p>
 <span><span class="co">#&gt; enforce higher specificity, at the cost of sensitivity.</span></span>
 <span><span class="co">#&gt;   |                                                                              |=======================                                               |  33%  |                                                                              |===============================================                       |  67%  |                                                                              |======================================================================| 100%</span></span>
 <span></span>
-<span><span class="va">loo_thr</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">loo_thr</span>, detailed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Leave-One-Out Analysis Results</span></span>
 <span><span class="co">#&gt; ==============================</span></span>
 <span><span class="co">#&gt; Selection method: threshold_8</span></span>
@@ -246,8 +307,60 @@ and re-estimates the network to see what changes.</p>
 <span><span class="co">#&gt;                    1               1</span></span>
 <span><span class="co">#&gt;                    0               1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; * Use `print(x, n = 5)` to view the top 5 influential cases and their detailed edge changes.</span></span>
-<span><span class="co">#&gt; * Use `print(x, detailed = TRUE)` to view all cases.</span></span></code></pre></div>
+<span><span class="co">#&gt; Top 3 cases ranked by Total Structural Changes:</span></span>
+<span><span class="co">#&gt;  case_id empirical_influence global_weight-strength_change</span></span>
+<span><span class="co">#&gt;      100           10.554229                  0.7557114974</span></span>
+<span><span class="co">#&gt;       73            9.837622                  0.0973086900</span></span>
+<span><span class="co">#&gt;       23            8.166919                  0.0009796011</span></span>
+<span><span class="co">#&gt;  global_weight-strength_change(%) n_edges_disappeared n_edges_appeared</span></span>
+<span><span class="co">#&gt;                       20.91975478                   6                0</span></span>
+<span><span class="co">#&gt;                        2.69371836                   1                0</span></span>
+<span><span class="co">#&gt;                        0.02711751                   0                0</span></span>
+<span><span class="co">#&gt;  n_edges_reversed</span></span>
+<span><span class="co">#&gt;                 0</span></span>
+<span><span class="co">#&gt;                 0</span></span>
+<span><span class="co">#&gt;                 0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; === Without Case 100: Structure Changes ===</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edges disappeared:</span></span>
+<span><span class="co">#&gt;   x2 -- x6 : 0.038092121741292263 -&gt; 0 </span></span>
+<span><span class="co">#&gt;   x2 -- x7 : -0.070443780586514806 -&gt; 0 </span></span>
+<span><span class="co">#&gt;   x4 -- x7 : 0.025130867389584893 -&gt; 0 </span></span>
+<span><span class="co">#&gt;   x6 -- x7 : 0.027369962399648878 -&gt; 0 </span></span>
+<span><span class="co">#&gt;   x3 -- x8 : 0.040670512932712358 -&gt; 0 </span></span>
+<span><span class="co">#&gt;   x7 -- x9 : 0.032621213662403996 -&gt; 0 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edges appeared:</span></span>
+<span><span class="co">#&gt;   None</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edge sign reversals:</span></span>
+<span><span class="co">#&gt;   None</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; === Without Case 73: Structure Changes ===</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edges disappeared:</span></span>
+<span><span class="co">#&gt;   x1 -- x8 : 0.014833658354640828 -&gt; 0 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edges appeared:</span></span>
+<span><span class="co">#&gt;   None</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edge sign reversals:</span></span>
+<span><span class="co">#&gt;   None</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; === Without Case 23: Structure Changes ===</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edges disappeared:</span></span>
+<span><span class="co">#&gt;   None</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edges appeared:</span></span>
+<span><span class="co">#&gt;   None</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Edge sign reversals:</span></span>
+<span><span class="co">#&gt;   None</span></span></code></pre></div>
 <p><strong>Option 3 — manually remove specific cases (multiple →
 leave-multiple-out):</strong></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -264,7 +377,7 @@ leave-multiple-out):</strong></p>
 <span><span class="co">#&gt; the presence of the smallest edges with care. Setting threshold = TRUE will</span></span>
 <span><span class="co">#&gt; enforce higher specificity, at the cost of sensitivity.</span></span>
 <span></span>
-<span><span class="va">lmo_res</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">lmo_res</span>, detailed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Leave-Multiple-Out Analysis Results</span></span>
 <span><span class="co">#&gt; ===================================</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -344,7 +457,32 @@ shifts the centrality vector.</p>
 <span><span class="co">#&gt;    Min Median   Mean    Max </span></span>
 <span><span class="co">#&gt;  0.838  1.355  1.643  3.024 </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; * Use `print(x, n = 5)` to view top cases per metric, or `print(x, detailed = TRUE)` to view all.</span></span></code></pre></div>
+<span><span class="co">#&gt; * Use `print(x, n = 5)` to view top cases per metric, or `print(x, detailed = TRUE)` to view all.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">gcd_res</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; === Centrality generalized Cook's Distance (gCD) ===</span></span>
+<span><span class="co">#&gt; Top 10 cases per metric:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; --- Metric: Strength ---</span></span>
+<span><span class="co">#&gt;  Case_ID   gCD</span></span>
+<span><span class="co">#&gt;      100 2.670</span></span>
+<span><span class="co">#&gt;       75 0.107</span></span>
+<span><span class="co">#&gt;       50 0.105</span></span>
+<span><span class="co">#&gt;       25 0.092</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; --- Metric: Closeness ---</span></span>
+<span><span class="co">#&gt;  Case_ID   gCD</span></span>
+<span><span class="co">#&gt;      100 2.210</span></span>
+<span><span class="co">#&gt;       75 0.154</span></span>
+<span><span class="co">#&gt;       25 0.106</span></span>
+<span><span class="co">#&gt;       50 0.063</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; --- Metric: Betweenness ---</span></span>
+<span><span class="co">#&gt;  Case_ID   gCD</span></span>
+<span><span class="co">#&gt;      100 3.024</span></span>
+<span><span class="co">#&gt;       25 1.871</span></span>
+<span><span class="co">#&gt;       75 0.838</span></span>
+<span><span class="co">#&gt;       50 0.838</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">

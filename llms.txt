@@ -1,6 +1,6 @@
 # netinf
 
-(Version 0.1.0, updated on 2026-09-29)
+(Version 0.1.1, updated on 2026-10-26)
 
 **(Work-in-progress. Not ready for use)**
 

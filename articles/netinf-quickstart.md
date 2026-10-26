@@ -92,6 +92,14 @@ turns the bootstrap indices into a numeric influence value per case.
 
 empic <- calculate_empirical_influence(boot_res)
 
+empic
+#> 
+#> === Empirical Influence ===
+#> Summary Statistics of Influence Values:
+#>    Min Median   Mean    Max     SD 
+#> -7.784 -0.456  0.000 10.554  2.885 
+#> 
+#> * Use `print(x, n = 5)` to view top cases, or `print(x, detailed = TRUE)` to view all.
 print(empic, n = 10)   # 10 cases with largest absolute value
 #> 
 #> === Empirical Influence ===
@@ -145,7 +153,7 @@ loo_res <- leave_one_out_analysis(
 #> enforce higher specificity, at the cost of sensitivity.
 #>   |                                                                              |======================================================================| 100%
 
-loo_res
+print(loo_res, detailed = TRUE)
 #> Leave-One-Out Analysis Results
 #> ==============================
 #> Selection method: top_3
@@ -157,8 +165,60 @@ loo_res
 #>                    1               1
 #>                    0               1
 #> 
-#> * Use `print(x, n = 5)` to view the top 5 influential cases and their detailed edge changes.
-#> * Use `print(x, detailed = TRUE)` to view all cases.
+#> Top 3 cases ranked by Total Structural Changes:
+#>  case_id empirical_influence global_weight-strength_change
+#>      100           10.554229                  0.7557114974
+#>       73            9.837622                  0.0973086900
+#>       23            8.166919                  0.0009796011
+#>  global_weight-strength_change(%) n_edges_disappeared n_edges_appeared
+#>                       20.91975478                   6                0
+#>                        2.69371836                   1                0
+#>                        0.02711751                   0                0
+#>  n_edges_reversed
+#>                 0
+#>                 0
+#>                 0
+#> 
+#> 
+#> === Without Case 100: Structure Changes ===
+#> 
+#> Edges disappeared:
+#>   x2 -- x6 : 0.038092121741292263 -> 0 
+#>   x2 -- x7 : -0.070443780586514806 -> 0 
+#>   x4 -- x7 : 0.025130867389584893 -> 0 
+#>   x6 -- x7 : 0.027369962399648878 -> 0 
+#>   x3 -- x8 : 0.040670512932712358 -> 0 
+#>   x7 -- x9 : 0.032621213662403996 -> 0 
+#> 
+#> Edges appeared:
+#>   None
+#> 
+#> Edge sign reversals:
+#>   None
+#> 
+#> 
+#> === Without Case 73: Structure Changes ===
+#> 
+#> Edges disappeared:
+#>   x1 -- x8 : 0.014833658354640828 -> 0 
+#> 
+#> Edges appeared:
+#>   None
+#> 
+#> Edge sign reversals:
+#>   None
+#> 
+#> 
+#> === Without Case 23: Structure Changes ===
+#> 
+#> Edges disappeared:
+#>   None
+#> 
+#> Edges appeared:
+#>   None
+#> 
+#> Edge sign reversals:
+#>   None
 ```
 
 **Option 2 — by threshold:**
@@ -184,7 +244,8 @@ loo_thr <- leave_one_out_analysis(
 #> enforce higher specificity, at the cost of sensitivity.
 #>   |                                                                              |=======================                                               |  33%  |                                                                              |===============================================                       |  67%  |                                                                              |======================================================================| 100%
 
-loo_thr
+
+print(loo_thr, detailed = TRUE)
 #> Leave-One-Out Analysis Results
 #> ==============================
 #> Selection method: threshold_8
@@ -196,8 +257,60 @@ loo_thr
 #>                    1               1
 #>                    0               1
 #> 
-#> * Use `print(x, n = 5)` to view the top 5 influential cases and their detailed edge changes.
-#> * Use `print(x, detailed = TRUE)` to view all cases.
+#> Top 3 cases ranked by Total Structural Changes:
+#>  case_id empirical_influence global_weight-strength_change
+#>      100           10.554229                  0.7557114974
+#>       73            9.837622                  0.0973086900
+#>       23            8.166919                  0.0009796011
+#>  global_weight-strength_change(%) n_edges_disappeared n_edges_appeared
+#>                       20.91975478                   6                0
+#>                        2.69371836                   1                0
+#>                        0.02711751                   0                0
+#>  n_edges_reversed
+#>                 0
+#>                 0
+#>                 0
+#> 
+#> 
+#> === Without Case 100: Structure Changes ===
+#> 
+#> Edges disappeared:
+#>   x2 -- x6 : 0.038092121741292263 -> 0 
+#>   x2 -- x7 : -0.070443780586514806 -> 0 
+#>   x4 -- x7 : 0.025130867389584893 -> 0 
+#>   x6 -- x7 : 0.027369962399648878 -> 0 
+#>   x3 -- x8 : 0.040670512932712358 -> 0 
+#>   x7 -- x9 : 0.032621213662403996 -> 0 
+#> 
+#> Edges appeared:
+#>   None
+#> 
+#> Edge sign reversals:
+#>   None
+#> 
+#> 
+#> === Without Case 73: Structure Changes ===
+#> 
+#> Edges disappeared:
+#>   x1 -- x8 : 0.014833658354640828 -> 0 
+#> 
+#> Edges appeared:
+#>   None
+#> 
+#> Edge sign reversals:
+#>   None
+#> 
+#> 
+#> === Without Case 23: Structure Changes ===
+#> 
+#> Edges disappeared:
+#>   None
+#> 
+#> Edges appeared:
+#>   None
+#> 
+#> Edge sign reversals:
+#>   None
 ```
 
 **Option 3 — manually remove specific cases (multiple →
@@ -218,7 +331,7 @@ lmo_res <- leave_one_out_analysis(
 #> the presence of the smallest edges with care. Setting threshold = TRUE will
 #> enforce higher specificity, at the cost of sensitivity.
 
-lmo_res
+print(lmo_res, detailed = TRUE)
 #> Leave-Multiple-Out Analysis Results
 #> ===================================
 #> 
@@ -301,6 +414,31 @@ gcd_res
 #>  0.838  1.355  1.643  3.024 
 #> 
 #> * Use `print(x, n = 5)` to view top cases per metric, or `print(x, detailed = TRUE)` to view all.
+print(gcd_res, n = 10)
+#> 
+#> === Centrality generalized Cook's Distance (gCD) ===
+#> Top 10 cases per metric:
+#> 
+#> --- Metric: Strength ---
+#>  Case_ID   gCD
+#>      100 2.670
+#>       75 0.107
+#>       50 0.105
+#>       25 0.092
+#> 
+#> --- Metric: Closeness ---
+#>  Case_ID   gCD
+#>      100 2.210
+#>       75 0.154
+#>       25 0.106
+#>       50 0.063
+#> 
+#> --- Metric: Betweenness ---
+#>  Case_ID   gCD
+#>      100 3.024
+#>       25 1.871
+#>       75 0.838
+#>       50 0.838
 ```
 
 ### Visualization
