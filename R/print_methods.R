@@ -111,32 +111,51 @@ print.looMultiAnalysis <- function(x, ...) {
 
 #' Print Method for empiricalInfluence Objects
 #'
-#' Prints a sorted table of empirical influence values.
+#' Prints a summary of empirical influence values. By default, it prints
+#' summary statistics. If `n` is specified, it prints the top `n` cases
+#' with the largest absolute influence values. If `detailed = TRUE`,
+#' it prints the full sorted table of all cases.
 #'
 #' @param x An object of class `"empiricalInfluence"`.
 #' @param n If setted, only the top "n" cases with absolute values will be printed.
+#' @param detailed If `TRUE`, prints the full table of all cases.
+#'   Default is `FALSE`.
 #' @param ... Additional arguments (currently unused).
 #'
 #' @return Invisibly returns `x`.
 #' @export
-print.empiricalInfluence <- function(x, n = NULL, ...) {
-  cat("Empirical Influence Values\n")
-  cat("==========================\n\n")
+print.empiricalInfluence <- function(x, n = NULL, detailed = FALSE, ...) {
+  val <- as.numeric(x)
+  ids <- names(x)
+  if (is.null(ids)) ids <- as.character(seq_along(val))
 
-  ord <- order(abs(x), decreasing = TRUE)
-  influence_table <- data.frame(
-    case_id = ord,
-    influence = unname(x[ord])
-  )
-  
-  if (!is.null(n)) {
-    n <- max(1L, min(as.integer(n), nrow(influence_table)))
-    influence_table <- influence_table[seq_len(n), , drop = FALSE]
-    cat(sprintf("Showing top %d of %d cases by absolute influence:\n\n",
-                n, length(x)))
+  cat("\n=== Empirical Influence ===\n")
+
+  if (detailed) {
+    ord <- order(abs(val), decreasing = TRUE)
+    df <- data.frame(Case_ID = ids[ord], Influence = val[ord])
+    print(df, row.names = FALSE)
+    return(invisible(x))
   }
 
-  print(influence_table, row.names = FALSE)
+  if (!is.null(n)) {
+    n <- min(n, length(val))
+    ord <- order(abs(val), decreasing = TRUE)
+    df <- data.frame(Case_ID = ids[ord[1:n]], Influence = round(val[ord[1:n]], 3))
+    print(df, row.names = FALSE)
+    return(invisible(x))
+  }
+
+  stats <- c(
+    Min = min(val, na.rm = TRUE),
+    Median = median(val, na.rm = TRUE),
+    Mean = mean(val, na.rm = TRUE),
+    Max = max(val, na.rm = TRUE),
+    SD = sd(val, na.rm = TRUE)
+  )
+  cat("Summary Statistics of Influence Values:\n")
+  print(round(stats, 3))
+  cat("\n* Use `print(x, n = 5)` to view top cases, or `print(x, detailed = TRUE)` to view all.\n")
 
   invisible(x)
 }
