@@ -36,29 +36,78 @@ print.influenceDiagnostic <- function(x, n = NULL, detailed = FALSE, ...) {
 #' Prints a summary of leave-one-out analysis results, including
 #' global strength changes and structural changes for each case.
 #'
-#' @param x An object of class `"looAnalysis"`.
+#' @param x An object of class `"looAnalysis"`or `"looMultiAnalysis"`.
+#' @param n The number of top n cases with the most structural changes (Edges)  to display for single-case LOO. Default is `NULL`.
+#' @param detailed If `TRUE`, prints detailed edge weight changes. Default is `FALSE`.
 #' @param ... Additional arguments (currently unused).
 #'
 #' @return Invisibly returns `x`.
 #' @export
-print.looAnalysis <- function(x, ...) {
-  cat("Leave-One-Out Analysis Results\n")
-  cat("==============================\n\n")
+print.looAnalysis <- function(x, n = NULL, detailed = FALSE, ...) {
 
+  if (inherits(x, "looMultiAnalysis")) {
+    cat(sprintf("\n=== Leave-Multiple-Out Results (Cases: %s) ===\n",
+                paste(x$case_ids, collapse = ", ")))
+    cat(sprintf("Global Strength Change: %.3f (%.2f%%)\n",
+                x$global_weight_strength_change,
+                x$global_weight_strength_change_pct))
+
+    print_structure_changes(x$structure_changes, x$case_ids)
+
+    return(invisible(x))
+  }
+
+  cat("Leave-One-Out Analysis Results\n")
+  cat("==============================\n")
   cat(sprintf("Selection method: %s\n", x$selection_method))
-  cat(sprintf("Direction: %s\n", x$direction))
   cat(sprintf("Number of cases analyzed: %d\n\n", x$n_cases))
 
-  cat("Summary:\n")
-  summary_print <- x$summary
+  df <- x$summary
+
+  total_edges <- df$n_edges_disappeared + df$n_edges_appeared + df$n_edges_reversed
+  cat("Summary of Structural Changes:\n")
+  dist_table <- as.data.frame(table(total_edges))
+  names(dist_table) <- c("Total_Edges_Changed", "Number_of_Cases")
+
+  dist_table <- dist_table[order(-as.numeric(as.character(dist_table$Total_Edges_Changed))), ]
+  print(dist_table, row.names = FALSE)
+  cat("\n")
+
+  if (is.null(n) && !detailed) {
+    cat("* Use `print(x, n = 5)` to view the top 5 influential cases and their detailed edge changes.\n")
+    cat("* Use `print(x, detailed = TRUE)` to view all cases.\n")
+    return(invisible(x))
+  }
+
+  if (detailed) {
+     n_show <- nrow(df)
+  } else {
+    n_show <- min(n, nrow(df))
+  }
+
+  ord <- order(-total_edges, -abs(df$global_weight_strength_change))
+  df_sorted <- df[ord, ]
+  target_df <- df_sorted[1:n_show, ]
+
+  cat(sprintf("Top %d cases ranked by Total Structural Changes:\n", n_show))
+
+  summary_print <- target_df
   names(summary_print)[names(summary_print) == "global_weight_strength_change"] <- "global_weight-strength_change"
   names(summary_print)[names(summary_print) == "global_weight_strength_change_pct"] <- "global_weight-strength_change(%)"
-  print(summary_print)
 
-  for (i in seq_along(x$results)) {
-    case_id <- x$results[[i]]$case_id
-    structure_changes <- x$results[[i]]$structure_changes
+  print(summary_print, row.names = FALSE)
+  cat("\n")
+
+  for (i in seq_len(nrow(target_df))) {
+    case_id <- target_df$case_id[i]
+    idx <- which(x$summary$case_id == case_id)
+    structure_changes <- x$results[[idx]]$structure_changes
     print_structure_changes(structure_changes, case_id)
+  }
+
+  if (nrow(df_sorted) > n_show) {
+    cat(sprintf("* %d more cases not shown. Use `print(x, n = %d)` or `print(x, detailed = TRUE)` to view all.\n",
+                nrow(df_sorted) - n_show, nrow(df_sorted)))
   }
 
   invisible(x)
