@@ -89,6 +89,7 @@ influence value per case.
 ```{r}
 empic <- calculate_empirical_influence(boot_res)
 
+empic
 print(empic, n = 10)   # 10 cases with largest absolute value
 ```
 
@@ -113,7 +114,7 @@ loo_res <- leave_one_out_analysis(
   default          = "EBICglasso"
 )
 
-loo_res
+print(loo_res, detailed = TRUE)
 ```
 
 **Option 2 — by threshold:**
@@ -127,7 +128,8 @@ loo_thr <- leave_one_out_analysis(
   default          = "EBICglasso"
 )
 
-loo_thr
+
+print(loo_thr, detailed = TRUE)
 ```
 
 **Option 3 — manually remove specific cases (multiple → leave-multiple-out):**
@@ -140,7 +142,7 @@ lmo_res <- leave_one_out_analysis(
   default          = "EBICglasso"
 )
 
-lmo_res
+print(lmo_res, detailed = TRUE)
 ```
 
 ### Step 4: centrality gCD
@@ -158,6 +160,7 @@ gcd_res <- calculate_centrality_gCD(
 )
 
 gcd_res
+print(gcd_res, n = 10)
 ```
 
 ## Visualization

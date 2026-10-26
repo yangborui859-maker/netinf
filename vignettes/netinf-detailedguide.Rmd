@@ -374,13 +374,13 @@ lmo_res <- leave_one_out_analysis(
 ### For `looAnalysis` (one case at a time)
 
 ```{r}
-loo_res
+print(loo_res, detailed = TRUE)
 ```
 
 ### For `looMultiAnalysis` (multiple cases at once)
 
 ```{r}
-lmo_res
+print(lmo_res, detailed = TRUE)
 ```
 
 Columns:
@@ -503,6 +503,7 @@ The result is a **data frame** with one row per case × metric:
 
 ```{r}
 gcd_res
+print(gcd_res, detailed = TRUE)
 ```
 
 Columns:
@@ -557,7 +558,6 @@ diag <- influence_diagnostic(
   verbose            = FALSE
 )
 
-diag
 ```
 
 
