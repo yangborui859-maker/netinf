@@ -4,12 +4,15 @@
 \alias{print.empiricalInfluence}
 \title{Print Method for empiricalInfluence Objects}
 \usage{
-\method{print}{empiricalInfluence}(x, n = NULL, ...)
+\method{print}{empiricalInfluence}(x, n = NULL, detailed = FALSE, ...)
 }
 \arguments{
 \item{x}{An object of class \code{"empiricalInfluence"}.}
 
 \item{n}{If setted, only the top "n" cases with absolute values will be printed.}
+
+\item{detailed}{If \code{TRUE}, prints the full table of all cases.
+Default is \code{FALSE}.}
 
 \item{...}{Additional arguments (currently unused).}
 }
@@ -17,5 +20,8 @@
 Invisibly returns \code{x}.
 }
 \description{
-Prints a sorted table of empirical influence values.
+Prints a summary of empirical influence values. By default, it prints
+summary statistics. If \code{n} is specified, it prints the top \code{n} cases
+with the largest absolute influence values. If \code{detailed = TRUE},
+it prints the full sorted table of all cases.
 }
