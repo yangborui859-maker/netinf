@@ -4,10 +4,14 @@
 \alias{print.influenceDiagnostic}
 \title{Print Method for influenceDiagnostic Objects}
 \usage{
-\method{print}{influenceDiagnostic}(x, ...)
+\method{print}{influenceDiagnostic}(x, n = NULL, detailed = FALSE, ...)
 }
 \arguments{
 \item{x}{An object of class \code{"influenceDiagnostic"}.}
+
+\item{n}{If specified, prints the top \code{n} cases. Default is \code{NULL}.}
+
+\item{detailed}{If \code{TRUE}, prints full details. Default is \code{FALSE}.}
 
 \item{...}{Additional arguments (currently unused).}
 }

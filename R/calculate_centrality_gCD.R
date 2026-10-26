@@ -190,5 +190,6 @@ calculate_centrality_gCD <- function(data,
     rownames(out) <- NULL
   }
   attr(out, "diff_vectors") <- diff_vectors
+  class(out) <- c("centralityGCD", "data.frame")
   return(out)
 }
