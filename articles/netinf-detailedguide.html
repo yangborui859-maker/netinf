@@ -388,22 +388,19 @@ with a class <code>"empiricalInfluence"</code>:</p>
 </h3>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">empic</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>    <span class="co">#For demo, only 10 cases were printed(10 cases with largest abs value)</span></span>
-<span><span class="co">#&gt; Empirical Influence Values</span></span>
-<span><span class="co">#&gt; ==========================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Showing top 10 of 100 cases by absolute influence:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  case_id influence</span></span>
-<span><span class="co">#&gt;      100 10.554229</span></span>
-<span><span class="co">#&gt;       73  9.837622</span></span>
-<span><span class="co">#&gt;       23  8.166919</span></span>
-<span><span class="co">#&gt;       14 -7.783677</span></span>
-<span><span class="co">#&gt;       24  5.524770</span></span>
-<span><span class="co">#&gt;       82  5.505637</span></span>
-<span><span class="co">#&gt;       18 -4.968687</span></span>
-<span><span class="co">#&gt;       52  4.471433</span></span>
-<span><span class="co">#&gt;       78  4.404015</span></span>
-<span><span class="co">#&gt;       70 -4.092135</span></span>
+<span><span class="co">#&gt; === Empirical Influence ===</span></span>
+<span><span class="co">#&gt;  Case_ID Influence</span></span>
+<span><span class="co">#&gt;      100    10.554</span></span>
+<span><span class="co">#&gt;       73     9.838</span></span>
+<span><span class="co">#&gt;       23     8.167</span></span>
+<span><span class="co">#&gt;       14    -7.784</span></span>
+<span><span class="co">#&gt;       24     5.525</span></span>
+<span><span class="co">#&gt;       82     5.506</span></span>
+<span><span class="co">#&gt;       18    -4.969</span></span>
+<span><span class="co">#&gt;       52     4.471</span></span>
+<span><span class="co">#&gt;       78     4.404</span></span>
+<span><span class="co">#&gt;       70    -4.092</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">empic</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
 <span><span class="co">#&gt; -7.7837 -1.6230 -0.4559  0.0000  1.1463 10.5542</span></span></code></pre></div>

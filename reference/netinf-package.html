@@ -366,110 +366,13 @@ visualization and centrality.</p></li>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">empic</span> <span class="op">&lt;-</span> <span class="fu"><a href="calculate_empirical_influence.html">calculate_empirical_influence</a></span><span class="op">(</span><span class="va">boot_res</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">empic</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Empirical Influence Values</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ==========================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  case_id    influence</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       59  1350.524564</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       90 -1295.153552</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        9  1169.157261</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        7  1116.748163</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       14 -1074.987478</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        4   804.878393</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       38   779.676824</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       47  -774.142630</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      100  -762.180215</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       77   719.461276</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       98   712.085591</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       65   701.344401</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       20  -690.771300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       37   682.912684</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       34  -653.286260</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       39   640.738708</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       21  -639.550836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       62  -636.110384</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       86   629.257674</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       19  -610.567371</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       99   605.770415</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       36   594.819108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       66  -533.514167</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       18  -522.129495</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       58   516.292261</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        6  -512.402089</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       13  -509.888822</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       78   509.054514</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       49  -496.548008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       68  -491.007351</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       71  -487.601175</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       83  -467.352437</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       25   449.689395</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       16  -442.951584</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       29   432.187665</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       43   424.661501</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       93  -411.430443</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       85  -396.085645</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       35   394.052467</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       27   390.095601</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       28  -385.862103</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       82   377.541644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       95  -371.474373</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       48  -357.700275</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       51   336.432667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       63  -329.503339</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       79  -319.535773</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       11  -314.035111</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       30   300.744072</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        8  -290.071199</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       40  -283.438808</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       76   280.230011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       57  -271.825858</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       10  -264.016126</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       87   258.265118</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        3  -251.191943</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       91  -251.038835</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       72  -244.614601</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       50   237.311512</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       45   235.258822</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       69  -221.916472</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       52  -219.603375</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       92  -209.994256</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       64   206.723529</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       17  -192.815772</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       44   189.590843</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       12   183.607604</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       33   183.376558</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       75   177.015484</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       26   165.528455</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       84   163.174602</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       74   153.081275</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       24  -145.387910</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       53  -142.505746</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       81  -128.496308</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       94   110.063644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       60   105.832023</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        2    94.643304</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       61    93.497196</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       22   -92.895985</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       88    92.195082</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       80    82.603138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       46    77.521194</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        5    61.402026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       55    59.019581</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       41   -48.465435</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       15   -46.139480</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       56   -42.667532</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       31    41.409545</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       32    40.587681</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       42   -37.925050</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       67   -37.399395</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        1   -30.960579</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       23   -30.736459</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       73    26.550249</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       89    16.415801</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       96   -10.052658</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       54     7.934163</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       70    -7.427644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       97     6.394356</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> === Empirical Influence ===</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Summary Statistics of Influence Values:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Min    Median      Mean       Max        SD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -1295.154    -0.517     0.000  1350.525   467.776 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Use `print(x, n = 5)` to view top cases, or `print(x, detailed = TRUE)` to view all.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">loo_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="leave_one_out_analysis.html">leave_one_out_analysis</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">empic</span>, <span class="va">test_data</span>,</span></span>

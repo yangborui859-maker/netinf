@@ -93,22 +93,19 @@ turns the bootstrap indices into a numeric influence value per case.
 empic <- calculate_empirical_influence(boot_res)
 
 print(empic, n = 10)   # 10 cases with largest absolute value
-#> Empirical Influence Values
-#> ==========================
 #> 
-#> Showing top 10 of 100 cases by absolute influence:
-#> 
-#>  case_id influence
-#>      100 10.554229
-#>       73  9.837622
-#>       23  8.166919
-#>       14 -7.783677
-#>       24  5.524770
-#>       82  5.505637
-#>       18 -4.968687
-#>       52  4.471433
-#>       78  4.404015
-#>       70 -4.092135
+#> === Empirical Influence ===
+#>  Case_ID Influence
+#>      100    10.554
+#>       73     9.838
+#>       23     8.167
+#>       14    -7.784
+#>       24     5.525
+#>       82     5.506
+#>       18    -4.969
+#>       52     4.471
+#>       78     4.404
+#>       70    -4.092
 ```
 
 #### Step 3: leave-one-out validation

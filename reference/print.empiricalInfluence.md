@@ -1,12 +1,15 @@
 # Print Method for empiricalInfluence Objects
 
-Prints a sorted table of empirical influence values.
+Prints a summary of empirical influence values. By default, it prints
+summary statistics. If `n` is specified, it prints the top `n` cases
+with the largest absolute influence values. If `detailed = TRUE`, it
+prints the full sorted table of all cases.
 
 ## Usage
 
 ``` r
 # S3 method for class 'empiricalInfluence'
-print(x, n = NULL, ...)
+print(x, n = NULL, detailed = FALSE, ...)
 ```
 
 ## Arguments
@@ -19,6 +22,10 @@ print(x, n = NULL, ...)
 
   If setted, only the top "n" cases with absolute values will be
   printed.
+
+- detailed:
+
+  If `TRUE`, prints the full table of all cases. Default is `FALSE`.
 
 - ...:
 
