@@ -183,22 +183,23 @@ Moore-Penrose pseudo-inverse from <code><a href="https://rdrr.io/pkg/MASS/man/gi
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     - using glasso::glasso</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>A dense regularized network was selected (lambda &lt; 0.1 * lambda.max). Recent work indicates a possible drop in specificity. Interpret the presence of the smallest edges with care. Setting threshold = TRUE will enforce higher specificity, at the cost of sensitivity.</span>
 <span class="r-in"><span><span class="va">gcd_res</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    case_id      metric         gCD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        4    Strength 0.063160687</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        2    Strength 0.057577568</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        5    Strength 0.055008171</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        3    Strength 0.030465401</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        1    Strength 0.006872595</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        4   Closeness 0.303456067</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7        2   Closeness 0.297861791</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8        3   Closeness 0.181103394</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9        5   Closeness 0.060280570</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10       1   Closeness 0.041871733</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11       2 Betweenness 2.510711025</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12       5 Betweenness 0.283097623</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       1 Betweenness 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14       3 Betweenness 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15       4 Betweenness 0.000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> === Centrality generalized Cook's Distance (gCD) ===</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Summary Statistics of gCD by Metric:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Metric: Strength</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Min Median   Mean    Max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.007  0.055  0.043  0.063 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Metric: Closeness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Min Median   Mean    Max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.042  0.181  0.177  0.303 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Metric: Betweenness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Min Median   Mean    Max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.000  0.000  0.559  2.511 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Use `print(x, n = 5)` to view top cases per metric, or `print(x, detailed = TRUE)` to view all.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

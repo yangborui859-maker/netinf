@@ -18,6 +18,8 @@
   : Plot Empirical Influence Values
 - [`leave_one_out_analysis()`](https://yangborui859-maker.github.io/netinf/reference/leave_one_out_analysis.md)
   : Leave-One-Out Analysis for Influential Cases
+- [`print(`*`<centralityGCD>`*`)`](https://yangborui859-maker.github.io/netinf/reference/print.centralityGCD.md)
+  : Print Method for centralityGCD Objects
 - [`print(`*`<empiricalInfluence>`*`)`](https://yangborui859-maker.github.io/netinf/reference/print.empiricalInfluence.md)
   : Print Method for empiricalInfluence Objects
 - [`print(`*`<influenceDiagnostic>`*`)`](https://yangborui859-maker.github.io/netinf/reference/print.influenceDiagnostic.md)

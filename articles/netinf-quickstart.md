@@ -378,19 +378,23 @@ gcd_res <- calculate_centrality_gCD(
 #> enforce higher specificity, at the cost of sensitivity.
 
 gcd_res
-#>    case_id      metric        gCD
-#> 1      100    Strength 2.66955723
-#> 2       75    Strength 0.10710609
-#> 3       50    Strength 0.10466219
-#> 4       25    Strength 0.09214964
-#> 5      100   Closeness 2.20986968
-#> 6       75   Closeness 0.15354288
-#> 7       50   Closeness 0.06266901
-#> 8       25   Closeness 0.10603953
-#> 9      100 Betweenness 3.02445721
-#> 10      75 Betweenness 0.83791464
-#> 11      50 Betweenness 0.83791464
-#> 12      25 Betweenness 1.87117778
+#> 
+#> === Centrality generalized Cook's Distance (gCD) ===
+#> Summary Statistics of gCD by Metric:
+#> 
+#> Metric: Strength
+#>    Min Median   Mean    Max 
+#>  0.092  0.106  0.743  2.670 
+#> 
+#> Metric: Closeness
+#>    Min Median   Mean    Max 
+#>  0.063  0.130  0.633  2.210 
+#> 
+#> Metric: Betweenness
+#>    Min Median   Mean    Max 
+#>  0.838  1.355  1.643  3.024 
+#> 
+#> * Use `print(x, n = 5)` to view top cases per metric, or `print(x, detailed = TRUE)` to view all.
 ```
 
 ### Visualization

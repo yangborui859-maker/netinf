@@ -945,19 +945,23 @@ Moore-Penrose pseudo-inverse was used.</code></pre>
 metric:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gcd_res</span></span>
-<span><span class="co">#&gt;    case_id      metric        gCD</span></span>
-<span><span class="co">#&gt; 1      100    Strength 2.66955723</span></span>
-<span><span class="co">#&gt; 2       75    Strength 0.10710609</span></span>
-<span><span class="co">#&gt; 3       50    Strength 0.10466219</span></span>
-<span><span class="co">#&gt; 4       25    Strength 0.09214964</span></span>
-<span><span class="co">#&gt; 5      100   Closeness 2.20986968</span></span>
-<span><span class="co">#&gt; 6       75   Closeness 0.15354288</span></span>
-<span><span class="co">#&gt; 7       50   Closeness 0.06266901</span></span>
-<span><span class="co">#&gt; 8       25   Closeness 0.10603953</span></span>
-<span><span class="co">#&gt; 9      100 Betweenness 3.02445721</span></span>
-<span><span class="co">#&gt; 10      75 Betweenness 0.83791464</span></span>
-<span><span class="co">#&gt; 11      50 Betweenness 0.83791464</span></span>
-<span><span class="co">#&gt; 12      25 Betweenness 1.87117778</span></span></code></pre></div>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; === Centrality generalized Cook's Distance (gCD) ===</span></span>
+<span><span class="co">#&gt; Summary Statistics of gCD by Metric:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Metric: Strength</span></span>
+<span><span class="co">#&gt;    Min Median   Mean    Max </span></span>
+<span><span class="co">#&gt;  0.092  0.106  0.743  2.670 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Metric: Closeness</span></span>
+<span><span class="co">#&gt;    Min Median   Mean    Max </span></span>
+<span><span class="co">#&gt;  0.063  0.130  0.633  2.210 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Metric: Betweenness</span></span>
+<span><span class="co">#&gt;    Min Median   Mean    Max </span></span>
+<span><span class="co">#&gt;  0.838  1.355  1.643  3.024 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; * Use `print(x, n = 5)` to view top cases per metric, or `print(x, detailed = TRUE)` to view all.</span></span></code></pre></div>
 <p>Columns:</p>
 <ul>
 <li>
@@ -1049,113 +1053,15 @@ Which input to use depends on your workflow.</p>
 <span><span class="co">#&gt; ============================</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Phase 1: Empirical Influence Screening</span></span>
-<span><span class="co">#&gt;   Number of cases: 100</span></span>
-<span><span class="co">#&gt;   Selected candidates: 3</span></span>
-<span><span class="co">#&gt;   Selection method: top_3</span></span>
-<span><span class="co">#&gt;   Direction: both</span></span>
+<span><span class="co">#&gt; =================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; All Case Influence Values (sorted by absolute influence):</span></span>
-<span><span class="co">#&gt;  case_id   influence</span></span>
-<span><span class="co">#&gt;      100 11.01535633</span></span>
-<span><span class="co">#&gt;       73  8.44221583</span></span>
-<span><span class="co">#&gt;       23  7.91951495</span></span>
-<span><span class="co">#&gt;       14 -6.90145831</span></span>
-<span><span class="co">#&gt;       82  6.12673996</span></span>
-<span><span class="co">#&gt;       24  5.71648062</span></span>
-<span><span class="co">#&gt;       18 -5.63018639</span></span>
-<span><span class="co">#&gt;       52  5.43083595</span></span>
-<span><span class="co">#&gt;       98  5.11315575</span></span>
-<span><span class="co">#&gt;       36  4.89202198</span></span>
-<span><span class="co">#&gt;        7 -4.23357640</span></span>
-<span><span class="co">#&gt;       96 -4.10472131</span></span>
-<span><span class="co">#&gt;        6 -3.87585777</span></span>
-<span><span class="co">#&gt;       41  3.67850809</span></span>
-<span><span class="co">#&gt;       78  3.50911648</span></span>
-<span><span class="co">#&gt;        2 -3.50031256</span></span>
-<span><span class="co">#&gt;       55  3.46189557</span></span>
-<span><span class="co">#&gt;       46 -3.33539205</span></span>
-<span><span class="co">#&gt;       99 -3.30949311</span></span>
-<span><span class="co">#&gt;       10 -3.30543722</span></span>
-<span><span class="co">#&gt;       94 -3.29415041</span></span>
-<span><span class="co">#&gt;       50 -3.26594134</span></span>
-<span><span class="co">#&gt;       38 -3.06675317</span></span>
-<span><span class="co">#&gt;       95 -2.93148638</span></span>
-<span><span class="co">#&gt;       88  2.89726718</span></span>
-<span><span class="co">#&gt;       20  2.84678486</span></span>
-<span><span class="co">#&gt;       19  2.84661840</span></span>
-<span><span class="co">#&gt;       97 -2.84472259</span></span>
-<span><span class="co">#&gt;       67  2.84015158</span></span>
-<span><span class="co">#&gt;       66 -2.67934046</span></span>
-<span><span class="co">#&gt;        9 -2.66462180</span></span>
-<span><span class="co">#&gt;       28  2.53531804</span></span>
-<span><span class="co">#&gt;       70 -2.46159073</span></span>
-<span><span class="co">#&gt;       68 -2.38127795</span></span>
-<span><span class="co">#&gt;       11 -2.37810050</span></span>
-<span><span class="co">#&gt;       21 -2.32736239</span></span>
-<span><span class="co">#&gt;       65 -2.23363274</span></span>
-<span><span class="co">#&gt;       93 -2.19451080</span></span>
-<span><span class="co">#&gt;       89 -2.18013462</span></span>
-<span><span class="co">#&gt;       57  2.14853178</span></span>
-<span><span class="co">#&gt;       72  2.10968130</span></span>
-<span><span class="co">#&gt;       85  2.07583099</span></span>
-<span><span class="co">#&gt;       31  2.03907786</span></span>
-<span><span class="co">#&gt;       69 -1.99343471</span></span>
-<span><span class="co">#&gt;       83 -1.88505294</span></span>
-<span><span class="co">#&gt;       29 -1.82517262</span></span>
-<span><span class="co">#&gt;       49 -1.81767777</span></span>
-<span><span class="co">#&gt;       61  1.77978567</span></span>
-<span><span class="co">#&gt;       80  1.77475601</span></span>
-<span><span class="co">#&gt;       35  1.71785276</span></span>
-<span><span class="co">#&gt;       16 -1.57651357</span></span>
-<span><span class="co">#&gt;       75  1.54311881</span></span>
-<span><span class="co">#&gt;       44  1.53387724</span></span>
-<span><span class="co">#&gt;       84  1.52970315</span></span>
-<span><span class="co">#&gt;       60 -1.52870028</span></span>
-<span><span class="co">#&gt;        4 -1.40177253</span></span>
-<span><span class="co">#&gt;       12 -1.31543157</span></span>
-<span><span class="co">#&gt;       56 -1.30407229</span></span>
-<span><span class="co">#&gt;       53 -1.29736937</span></span>
-<span><span class="co">#&gt;       22  1.25330107</span></span>
-<span><span class="co">#&gt;       32 -1.23094104</span></span>
-<span><span class="co">#&gt;        5 -1.22196686</span></span>
-<span><span class="co">#&gt;       74 -1.21708458</span></span>
-<span><span class="co">#&gt;       25  1.14624167</span></span>
-<span><span class="co">#&gt;       42 -1.10022522</span></span>
-<span><span class="co">#&gt;       76 -1.01661261</span></span>
-<span><span class="co">#&gt;       59 -0.99715634</span></span>
-<span><span class="co">#&gt;       45  0.98166886</span></span>
-<span><span class="co">#&gt;        3 -0.97447037</span></span>
-<span><span class="co">#&gt;       48 -0.95409094</span></span>
-<span><span class="co">#&gt;        1  0.93038137</span></span>
-<span><span class="co">#&gt;       87  0.90537768</span></span>
-<span><span class="co">#&gt;       71 -0.82593116</span></span>
-<span><span class="co">#&gt;       47 -0.80866146</span></span>
-<span><span class="co">#&gt;       58 -0.80432926</span></span>
-<span><span class="co">#&gt;       17  0.70169058</span></span>
-<span><span class="co">#&gt;       64  0.68300190</span></span>
-<span><span class="co">#&gt;       81  0.66493104</span></span>
-<span><span class="co">#&gt;        8 -0.65330186</span></span>
-<span><span class="co">#&gt;       92  0.63379428</span></span>
-<span><span class="co">#&gt;       86 -0.60769594</span></span>
-<span><span class="co">#&gt;       79  0.59855341</span></span>
-<span><span class="co">#&gt;       54 -0.59157617</span></span>
-<span><span class="co">#&gt;       30  0.57330736</span></span>
-<span><span class="co">#&gt;       62 -0.53637302</span></span>
-<span><span class="co">#&gt;       26 -0.53067036</span></span>
-<span><span class="co">#&gt;       40 -0.44610710</span></span>
-<span><span class="co">#&gt;       51 -0.42219179</span></span>
-<span><span class="co">#&gt;       63 -0.40153960</span></span>
-<span><span class="co">#&gt;       91 -0.36295408</span></span>
-<span><span class="co">#&gt;       90  0.35903978</span></span>
-<span><span class="co">#&gt;       27 -0.32890273</span></span>
-<span><span class="co">#&gt;       77  0.30175032</span></span>
-<span><span class="co">#&gt;       37 -0.20924802</span></span>
-<span><span class="co">#&gt;       43  0.19978506</span></span>
-<span><span class="co">#&gt;       34 -0.17450130</span></span>
-<span><span class="co">#&gt;       39  0.06988291</span></span>
-<span><span class="co">#&gt;       15 -0.06014851</span></span>
-<span><span class="co">#&gt;       13 -0.05297229</span></span>
-<span><span class="co">#&gt;       33  0.04800683</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; === Empirical Influence ===</span></span>
+<span><span class="co">#&gt; Summary Statistics of Influence Values:</span></span>
+<span><span class="co">#&gt;    Min Median   Mean    Max     SD </span></span>
+<span><span class="co">#&gt; -6.901 -0.434  0.000 11.015  2.909 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; * Use `print(x, n = 5)` to view top cases, or `print(x, detailed = TRUE)` to view all.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Phase 2: Leave-One-Out Validation</span></span>
 <span><span class="co">#&gt; =================================</span></span>
@@ -1221,14 +1127,18 @@ Which input to use depends on your workflow.</p>
 <span><span class="co">#&gt; Edge sign reversals:</span></span>
 <span><span class="co">#&gt;   None</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Phase 3: Centrality gCD</span></span>
-<span><span class="co">#&gt; ========================</span></span>
+<span><span class="co">#&gt; =================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   case_id   metric       gCD</span></span>
-<span><span class="co">#&gt; 1     100 Strength 2.7595455</span></span>
-<span><span class="co">#&gt; 2      73 Strength 0.3470562</span></span>
-<span><span class="co">#&gt; 3      23 Strength 0.2690898</span></span></code></pre></div>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; === Centrality generalized Cook's Distance (gCD) ===</span></span>
+<span><span class="co">#&gt; Summary Statistics of gCD by Metric:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Metric: Strength</span></span>
+<span><span class="co">#&gt;    Min Median   Mean    Max </span></span>
+<span><span class="co">#&gt;  0.269  0.347  1.125  2.760 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; * Use `print(x, n = 5)` to view top cases per metric, or `print(x, detailed = TRUE)` to view all.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>

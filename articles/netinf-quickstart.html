@@ -422,19 +422,23 @@ shifts the centrality vector.</p>
 <span><span class="co">#&gt; enforce higher specificity, at the cost of sensitivity.</span></span>
 <span></span>
 <span><span class="va">gcd_res</span></span>
-<span><span class="co">#&gt;    case_id      metric        gCD</span></span>
-<span><span class="co">#&gt; 1      100    Strength 2.66955723</span></span>
-<span><span class="co">#&gt; 2       75    Strength 0.10710609</span></span>
-<span><span class="co">#&gt; 3       50    Strength 0.10466219</span></span>
-<span><span class="co">#&gt; 4       25    Strength 0.09214964</span></span>
-<span><span class="co">#&gt; 5      100   Closeness 2.20986968</span></span>
-<span><span class="co">#&gt; 6       75   Closeness 0.15354288</span></span>
-<span><span class="co">#&gt; 7       50   Closeness 0.06266901</span></span>
-<span><span class="co">#&gt; 8       25   Closeness 0.10603953</span></span>
-<span><span class="co">#&gt; 9      100 Betweenness 3.02445721</span></span>
-<span><span class="co">#&gt; 10      75 Betweenness 0.83791464</span></span>
-<span><span class="co">#&gt; 11      50 Betweenness 0.83791464</span></span>
-<span><span class="co">#&gt; 12      25 Betweenness 1.87117778</span></span></code></pre></div>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; === Centrality generalized Cook's Distance (gCD) ===</span></span>
+<span><span class="co">#&gt; Summary Statistics of gCD by Metric:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Metric: Strength</span></span>
+<span><span class="co">#&gt;    Min Median   Mean    Max </span></span>
+<span><span class="co">#&gt;  0.092  0.106  0.743  2.670 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Metric: Closeness</span></span>
+<span><span class="co">#&gt;    Min Median   Mean    Max </span></span>
+<span><span class="co">#&gt;  0.063  0.130  0.633  2.210 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Metric: Betweenness</span></span>
+<span><span class="co">#&gt;    Min Median   Mean    Max </span></span>
+<span><span class="co">#&gt;  0.838  1.355  1.643  3.024 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; * Use `print(x, n = 5)` to view top cases per metric, or `print(x, detailed = TRUE)` to view all.</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">

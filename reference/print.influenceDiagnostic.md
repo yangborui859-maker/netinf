@@ -8,7 +8,7 @@ results if available.
 
 ``` r
 # S3 method for class 'influenceDiagnostic'
-print(x, ...)
+print(x, n = NULL, detailed = FALSE, ...)
 ```
 
 ## Arguments
@@ -16,6 +16,14 @@ print(x, ...)
 - x:
 
   An object of class `"influenceDiagnostic"`.
+
+- n:
+
+  If specified, prints the top `n` cases. Default is `NULL`.
+
+- detailed:
+
+  If `TRUE`, prints full details. Default is `FALSE`.
 
 - ...:
 

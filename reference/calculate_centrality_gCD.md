@@ -158,20 +158,21 @@ gcd_res <- calculate_centrality_gCD(
 #>     - using glasso::glasso
 #> Warning: A dense regularized network was selected (lambda < 0.1 * lambda.max). Recent work indicates a possible drop in specificity. Interpret the presence of the smallest edges with care. Setting threshold = TRUE will enforce higher specificity, at the cost of sensitivity.
 gcd_res
-#>    case_id      metric         gCD
-#> 1        4    Strength 0.063160687
-#> 2        2    Strength 0.057577568
-#> 3        5    Strength 0.055008171
-#> 4        3    Strength 0.030465401
-#> 5        1    Strength 0.006872595
-#> 6        4   Closeness 0.303456067
-#> 7        2   Closeness 0.297861791
-#> 8        3   Closeness 0.181103394
-#> 9        5   Closeness 0.060280570
-#> 10       1   Closeness 0.041871733
-#> 11       2 Betweenness 2.510711025
-#> 12       5 Betweenness 0.283097623
-#> 13       1 Betweenness 0.000000000
-#> 14       3 Betweenness 0.000000000
-#> 15       4 Betweenness 0.000000000
+#> 
+#> === Centrality generalized Cook's Distance (gCD) ===
+#> Summary Statistics of gCD by Metric:
+#> 
+#> Metric: Strength
+#>    Min Median   Mean    Max 
+#>  0.007  0.055  0.043  0.063 
+#> 
+#> Metric: Closeness
+#>    Min Median   Mean    Max 
+#>  0.042  0.181  0.177  0.303 
+#> 
+#> Metric: Betweenness
+#>    Min Median   Mean    Max 
+#>  0.000  0.000  0.559  2.511 
+#> 
+#> * Use `print(x, n = 5)` to view top cases per metric, or `print(x, detailed = TRUE)` to view all.
 ```
