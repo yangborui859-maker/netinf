@@ -4,10 +4,14 @@
 \alias{print.looAnalysis}
 \title{Print Method for looAnalysis Objects}
 \usage{
-\method{print}{looAnalysis}(x, ...)
+\method{print}{looAnalysis}(x, n = NULL, detailed = FALSE, ...)
 }
 \arguments{
-\item{x}{An object of class \code{"looAnalysis"}.}
+\item{x}{An object of class \code{"looAnalysis"}or \code{"looMultiAnalysis"}.}
+
+\item{n}{The number of top n cases with the most structural changes (Edges)  to display for single-case LOO. Default is \code{NULL}.}
+
+\item{detailed}{If \code{TRUE}, prints detailed edge weight changes. Default is \code{FALSE}.}
 
 \item{...}{Additional arguments (currently unused).}
 }
