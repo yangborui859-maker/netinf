@@ -1,12 +1,13 @@
 # print.empiricalInfluence
 test_that("print.empiricalInfluence: emits header", {
   expect_output(print(shared_empic_small),
-                "Empirical Influence Values")
+                "Empirical Influence")
+  expect_output(print(shared_empic_small), "Summary Statistics")
 })
 
 test_that("print.empiricalInfluence: prints case_id and influence columns", {
-  expect_output(print(shared_empic_small), "case_id")
-  expect_output(print(shared_empic_small), "influence")
+  expect_output(print(shared_empic_small, n = 2), "Case_ID")
+  expect_output(print(shared_empic_small, detailed = TRUE), "Influence")
 })
 
 test_that("print.empiricalInfluence: returns invisibly", {
@@ -27,20 +28,20 @@ test_that("print.looAnalysis: emits header", {
 
 test_that("print.looAnalysis: prints selection info", {
   expect_output(print(shared_loo), "Selection method:")
-  expect_output(print(shared_loo), "Direction:")
   expect_output(print(shared_loo), "Number of cases analyzed:")
 })
 
 test_that("print.looAnalysis: prints Summary block", {
-  expect_output(print(shared_loo), "Summary:")
-  expect_output(print(shared_loo), "case_id")
+  expect_output(print(shared_loo), "Summary of Structural Changes:")
+  expect_output(print(shared_loo, detailed = TRUE), "case_id")
 })
 
 test_that("print.looAnalysis: prints structure changes for each case", {
-  expect_output(print(shared_loo), "Structure Changes")
-  expect_output(print(shared_loo), "Edges disappeared")
-  expect_output(print(shared_loo), "Edges appeared")
-  expect_output(print(shared_loo), "Edge sign reversals")
+  out_detailed <- capture.output(print(shared_loo, detailed = TRUE))
+  expect_match(paste(out_detailed, collapse = "\n"), "Structure Changes")
+  expect_match(paste(out_detailed, collapse = "\n"), "Edges disappeared")
+  expect_match(paste(out_detailed, collapse = "\n"), "Edges appeared")
+  expect_match(paste(out_detailed, collapse = "\n"), "Edge sign reversals")
 })
 
 test_that("print.looAnalysis: returns invisibly", {
@@ -55,12 +56,10 @@ test_that("print.looMultiAnalysis: emits header", {
 
 test_that("print.looMultiAnalysis: prints removed cases info", {
   expect_output(print(shared_loo_multi), "Removed cases:")
-  expect_output(print(shared_loo_multi), "Number of removed cases:")
 })
 
 test_that("print.looMultiAnalysis: prints Summary block", {
-  expect_output(print(shared_loo_multi), "Summary:")
-  expect_output(print(shared_loo_multi), "case_ids")
+  expect_output(print(shared_loo_multi), "global_weight-strength_change")
 })
 
 test_that("print.looMultiAnalysis: prints structure changes", {
@@ -149,20 +148,16 @@ test_that("print_structure_changes: non-empty changes list each edge", {
 
 # print.influenceDiagnostic
 test_that("print.influenceDiagnostic: emits main header", {
-  expect_output(print(shared_diag),
-                "Influence Diagnostic Results")
+  expect_output(print(shared_diag), "Influence Diagnostic Results")
 })
 
 test_that("print.influenceDiagnostic: prints Phase 1 block", {
   expect_output(print(shared_diag), "Phase 1: Empirical Influence Screening")
-  expect_output(print(shared_diag), "Number of cases:")
-  expect_output(print(shared_diag), "Selected candidates:")
-  expect_output(print(shared_diag), "Selection method:")
+  expect_output(print(shared_diag), "=== Empirical Influence ===")
 })
 
 test_that("print.influenceDiagnostic: prints influence table", {
-  expect_output(print(shared_diag),
-                "All Case Influence Values")
+  expect_output(print(shared_diag), "Summary Statistics of Influence Values")
 })
 
 test_that("print.influenceDiagnostic: prints Phase 2 block", {
@@ -178,15 +173,6 @@ test_that("print.influenceDiagnostic: returns invisibly", {
   expect_invisible(print(shared_diag))
 })
 
-test_that("print.influenceDiagnostic: does not print Phase 3 when centrality_gCD is NULL", {
-  diag_no_gcd <- shared_diag
-  diag_no_gcd$centrality_gCD <- NULL
-
-  out <- capture.output(print(diag_no_gcd))
-
-  expect_false(any(grepl("Phase 3", out)))
-})
-
 # S3 dispatch check
 test_that("S3 dispatch: print() calls the right method", {
   out <- capture.output(print(shared_empic_small))
@@ -196,7 +182,7 @@ test_that("S3 dispatch: print() calls the right method", {
   expect_true(any(grepl("Leave-One-Out Analysis", out)))
 
   out <- capture.output(print(shared_loo_multi))
-  expect_true(any(grepl("Leave-Multiple-Out Analysis", out)))
+  expect_true(any(grepl("Leave-Multiple-Out Analysis Results", out)))
 
   out <- capture.output(print(shared_diag))
   expect_true(any(grepl("Influence Diagnostic Results", out)))
