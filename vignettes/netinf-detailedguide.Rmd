@@ -590,6 +590,21 @@ influence_plot(diag, largest_x = 3)
 influence_plot(empic, largest_x = 3)
 ```
 
+## loo_plot {#plot-loo}
+
+`loo_plot()` (or `plot()` applied to a `looAnalysis` object) generates a
+side-by-side network comparison before and after removing an influential case.
+It highlights topological changes with thick lines.
+
+**Accepted inputs:**
+
+- A `looAnalysis` or `looMultiAnalysis` object (from [leave_one_out_analysis()])
+
+**Example** plotting the top 1 influential case of the input by default:
+```{r}
+loo_plot(loo_res, n = 1)
+```
+
 ## gcds_plot {#plot-gcds}
 
 `gcds_plot()` shows gCD on the x-axis and centrality change on the

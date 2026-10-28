@@ -31,6 +31,7 @@
 #'
 #' @section Visualization:
 #' * [influence_plot()] — plot of empirical influence values
+#' * [loo_plot()] — plot of leave one out analysis
 #' * [gcds_plot()] — gCD vs centrality change
 #' * [gcds_md_plot()] — bubble plot with Mahalanobis distance
 #'

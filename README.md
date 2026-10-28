@@ -6,7 +6,7 @@
 [![R-CMD-check](https://github.com/yangborui859-maker/netinf/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/yangborui859-maker/netinf/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-(Version 0.1.1, updated on 2026-10-26)
+(Version 0.1.2, updated on 2026-10-28)
 
 # netinf
 **(Work-in-progress. Not ready for use)**

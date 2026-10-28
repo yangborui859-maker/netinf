@@ -1,6 +1,6 @@
 Package: netinf
 Title: Diagnostics for Influential Cases in Network Analysis
-Version: 0.1.1
+Version: 0.1.2
 Authors@R:
     c(person("Borui", "Yang", , "yangborui859@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0009-0006-7532-8950")),
     person("Shu Fai", "Cheung", , "shufai.cheung@gmail.com", role = c("aut"), comment = c(ORCID = "0000-0002-9871-9448")))

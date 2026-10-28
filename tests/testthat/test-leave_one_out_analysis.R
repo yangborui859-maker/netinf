@@ -8,7 +8,7 @@ test_that("a1: single case returns looAnalysis with expected fields", {
 
   expect_s3_class(res, "looAnalysis")
   expect_named(res, c("results", "summary", "case_ids", "n_cases",
-                      "selection_method", "direction"),
+                      "selection_method", "direction", "full_network", "reduced_networks"),
                ignore.order = TRUE)
 })
 
@@ -34,7 +34,7 @@ test_that("b1: non-numeric influence_result raises an error", {
   )
 })
 
-# b2: influence_result length must match data 
+# b2: influence_result length must match data
 test_that("b2: wrong-length influence_result raises an error", {
   expect_error(
     leave_one_out_analysis(
@@ -94,7 +94,7 @@ test_that("b6: non-numeric remove_cases raises an error", {
   )
 })
 
-# b7: remove_cases duplicated 
+# b7: remove_cases duplicated
 test_that("b7: duplicated remove_cases raises an error", {
   expect_error(
     leave_one_out_analysis(
@@ -106,7 +106,7 @@ test_that("b7: duplicated remove_cases raises an error", {
   )
 })
 
-# b8: threshold is non-numeric 
+# b8: threshold is non-numeric
 test_that("b8: non-numeric threshold raises an error", {
   expect_error(
     leave_one_out_analysis(
@@ -130,7 +130,7 @@ test_that("b9: vector threshold raises an error", {
   )
 })
 
-# b10: threshold is negative 
+# b10: threshold is negative
 test_that("b10: negative threshold raises an error", {
   expect_error(
     leave_one_out_analysis(
@@ -166,7 +166,7 @@ test_that("b12: negative top_n raises an error", {
   )
 })
 
-# b13: top_n is non-integer 
+# b13: top_n is non-integer
 test_that("b13: non-integer top_n raises an error", {
   expect_error(
     leave_one_out_analysis(
@@ -337,5 +337,3 @@ test_that("f1: same call gives identical result", {
 
   expect_equal(res1$summary, res2$summary)
 })
-
-
