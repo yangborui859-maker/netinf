@@ -56,6 +56,9 @@ a full walkthrough.
 - [`influence_plot()`](https://yangborui859-maker.github.io/netinf/reference/influence_plot.md)
   — plot of empirical influence values
 
+- [`loo_plot()`](https://yangborui859-maker.github.io/netinf/reference/plot.looAnalysis.md)
+  — plot of leave one out analysis
+
 - [`gcds_plot()`](https://yangborui859-maker.github.io/netinf/reference/gcds_plot.md)
   — gCD vs centrality change
 

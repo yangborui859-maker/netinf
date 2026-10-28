@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">netinf</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -499,18 +499,33 @@ individual step outputs.</p>
 <p><img src="netinf-quickstart_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 <div class="section level4">
-<h4 id="gcds_plot">gcds_plot<a class="anchor" aria-label="anchor" href="#gcds_plot"></a>
+<h4 id="loo_plot">loo_plot<a class="anchor" aria-label="anchor" href="#loo_plot"></a>
 </h4>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/gcds_plot.html">gcds_plot</a></span><span class="op">(</span><span class="va">gcd_res</span>, metrics <span class="op">=</span> <span class="st">"Strength"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.looAnalysis.html">loo_plot</a></span><span class="op">(</span><span class="va">loo_res</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in avgW * (esize - 1): longer object length is not a multiple of</span></span>
+<span><span class="co">#&gt; shorter object length</span></span>
+<span><span class="co">#&gt; Warning in (function (input, ..., layout, groups, minimum, maximum, cut, :</span></span>
+<span><span class="co">#&gt; Length of 'asize' is not equal to the number of edges</span></span>
+<span><span class="co">#&gt; Warning in avgW * (esize - 1): longer object length is not a multiple of</span></span>
+<span><span class="co">#&gt; shorter object length</span></span>
+<span><span class="co">#&gt; Warning in (function (input, ..., layout, groups, minimum, maximum, cut, :</span></span>
+<span><span class="co">#&gt; Length of 'asize' is not equal to the number of edges</span></span></code></pre></div>
 <p><img src="netinf-quickstart_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="576"></p>
+</div>
+<div class="section level4">
+<h4 id="gcds_plot">gcds_plot<a class="anchor" aria-label="anchor" href="#gcds_plot"></a>
+</h4>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/gcds_plot.html">gcds_plot</a></span><span class="op">(</span><span class="va">gcd_res</span>, metrics <span class="op">=</span> <span class="st">"Strength"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="netinf-quickstart_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 <div class="section level4">
 <h4 id="gcds_md_plot">gcds_md_plot<a class="anchor" aria-label="anchor" href="#gcds_md_plot"></a>
 </h4>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/gcds_md_plot.html">gcds_md_plot</a></span><span class="op">(</span><span class="va">gcd_res</span>, data <span class="op">=</span> <span class="va">test_data</span>, metric <span class="op">=</span> <span class="st">"Strength"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="netinf-quickstart_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="576"></p>
+<p><img src="netinf-quickstart_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 </div>
 <div class="section level3">

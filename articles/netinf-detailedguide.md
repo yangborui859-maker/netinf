@@ -872,6 +872,28 @@ influence_plot(empic, largest_x = 3)
 
 ![](netinf-detailedguide_files/figure-html/unnamed-chunk-19-1.png)
 
+### loo_plot
+
+[`loo_plot()`](https://yangborui859-maker.github.io/netinf/reference/plot.looAnalysis.md)
+(or [`plot()`](https://rdrr.io/r/graphics/plot.default.html) applied to
+a `looAnalysis` object) generates a side-by-side network comparison
+before and after removing an influential case. It highlights topological
+changes with thick lines.
+
+**Accepted inputs:**
+
+- A `looAnalysis` or `looMultiAnalysis` object (from
+  \[leave_one_out_analysis()\])
+
+**Example** plotting the top 1 influential case of the input by default:
+
+``` r
+
+loo_plot(loo_res, n = 1)
+```
+
+![](netinf-detailedguide_files/figure-html/unnamed-chunk-20-1.png)
+
 ### gcds_plot
 
 [`gcds_plot()`](https://yangborui859-maker.github.io/netinf/reference/gcds_plot.md)
@@ -889,7 +911,7 @@ separate panel per centrality measure.
 gcds_plot(diag, metrics = "Strength")
 ```
 
-![](netinf-detailedguide_files/figure-html/unnamed-chunk-20-1.png)
+![](netinf-detailedguide_files/figure-html/unnamed-chunk-21-1.png)
 
 **Or** using the output of
 [`calculate_centrality_gCD()`](https://yangborui859-maker.github.io/netinf/reference/calculate_centrality_gCD.md)
@@ -900,7 +922,7 @@ directly:
 gcds_plot(gcd_res, metrics = "Strength")
 ```
 
-![](netinf-detailedguide_files/figure-html/unnamed-chunk-21-1.png)
+![](netinf-detailedguide_files/figure-html/unnamed-chunk-22-1.png)
 
 ### gcds_md_plot
 
@@ -923,7 +945,7 @@ bubble size representing gCD.
 gcds_md_plot(diag, data = data, metric = "Strength")
 ```
 
-![](netinf-detailedguide_files/figure-html/unnamed-chunk-22-1.png)
+![](netinf-detailedguide_files/figure-html/unnamed-chunk-23-1.png)
 
 **Or** using the output of Step 4 directly:
 
@@ -932,4 +954,4 @@ gcds_md_plot(diag, data = data, metric = "Strength")
 gcds_md_plot(gcd_res, data = data, metric = "Strength")
 ```
 
-![](netinf-detailedguide_files/figure-html/unnamed-chunk-23-1.png)
+![](netinf-detailedguide_files/figure-html/unnamed-chunk-24-1.png)

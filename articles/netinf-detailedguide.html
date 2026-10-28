@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">netinf</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -1102,6 +1102,24 @@ each case.</p>
 <p><img src="netinf-detailedguide_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 <div class="section level3">
+<h3 id="plot-loo">loo_plot<a class="anchor" aria-label="anchor" href="#plot-loo"></a>
+</h3>
+<p><code><a href="../reference/plot.looAnalysis.html">loo_plot()</a></code> (or <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> applied to a
+<code>looAnalysis</code> object) generates a side-by-side network
+comparison before and after removing an influential case. It highlights
+topological changes with thick lines.</p>
+<p><strong>Accepted inputs:</strong></p>
+<ul>
+<li>A <code>looAnalysis</code> or <code>looMultiAnalysis</code> object
+(from [leave_one_out_analysis()])</li>
+</ul>
+<p><strong>Example</strong> plotting the top 1 influential case of the
+input by default:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.looAnalysis.html">loo_plot</a></span><span class="op">(</span><span class="va">loo_res</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<p><img src="netinf-detailedguide_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="576"></p>
+</div>
+<div class="section level3">
 <h3 id="plot-gcds">gcds_plot<a class="anchor" aria-label="anchor" href="#plot-gcds"></a>
 </h3>
 <p><code><a href="../reference/gcds_plot.html">gcds_plot()</a></code> shows gCD on the x-axis and centrality
@@ -1111,14 +1129,14 @@ change on the y-axis, with a separate panel per centrality measure.</p>
 - A data frame returned by [calculate_centrality_gCD()] (with a
 <code>"diff_vectors"</code> attribute)</p>
 <p><strong>Example</strong> using the all-in-one object:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/gcds_plot.html">gcds_plot</a></span><span class="op">(</span><span class="va">diag</span>, metrics <span class="op">=</span> <span class="st">"Strength"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="netinf-detailedguide_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="576"></p>
+<p><img src="netinf-detailedguide_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" alt="" width="576"></p>
 <p><strong>Or</strong> using the output of
 <code><a href="../reference/calculate_centrality_gCD.html">calculate_centrality_gCD()</a></code> directly:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/gcds_plot.html">gcds_plot</a></span><span class="op">(</span><span class="va">gcd_res</span>, metrics <span class="op">=</span> <span class="st">"Strength"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="netinf-detailedguide_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" alt="" width="576"></p>
+<p><img src="netinf-detailedguide_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 <div class="section level3">
 <h3 id="plot-gcds-md">gcds_md_plot<a class="anchor" aria-label="anchor" href="#plot-gcds-md"></a>
@@ -1135,13 +1153,13 @@ centrality change (y), with bubble size representing gCD.</p>
 <li>Plus the original <code>data</code> argument</li>
 </ul>
 <p><strong>Example</strong> using the all-in-one object:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/gcds_md_plot.html">gcds_md_plot</a></span><span class="op">(</span><span class="va">diag</span>, data <span class="op">=</span> <span class="va">data</span>, metric <span class="op">=</span> <span class="st">"Strength"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="netinf-detailedguide_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="576"></p>
-<p><strong>Or</strong> using the output of Step 4 directly:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/gcds_md_plot.html">gcds_md_plot</a></span><span class="op">(</span><span class="va">gcd_res</span>, data <span class="op">=</span> <span class="va">data</span>, metric <span class="op">=</span> <span class="st">"Strength"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/gcds_md_plot.html">gcds_md_plot</a></span><span class="op">(</span><span class="va">diag</span>, data <span class="op">=</span> <span class="va">data</span>, metric <span class="op">=</span> <span class="st">"Strength"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="netinf-detailedguide_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" alt="" width="576"></p>
+<p><strong>Or</strong> using the output of Step 4 directly:</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/gcds_md_plot.html">gcds_md_plot</a></span><span class="op">(</span><span class="va">gcd_res</span>, data <span class="op">=</span> <span class="va">data</span>, metric <span class="op">=</span> <span class="st">"Strength"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="netinf-detailedguide_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

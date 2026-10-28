@@ -456,6 +456,23 @@ influence_plot(empic, largest_x = 3)
 
 ![](netinf-quickstart_files/figure-html/unnamed-chunk-10-1.png)
 
+#### loo_plot
+
+``` r
+
+loo_plot(loo_res, n = 1)
+#> Warning in avgW * (esize - 1): longer object length is not a multiple of
+#> shorter object length
+#> Warning in (function (input, ..., layout, groups, minimum, maximum, cut, :
+#> Length of 'asize' is not equal to the number of edges
+#> Warning in avgW * (esize - 1): longer object length is not a multiple of
+#> shorter object length
+#> Warning in (function (input, ..., layout, groups, minimum, maximum, cut, :
+#> Length of 'asize' is not equal to the number of edges
+```
+
+![](netinf-quickstart_files/figure-html/unnamed-chunk-11-1.png)
+
 #### gcds_plot
 
 ``` r
@@ -463,7 +480,7 @@ influence_plot(empic, largest_x = 3)
 gcds_plot(gcd_res, metrics = "Strength")
 ```
 
-![](netinf-quickstart_files/figure-html/unnamed-chunk-11-1.png)
+![](netinf-quickstart_files/figure-html/unnamed-chunk-12-1.png)
 
 #### gcds_md_plot
 
@@ -472,7 +489,7 @@ gcds_plot(gcd_res, metrics = "Strength")
 gcds_md_plot(gcd_res, data = test_data, metric = "Strength")
 ```
 
-![](netinf-quickstart_files/figure-html/unnamed-chunk-12-1.png)
+![](netinf-quickstart_files/figure-html/unnamed-chunk-13-1.png)
 
 ### Tips
 
