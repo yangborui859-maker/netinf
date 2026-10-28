@@ -169,8 +169,8 @@ if (!is.null(top_n)) {
       global_weight_strength_change_pct =
         (global_full - global_without) / global_full * 100,
       structure_changes = structure_changes,
-      network_full = full_network,
-      network_without = network_without
+      full_network = full_network,
+      reduced_networks = list(network_without)
     )
 
     class(result) <- c("looMultiAnalysis", "list")
@@ -221,6 +221,7 @@ if (!is.null(top_n)) {
   global_full <- sum(abs(full_graph[upper.tri(full_graph)]))
 
   results <- list()
+  reduced_networks <- list()
 
   if (verbose) message("Performing leave-one-out analysis...")
   if (verbose) pb <- utils::txtProgressBar(0, length(candidate_ids), style = 3)
@@ -250,10 +251,9 @@ if (!is.null(top_n)) {
       global_weight_strength_change = global_full - global_without,
       global_weight_strength_change_pct =
         (global_full - global_without) / global_full * 100,
-      structure_changes = structure_changes,
-      network_full = full_network,
-      network_without = network_without
+      structure_changes = structure_changes
     )
+    reduced_networks[[i]] <- network_without
 
     if (verbose) utils::setTxtProgressBar(pb, i)
   }
@@ -281,7 +281,9 @@ if (!is.null(top_n)) {
     case_ids = candidate_ids,
     n_cases = length(candidate_ids),
     selection_method = selection_method,
-    direction = direction
+    direction = direction,
+    full_network = full_network,
+    reduced_networks = reduced_networks
   )
 
   class(result) <- c("looAnalysis", "list")

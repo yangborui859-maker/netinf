@@ -45,6 +45,7 @@ or \code{vignette("netinf-detailedguide", package = "netinf")}for a full walkthr
 
 \itemize{
 \item \code{\link[=influence_plot]{influence_plot()}} — plot of empirical influence values
+\item \code{\link[=loo_plot]{loo_plot()}} — plot of leave one out analysis
 \item \code{\link[=gcds_plot]{gcds_plot()}} — gCD vs centrality change
 \item \code{\link[=gcds_md_plot]{gcds_md_plot()}} — bubble plot with Mahalanobis distance
 }
