@@ -7,16 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment  = "#>",
-  fig.width  = 6,
-  fig.height = 4,
-  message  = FALSE,
-  warning  = FALSE
-)
-```
+
 
 # Getting started with netinf
 
@@ -94,18 +85,19 @@ The returned object is a `bootnetWithIndices` object: a `bootnet` result with an
 
 ## Setup
 
-```{r}
+
+``` r
 library(netinf)
 ```
 
 We use a simulated dataset based on the 9 variables from the HolzingerSwineford1939 dataset in lavaan.
 
-```{r}
+
+``` r
 set.seed(123)
 dat <- lavaan::HolzingerSwineford1939
 datused <- dat[, paste0("x", 1:9)]
 
-#Following Fried's suggestion(2017),N/P > 10
 sample_idx <- sample(1:nrow(datused), 99)
 data_99 <- datused[sample_idx, ]
 means_99 <- colMeans(data_99)
@@ -121,28 +113,36 @@ rownames(data) <- seq_len(nrow(data))
 
 ## Calling `bootnet_with_indices()`
 
-```{r}
+
+``` r
 set.seed(1)
 boot_res <- bootnet_with_indices(
   data,
   nBoots = 5000,
-  default = "EBICglasso"
+  default = "EBICglasso",
+  verbose = FALSE
 )
 ```
 
 ## Structure of the returned object
 
-```{r}
+
+``` r
 class(boot_res)
+#> [1] "bootnetWithIndices" "bootnet"
 names(boot_res)
+#> [1] "sampleTable" "bootTable"   "sample"      "boots"       "type"        "sampleSize"  "bootIndices"
 ```
 
 In addition to the `bootnet` objects (`sample`, `boots`, `sampleTable`, `bootTable`, etc.), there is one extra object "bootIndices":
 
-```{r}
+
+``` r
 # The case indices drawn in each bootstrap sample
 length(boot_res$bootIndices)      # equals nBoots
+#> [1] 5000
 str(boot_res$bootIndices[[1]])    # indices from the first bootstrap
+#>  num [1:100] 68 39 1 34 87 43 14 82 59 51 ...
 ```
 
 `bootIndices[[b]]` is a vector of length $n$. Its $k$-th element indicates which row of the original data was drawn at position $k$ in the $b$-th bootstrap sample.
@@ -201,22 +201,42 @@ so that the average influence is 0. Positive values mean "including this case in
 
 ## Basic usage
 
-```{r}
+
+``` r
 empic <- calculate_empirical_influence(boot_res)
 ```
 
 The result is a numeric vector of length $n$, with a class `"empiricalInfluence"`:
 
-```{r}
+
+``` r
 class(empic)
+#> [1] "empiricalInfluence"
 length(empic)
+#> [1] 100
 ```
 
 ## Structure of the output
 
-```{r}
+
+``` r
 print(empic, n = 10)    #For demo, only 10 cases were printed(10 cases with largest abs value)
+#> 
+#> === Empirical Influence ===
+#>  Case_ID Influence
+#>      100    10.554
+#>       73     9.838
+#>       23     8.167
+#>       14    -7.784
+#>       24     5.525
+#>       82     5.506
+#>       18    -4.969
+#>       52     4.471
+#>       78     4.404
+#>       70    -4.092
 summary(as.numeric(empic))
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#> -7.7837 -1.6230 -0.4559  0.0000  1.1463 10.5542
 ```
 
 ## Interpreting the output
@@ -338,35 +358,41 @@ the influence distribution to select:
 
 ### Option 1: select the top 3 most influential cases
 
-```{r}
+
+``` r
 loo_res <- leave_one_out_analysis(
   influence_result = empic,
   data             = data,
   top_n            = 3,
-  default          = "EBICglasso"
+  default          = "EBICglasso",
+  verbose          = FALSE
 )
 ```
 
 ### Option 2: select by threshold
 
-```{r}
+
+``` r
 loo_thr <- leave_one_out_analysis(
   influence_result = empic,
   data             = data,
   threshold        = 0.02,
   direction        = "both",
-  default          = "EBICglasso"
+  default          = "EBICglasso",
+  verbose          = FALSE
 )
 ```
 
 ### Option 3: manually remove specific cases(if multiple cases are specified, only leave-multiple-out now)
 
-```{r}
+
+``` r
 lmo_res <- leave_one_out_analysis(
   influence_result = empic,
   data             = data,
   remove_cases     = c(3, 7, 12),
-  default          = "EBICglasso"
+  default          = "EBICglasso",
+  verbose          = FALSE
 )
 ```
 
@@ -374,14 +400,97 @@ lmo_res <- leave_one_out_analysis(
 
 ### For `looAnalysis` (one case at a time)
 
-```{r}
-print(loo_res, detailed = TRUE)
+
+``` r
+print(loo_res, detailed = TRUE)  # Set detailed = TRUE to print all results
+#> Leave-One-Out Analysis Results
+#> ==============================
+#> Selection method: top_3
+#> Number of cases analyzed: 3
+#> 
+#> Summary of Structural Changes:
+#>  Total_Edges_Changed Number_of_Cases
+#>                    6               1
+#>                    1               1
+#>                    0               1
+#> 
+#> Top 3 cases ranked by Total Structural Changes:
+#>  case_id empirical_influence global_weight-strength_change global_weight-strength_change(%) n_edges_disappeared n_edges_appeared
+#>      100           10.554229                  0.7557114974                      20.91975478                   6                0
+#>       73            9.837622                  0.0973086900                       2.69371836                   1                0
+#>       23            8.166919                  0.0009796011                       0.02711751                   0                0
+#>  n_edges_reversed
+#>                 0
+#>                 0
+#>                 0
+#> 
+#> 
+#> === Without Case 100: Structure Changes ===
+#> 
+#> Edges disappeared:
+#>   x2 -- x6 : 0.038092121741292263 -> 0 
+#>   x2 -- x7 : -0.070443780586514806 -> 0 
+#>   x4 -- x7 : 0.025130867389584893 -> 0 
+#>   x6 -- x7 : 0.027369962399648878 -> 0 
+#>   x3 -- x8 : 0.040670512932712358 -> 0 
+#>   x7 -- x9 : 0.032621213662403996 -> 0 
+#> 
+#> Edges appeared:
+#>   None
+#> 
+#> Edge sign reversals:
+#>   None
+#> 
+#> 
+#> === Without Case 73: Structure Changes ===
+#> 
+#> Edges disappeared:
+#>   x1 -- x8 : 0.014833658354640828 -> 0 
+#> 
+#> Edges appeared:
+#>   None
+#> 
+#> Edge sign reversals:
+#>   None
+#> 
+#> 
+#> === Without Case 23: Structure Changes ===
+#> 
+#> Edges disappeared:
+#>   None
+#> 
+#> Edges appeared:
+#>   None
+#> 
+#> Edge sign reversals:
+#>   None
 ```
 
 ### For `looMultiAnalysis` (multiple cases at once)
 
-```{r}
+
+``` r
 print(lmo_res, detailed = TRUE)
+#> Leave-Multiple-Out Analysis Results
+#> ===================================
+#> 
+#> Removed cases: 3, 7, 12
+#> Number of removed cases: 3
+#> 
+#> Summary:
+#>   case_ids global_weight-strength_change global_weight-strength_change(%)
+#> 1 3, 7, 12                   -0.05325883                        -1.474322
+#> 
+#> === Without Cases 3, 7, 12: Structure Changes ===
+#> 
+#> Edges disappeared:
+#>   None
+#> 
+#> Edges appeared:
+#>   None
+#> 
+#> Edge sign reversals:
+#>   None
 ```
 
 Columns:
@@ -404,7 +513,8 @@ Columns:
 If you want cases with influence **below** a cutoff (e.g., $\beta_i < -0.5$),
 use `direction = "negative"` and a **positive** threshold:
 
-```{r eval = FALSE}
+
+``` r
 # A correct demo: threshold is positive, direction controls the tail
 leave_one_out_analysis(empic, data,
                        threshold = 0.5,
@@ -488,13 +598,15 @@ Moore-Penrose pseudo-inverse was used.
 
 ## Basic usage
 
-```{r}
+
+``` r
 gcd_res <- calculate_centrality_gCD(
   data        = data,
   boot_result = boot_res,
   case_ids    = c(100, 75, 50, 25),
   metric      = c("Strength", "Closeness", "Betweenness"),
-  default     = "EBICglasso"
+  default     = "EBICglasso",
+  verbose     = FALSE
 )
 ```
 
@@ -502,9 +614,42 @@ gcd_res <- calculate_centrality_gCD(
 
 The result is a **data frame** with one row per case × metric:
 
-```{r}
+
+``` r
 gcd_res
+#> 
+#> === Centrality generalized Cook's Distance (gCD) ===
+#> Summary Statistics of gCD by Metric:
+#> 
+#> Metric: Strength
+#>    Min Median   Mean    Max 
+#>  0.092  0.106  0.743  2.670 
+#> 
+#> Metric: Closeness
+#>    Min Median   Mean    Max 
+#>  0.063  0.130  0.633  2.210 
+#> 
+#> Metric: Betweenness
+#>    Min Median   Mean    Max 
+#>  0.838  1.355  1.643  3.024 
+#> 
+#> * Use `print(x, n = 5)` to view top cases per metric, or `print(x, detailed = TRUE)` to view all.
 print(gcd_res, detailed = TRUE)
+#> 
+#> === Centrality generalized Cook's Distance (gCD) ===
+#>  case_id      metric        gCD
+#>      100 Betweenness 3.02445721
+#>       25 Betweenness 1.87117778
+#>       75 Betweenness 0.83791464
+#>       50 Betweenness 0.83791464
+#>      100   Closeness 2.20986968
+#>       75   Closeness 0.15354288
+#>       25   Closeness 0.10603953
+#>       50   Closeness 0.06266901
+#>      100    Strength 2.66955723
+#>       75    Strength 0.10710609
+#>       50    Strength 0.10466219
+#>       25    Strength 0.09214964
 ```
 
 Columns:
@@ -549,7 +694,8 @@ The next section shows how to run all four steps in **one call** with
 Step 1 (`bootnet_with_indices()`) is **optional** and depends on the input:
 if you pass raw data, the function runs four steps for you; if you pass an `bootnetWithIndices` object, the function skips the first step and reuses your existing bootstrap result. Which input to use depends on your workflow.
 
-```{r}
+
+``` r
 diag <- influence_diagnostic(
   data               = data,
   nBoots             = 5000,
@@ -581,14 +727,20 @@ and [`calculate_centrality_gCD()`][calculate_centrality_gCD]).
 - A named numeric vector, matrix, or data frame
 
 **Example** using the all-in-one object:
-```{r}
+
+``` r
 influence_plot(diag, largest_x = 3)
 ```
 
+![plot of chunk unnamed-chunk-18](figure/unnamed-chunk-18-1.png)
+
 **Or** using the output of  `calculate_empirical_influence()` directly:
-```{r}
+
+``` r
 influence_plot(empic, largest_x = 3)
 ```
+
+![plot of chunk unnamed-chunk-19](figure/unnamed-chunk-19-1.png)
 
 ## loo_plot {#plot-loo}
 
@@ -601,9 +753,12 @@ It highlights topological changes with thick lines.
 - A `looAnalysis` or `looMultiAnalysis` object (from [leave_one_out_analysis()])
 
 **Example** plotting the top 1 influential case of the input by default:
-```{r}
+
+``` r
 loo_plot(loo_res, n = 1)
 ```
+
+![plot of chunk unnamed-chunk-20](figure/unnamed-chunk-20-1.png)
 
 ## gcds_plot {#plot-gcds}
 
@@ -616,14 +771,20 @@ y-axis, with a separate panel per centrality measure.
   `"diff_vectors"` attribute)
 
 **Example** using the all-in-one object:
-```{r}
+
+``` r
 gcds_plot(diag, metrics = "Strength")
 ```
 
+![plot of chunk unnamed-chunk-21](figure/unnamed-chunk-21-1.png)
+
 **Or** using the output of `calculate_centrality_gCD()` directly:
-```{r}
+
+``` r
 gcds_plot(gcd_res, metrics = "Strength")
 ```
+
+![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-1.png)
 
 ## gcds_md_plot {#plot-gcds-md}
 
@@ -640,12 +801,18 @@ change (y), with bubble size representing gCD.
 
 **Example** using the all-in-one object:
 
-```{r}
+
+``` r
 gcds_md_plot(diag, data = data, metric = "Strength")
 ```
 
+![plot of chunk unnamed-chunk-23](figure/unnamed-chunk-23-1.png)
+
 **Or** using the output of Step 4 directly:
 
-```{r}
+
+``` r
 gcds_md_plot(gcd_res, data = data, metric = "Strength")
 ```
+
+![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png)

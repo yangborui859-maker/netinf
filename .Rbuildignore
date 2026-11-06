@@ -8,3 +8,4 @@
 ^data-raw$
 ^README\.html$
 ^README_files$
+^rebuild_vignettes\.R$
