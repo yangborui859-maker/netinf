@@ -28,8 +28,8 @@ Guide](https://yangborui859-maker.github.io/netinf/articles/netinf-detailedguide
 
 ``` r
 
-install.packages("devtools")
-devtools::install_github("yangborui859-maker/netinf")
+install.packages("pak")
+pak::pak("yangborui859-maker/netinf")
 ```
 
 ## Issues
