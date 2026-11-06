@@ -33,9 +33,9 @@ plot.looAnalysis <- function(x, n = 1, qgraph_args = list(), ...) {
   }
 
   n_cases <- length(case_ids_to_plot)
-  op <- par(no.readonly = TRUE)
-  on.exit(par(op), add = TRUE)
-  layout(matrix(1:(n_cases * 2), nrow = n_cases, ncol = 2, byrow = TRUE))
+  op <- graphics::par(no.readonly = TRUE)
+  on.exit(graphics::par(op), add = TRUE)
+  graphics::layout(matrix(1:(n_cases * 2), nrow = n_cases, ncol = 2, byrow = TRUE))
 
   for (i in seq_len(n_cases)) {
     W_red <- red_nets[[i]]$graph
@@ -58,11 +58,11 @@ plot.looAnalysis <- function(x, n = 1, qgraph_args = list(), ...) {
       for (c in 1:ncol(full_net)) {
         if (full_net[r, c] != 0) {
           rel_w <- abs(full_net[r, c]) / max_w_full
-          edge_colors_full[r, c] <- adjustcolor("black", alpha.f = max(0.2, rel_w))
+          edge_colors_full[r, c] <- grDevices::adjustcolor("black", alpha.f = max(0.2, rel_w))
         }
         if (W_red[r, c] != 0) {
           rel_w <- abs(W_red[r, c]) / max_w_red
-          edge_colors_red[r, c] <- adjustcolor("black", alpha.f = max(0.2, rel_w))
+          edge_colors_red[r, c] <- grDevices::adjustcolor("black", alpha.f = max(0.2, rel_w))
         }
       }
     }

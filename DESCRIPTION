@@ -26,7 +26,10 @@ Imports:
     pbapply,
     qgraph,
     utils,
-    rlang
+    rlang,
+    grDevices,
+    graphics,
+    stats
 Suggests:
     lavaan,
     knitr,

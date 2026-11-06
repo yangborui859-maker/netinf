@@ -187,10 +187,10 @@ print.empiricalInfluence <- function(x, n = NULL, detailed = FALSE, ...) {
 
   stats <- c(
     Min = min(val, na.rm = TRUE),
-    Median = median(val, na.rm = TRUE),
+    Median = stats::median(val, na.rm = TRUE),
     Mean = mean(val, na.rm = TRUE),
     Max = max(val, na.rm = TRUE),
-    SD = sd(val, na.rm = TRUE)
+    SD = stats::sd(val, na.rm = TRUE)
   )
   cat("Summary Statistics of Influence Values:\n")
   print(round(stats, 3))
@@ -231,7 +231,7 @@ print.centralityGCD <- function(x, n = NULL, detailed = FALSE, ...) {
     for (m in metrics) {
       sub_df <- df[df$metric == m, ]
       sub_df <- sub_df[order(-sub_df$gCD), ]
-      top_n <- head(sub_df, n)
+      top_n <- utils::head(sub_df, n)
       cat(sprintf("--- Metric: %s ---\n", m))
       print(data.frame(Case_ID = top_n$case_id, gCD = round(top_n$gCD, 3)), row.names = FALSE)
       cat("\n")
@@ -244,7 +244,7 @@ print.centralityGCD <- function(x, n = NULL, detailed = FALSE, ...) {
     sub_val <- df$gCD[df$metric == m]
     stats <- c(
       Min = min(sub_val, na.rm = TRUE),
-      Median = median(sub_val, na.rm = TRUE),
+      Median = stats::median(sub_val, na.rm = TRUE),
       Mean = mean(sub_val, na.rm = TRUE),
       Max = max(sub_val, na.rm = TRUE)
     )

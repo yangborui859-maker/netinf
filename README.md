@@ -28,8 +28,8 @@ For a detailed walkthrough, see the
 
 ## Installation
 ```r
-install.packages("devtools")
-devtools::install_github("yangborui859-maker/netinf")
+install.packages("pak")
+pak::pak("yangborui859-maker/netinf")
 ```
 
 ## Issues
