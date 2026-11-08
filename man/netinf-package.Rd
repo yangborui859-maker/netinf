@@ -67,22 +67,23 @@ visualization and centrality.
 data("test_data", package = "netinf")
 
 # All-in-one workflow
+\dontrun{
 set.seed(1)
 diag <- influence_diagnostic(
   data               = test_data,
-  nBoots             = 100,
+  nBoots             = 50,
   top_n              = 3,
   centrality_metrics = c("Strength", "Closeness", "Betweenness"),
   default            = "EBICglasso",
   verbose            = FALSE
 )
 diag
-
+}
 # Manual workflow
 set.seed(1)
 boot_res <- bootnet_with_indices(
   test_data,
-  nBoots  = 100,  # Use nBoots = 5000 or more in practice; 100 here for speed.
+  nBoots  = 50,  # Use nBoots = 5000 or more in practice; 50 here for speed.
   default = "EBICglasso"
 )
 boot_res
