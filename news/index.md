@@ -1,5 +1,9 @@
 # Changelog
 
+## netinf 0.1.3
+
+- Modify the examples to reduce runtime.
+
 ## netinf 0.1.2
 
 - Added a new S3
