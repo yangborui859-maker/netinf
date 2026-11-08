@@ -71,7 +71,7 @@ data("test_data", package = "netinf")
 set.seed(1)
 diag <- influence_diagnostic(
   data               = test_data,
-  nBoots             = 50,
+  nBoots             = 100,
   top_n              = 3,
   centrality_metrics = c("Strength", "Closeness", "Betweenness"),
   default            = "EBICglasso",
@@ -83,7 +83,7 @@ diag
 set.seed(1)
 boot_res <- bootnet_with_indices(
   test_data,
-  nBoots  = 50,  # Use nBoots = 5000 or more in practice; 50 here for speed.
+  nBoots  = 100,  # Use nBoots = 5000 or more in practice; 100 here for speed.
   default = "EBICglasso"
 )
 boot_res
